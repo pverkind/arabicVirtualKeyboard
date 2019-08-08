@@ -11,46 +11,69 @@
 
 <body style="">
 
-<h1>Arabic keyboard</h1>
+<div id="intro">
+    <h1>Arabic keyboard</h1>
+    <button class="btn" id="cbtn" onclick="copy2Clipboard()">Copy to clipboard</button>
 
-<button class="btn" id="cbtn" onclick="copy2Clipboard()">Copy to clipboard</button>
-<div id="rgxChckbx">
-    <div class="tooltip">
-        Input Arabic letters separated
-        <span class="tooltiptext">By checking this checkbox, the Arabic letters you input will be displayed as separated by an invisible space;
-        if you click the "Copy to Clipboard" button, however, the text will be copied without these separators</span>
+    <div id="rgxChckbx">
+        <div class="tooltip">
+            Input Arabic letters separated
+            <span class="tooltiptext">By checking this checkbox, the Arabic letters you input will be displayed as separated by an invisible space;
+            if you click the "Copy to Clipboard" button, however, the text will be copied without these separators</span>
+        </div>
+        : 
+        <input type="checkbox" id="regexCheck">
     </div>
-    : 
-    <input type="checkbox" id="regexCheck">
 </div>
 
-<form name="fo" id="send" method="post" onsubmit="return OnSubmitForm();">
-    <div id="keyboard">
-        <div class="resizable-textarea">
-            <span>
-                <textarea id="area" dir="rtl" name="area" class="resizable processed" tabindex="1"></textarea>
-                <div class="grippie" style="margin-right: 0px;"></div>
-            </span>
+
+<div id="keyboard">
+    <div class="resizable-textarea">
+        <span>
+            <textarea id="area" dir="rtl" name="area" class="resizable processed" tabindex="1"></textarea>
+            <div class="grippie" style="margin-right: 0px;"></div>
+        </span>
+    </div>
+    <div id="keyboardPic">
+        <img id="k" src="i/keyboard.png" usemap="#key" alt="" width="450" height="256" border="0"> 
+    </div>
+</div>
+
+
+<div id="specialChar">
+    <h3>Need more special characters? </h3>
+    <p>Add your character in an input field below, and click the insert button to insert the character. Add a description in the second input field if you like. Use the links below to find the unicode character you're looking for.</p>
+    <div id="moreInputs">
+        <div>
+            <input type="text" class="extraInput" id="extraInput0" dir="rtl" value="ک"></input>
+            <input type="text" class="extraInputDescr" value="final kāf"></input>
+            <button class="l-btn" id="extraBtn0" onclick="buttonwr('extraInput0')">insert</button>
         </div>
-        <div id="keyboardPic">
-            <img id="k" src="i/keyboard.png" usemap="#key" alt="" width="450" height="256" border="0"> 
+        <div>
+            <input type="text" class="extraInput" id="extraInput1" dir="rtl"></input>
+            <input type="text" class="extraInputDescr" value="descr"></input>
+            <button class="l-btn" id="extraBtn0" onclick="buttonwr('extraInput1')">insert</button>
         </div>
-</form>
+    </div>
+    <div>
+        <button class="l-btn" id="addInputs" onclick="addNewInput()">add more!</button>
+    </div>
+</div>
 
-
-<h3>Need more special characters?</h3>
-<p><a href="https://unicodelookup.com" target="_blank">https://unicodelookup.com</a></p>
-<p><a href="http://www.unicode-symbol.com" target="_blank">http://www.unicode-symbol.com/</a></p>
-<p><a href="http://www.unicode-symbol.com/block/Arabic.html" target="_blank">Unicode code block "Arabic"</a></p>
-<p><a href="http://www.unicode-symbol.com/block/Arabic_Ext_A.html" target="_blank">Unicode code block "Arabic Extended-A"</a></p>
-<p><a href="http://www.unicode-symbol.com/block/Arabic_Math.html" target="_blank">Unicode code block "Arabic Mathematical Symbols"</a></p>
-<p><a href="http://www.unicode-symbol.com/block/Arabic_PF_A.html" target="_blank">Unicode code block "Arabic Presentation Forms A"</a></p>
-<p><a href="http://www.unicode-symbol.com/block/Arabic_PF_B.html" target="_blank">Unicode code block "Arabic Presentation Forms B"</a></p>
-<p><a href="http://www.unicode-symbol.com/block/Arabic_Sup.html" target="_blank">Unicode code block "Arabic Supplement"</a></p>
-
+<div id="links">
+    <h3>Useful links</h3>
+    <p><a href="https://unicode-table.com/en" target="_blank">https://unicode-table.com/en</a></p>
+    <p><a href="http://www.unicode-symbol.com" target="_blank">http://www.unicode-symbol.com/</a></p>
+    <p><a href="http://www.unicode-symbol.com/block/Arabic.html" target="_blank">Unicode code block "Arabic"</a></p>
+    <p><a href="http://www.unicode-symbol.com/block/Arabic_Ext_A.html" target="_blank">Unicode code block "Arabic Extended-A"</a></p>
+    <p><a href="http://www.unicode-symbol.com/block/Arabic_Math.html" target="_blank">Unicode code block "Arabic Mathematical Symbols"</a></p>
+    <p><a href="http://www.unicode-symbol.com/block/Arabic_PF_A.html" target="_blank">Unicode code block "Arabic Presentation Forms A"</a></p>
+    <p><a href="http://www.unicode-symbol.com/block/Arabic_PF_B.html" target="_blank">Unicode code block "Arabic Presentation Forms B"</a></p>
+    <p><a href="http://www.unicode-symbol.com/block/Arabic_Sup.html" target="_blank">Unicode code block "Arabic Supplement"</a></p>
+</div>
 
 <map name="key">
- <area shape="rect" coords="4,4,35,35" onclick="wr('ذ')" alt="">
+ <area shape="rect" coords="4,4,35,35" onclick="wr('ذ')" alt="" title="dhāl">
  <area shape="rect" coords="35,4,64,32" onclick="wr('١')" alt="">
  <area shape="rect" coords="65,4,92,32" onclick="wr('٢')" alt="">
  <area shape="rect" coords="92,4,122,32" onclick="wr('٣')" alt="">
@@ -298,8 +321,39 @@
         sl("keyboardPic").innerHTML = '<img id="k" src="i/keyboard.png" usemap="#key2" alt="" width="450" height="256" border="0">';
     } else {
         sl("keyboardPic").innerHTML = '<img id="k" src="i/keyboard.png" usemap="#key" alt="" width="450" height="256" border="0">';  }
-});
+  });
+
+  function buttonwr(id) {
+    var inp = document.getElementById(id).value;    
+    wr(inp);
+  }
   
-
-
+  function addNewInput(){
+    var moreInputsDiv = document.getElementById("moreInputs");
+    var inputs = moreInputsDiv.getElementsByTagName("input");
+    var len = inputs.length
+    var div = document.createElement("div");
+    document.getElementById("moreInputs").appendChild(div);
+    var inp = document.createElement("input");
+    inp.className = "extraInput";
+    inp.setAttribute("type", "text");
+    inp.setAttribute("id", "extraInput"+len);
+    inp.setAttribute("dir", "rtl");
+    div.appendChild(inp);
+    var inp2 = document.createElement("input");
+    inp2.className = "extraInputDescr";
+    inp2.setAttribute("type", "text");
+    inp2.setAttribute("value", "descr");
+    div.appendChild(inp2);
+    var b = document.createElement("button");
+    b.className = "l-btn";
+    b.setAttribute("id", "extraBtn"+len);
+    b.setAttribute("onclick", "buttonwr('extraInput"+len+"')");
+    b.innerHTML="insert";
+    div.appendChild(b);
+    
+  }
+  
+  
 </script>
+  
