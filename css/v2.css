@@ -1,7 +1,7 @@
 
 html,
 body {
-    font-size: 1em;
+    font-size: 13px;
     font-family: verdana, arial, helvetica, sans-serif;
     height: 100%;
     padding-left:25;
@@ -83,6 +83,8 @@ h3 {
 
 #cbtn {
     padding: 5px;
+    margin-right: 70px;
+    margin-bottom: 2px;
 }
 .l-btn {
     float:left;
@@ -94,7 +96,6 @@ h3 {
 
 #rgxChckbx {
     float:left;
-    padding: 5px;
     padding-left: 30px;
 }  
 
@@ -110,7 +111,7 @@ p {
 #area {
     position: relative;
     height: 132px;
-    width: 440px;
+    width: 450px;
     top: 0px;
     left: 0px;
     border: 3px solid #b5b5b5;
@@ -132,20 +133,7 @@ p {
     outline: 0
 }
 
-div.grippie {
-    background: #EEE no-repeat scroll center 2px;
-    cursor: s-resize;
-    height: 9px;
-    overflow: hidden;
-    border-left: 3px solid #b5b5b5;
-    border-right: 3px solid #b5b5b5
-}
-.resizable-textarea textarea {
-    display: block;
-    margin-bottom: 0pt;
-    width: 442px;
-    height: 20%
-}
+
 
 * html button.btn {
     
