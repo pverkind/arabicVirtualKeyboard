@@ -30,6 +30,30 @@ h3 {
     padding-top: 10px;
     padding-bottom: 10px; 
 }
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #ccc;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+
+  /* Position the tooltip */
+  position: fixed;
+  z-index: 100;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 #main {
     height: 630px;
     margin: 0 auto;
@@ -42,7 +66,7 @@ h3 {
     left: 200px;
     position: absolute;
     width: 550px;
-    z-index: 1
+    z-index: 1;
 }
 #bgheader {
     background: url(/i/main.png) repeat-x center top;
@@ -223,12 +247,20 @@ h3 {
     left: 58px;
     padding: 5px;
 }
+
+#rgxChckbx {
+    position: absolute;
+    top: 70px;
+    left: 200px;
+    padding: 5px;
+}  
+
 #keyboard {
     position: absolute;
     top: 109px;
     left: 54px;
     width: 450px;
-    z-index: 1
+    z-index: 1;
 }
 #area {
     position: relative;
