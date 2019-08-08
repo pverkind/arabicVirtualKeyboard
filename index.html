@@ -1,7 +1,6 @@
 <html>
 <head>
 <title>Arabic Keyboard</title>
-<meta name="keywords" content="arabic, arabic keyboard, keyboard, arabic key board, editor, arabic courses">
 <meta name="description" content="online editor to write Arabic, especially for transcribing manuscripts and composing regular expressions. Based on Ahmad Ismail's Arabic keyboard at http://www.arabic-keyboard.org/">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="css/v2.css?13">
@@ -15,6 +14,15 @@
 <h1>Arabic keyboard</h1>
 
 <button class="btn" id="cbtn" onclick="copy2Clipboard()">Copy to clipboard</button>
+<div id="rgxChckbx">
+    <div class="tooltip">
+        Input Arabic letters separated
+        <span class="tooltiptext">By checking this checkbox, the Arabic letters you input will be displayed as separated by an invisible space;
+        if you click the "Copy to Clipboard" button, however, the text will be copied without these separators</span>
+    </div>
+    : 
+    <input type="checkbox" id="regexCheck">
+</div>
 
 <form name="fo" id="send" method="post" onsubmit="return OnSubmitForm();">
     <div id="keyboard">
@@ -24,9 +32,11 @@
                 <div class="grippie" style="margin-right: 0px;"></div>
             </span>
         </div>
-        <img id="k" src="i/keyboard.png" usemap="#key" alt="" width="450" height="256" border="0"> 
+        <div id="keyboardPic">
+            <img id="k" src="i/keyboard.png" usemap="#key" alt="" width="450" height="256" border="0"> 
+        </div>
 </form>
-    
+
 
 <h3>Need more special characters?</h3>
 <p><a href="https://unicodelookup.com" target="_blank">https://unicodelookup.com</a></p>
@@ -148,22 +158,148 @@
  <area shape="rect" coords="379,218,409,247" onclick="wr('{‎')" alt="opening curly bracket">
  <area shape="rect" coords="409,218,445,247" onclick="wr('}‎')" alt="closing curly bracket">
 </map>
+    
+<map name="key2">
+ <area shape="rect" coords="4,4,35,35" onclick="wr('ذ')" alt="">
+ <area shape="rect" coords="35,4,64,32" onclick="wr('١')" alt="">
+ <area shape="rect" coords="65,4,92,32" onclick="wr('٢')" alt="">
+ <area shape="rect" coords="92,4,122,32" onclick="wr('٣')" alt="">
+ <area shape="rect" coords="123,4,151,32" onclick="wr('٤')" alt="">
+ <area shape="rect" coords="151,4,180,32" onclick="wr('٥')" alt="">
+ <area shape="rect" coords="179,4,210,32" onclick="wr('٦')" alt="">
+ <area shape="rect" coords="210,4,238,32" onclick="wr('٧')" alt="">
+ <area shape="rect" coords="238,4,268,32" onclick="wr('٨')" alt="">
+ <area shape="rect" coords="268,4,296,32" onclick="wr('٩')" alt="">
+ <area shape="rect" coords="296,4,326,32" onclick="wr('٠')" alt="">
+ <area shape="rect" coords="326,4,355,32" onclick="wr('~')" alt="">
+ <area shape="rect" coords="355,4,382,32" onclick="wr('!')" alt="">
+ <area shape="rect" coords="384,4,443,32" onclick="op('back')">
+     
+ <area shape="rect" coords="50,33,79,61" onclick="wr('ض')" alt="">
+ <area shape="rect" coords="80,33,108,61" onclick="wr('ص')" alt="">
+ <area shape="rect" coords="108,33,137,61" onclick="wr('ث')" alt="">
+ <area shape="rect" coords="138,34,166,61" onclick="wr('ق')" alt="">
+ <area shape="rect" coords="167,34,194,62" onclick="wr('ف')" alt="">
+ <area shape="rect" coords="196,34,224,61" onclick="wr('غ')" alt="">
+ <area shape="rect" coords="225,34,252,62" onclick="wr('ع')" alt="">
+ <area shape="rect" coords="253,34,281,61" onclick="wr('ه')" alt="">
+ <area shape="rect" coords="282,33,311,61" onclick="wr('خ')" alt="">
+ <area shape="rect" coords="312,33,340,60" onclick="wr('ح')" alt="">
+ <area shape="rect" coords="342,33,368,60" onclick="wr('ج')" alt="">
+ <area shape="rect" coords="369,33,397,60" onclick="wr('د')" alt="">
+ <area shape="poly" coords="440,36,441,37,401,35,400,63,379,64,380,89,440,89" onclick="wr('\n')" alt="">
+     
+ <area shape="rect" coords="6,64,57,92">       
+ <area shape="rect" coords="58,62,87,91" onclick="wr('ش')" alt="">
+ <area shape="rect" coords="88,62,116,92" onclick="wr('س')" alt="">
+ <area shape="rect" coords="117,62,145,90" onclick="wr('ي')" alt="">
+ <area shape="rect" coords="146,62,174,92" onclick="wr('ب')" alt="">
+ <area shape="rect" coords="175,62,203,91" onclick="wr('ل')" alt="">
+ <area shape="rect" coords="204,63,232,92" onclick="wr('ا')" alt="">
+ <area shape="rect" coords="233,63,261,92" onclick="wr('ت')" alt="">
+ <area shape="rect" coords="262,63,290,92" onclick="wr('ن')" alt="">
+ <area shape="rect" coords="291,63,319,92" onclick="wr('م')" alt="">
+ <area shape="rect" coords="320,62,348,91" onclick="wr('ك')" alt="">
+ <area shape="rect" coords="349,62,377,91" onclick="wr('ط')" alt="">
+     
+ <area shape="rect" coords="7,92,71,120">
+ <area shape="rect" coords="71,92,100,120" onclick="wr('ئ')" alt="">
+ <area shape="rect" coords="100,92,129,120" onclick="wr('ء')" alt="">
+ <area shape="rect" coords="129,92,158,120" onclick="wr('ؤ')" alt="">
+ <area shape="rect" coords="159,92,188,120" onclick="wr('ر')" alt="">
+ <area shape="rect" coords="188,92,217,120" onclick="wr('لا')" alt="">
+ <area shape="rect" coords="217,92,246,120" onclick="wr('ى')" alt="">
+ <area shape="rect" coords="246,91,275,119" onclick="wr('ة')" alt="">
+ <area shape="rect" coords="275,91,304,119" onclick="wr('و')" alt="">
+ <area shape="rect" coords="304,91,333,119" onclick="wr('ز')" alt="">
+ <area shape="rect" coords="333,92,362,120" onclick="wr('ظ')" alt="">
+ <area shape="rect" coords="362,92,412,120">
+ <area shape="rect" coords="413,92,442,120" onclick="wr('ـ')" alt="tatweel">
+     
+ <area shape="rect" coords="115,121,295,149" onclick="wr(' ')" alt="">
+ <area shape="rect" coords="408,121,440,145" onclick="sl('area').select()" alt="Text Highlight">    
+     
+     
+ <area shape="rect" coords="4,165,29,180" onclick="wr('\u25ccْ')" alt="">
+ <area shape="rect" coords="29,164,48,180" onclick="wr('\u25ccِ')" alt="">
+ <area shape="rect" coords="47,163,65,180" onclick="wr('\u25ccٌ')" alt="">
+ <area shape="rect" coords="65,163,88,180" onclick="wr('\u25ccَ')" alt="">
+     
+ <area shape="rect" coords="2,180,27,195" onclick="wr('\u25ccّ')" alt="">
+ <area shape="rect" coords="29,180,48,196" onclick="wr('\u25ccٍ')" alt="">
+ <area shape="rect" coords="47,180,66,196" onclick="wr('\u25ccُ')" alt="">
+ <area shape="rect" coords="66,180,85,196" onclick="wr('\u25ccً')" alt="">
+      
+  
+ <area shape="rect" coords="99,165,131,199" onclick="wr('آ')" alt="">
+ <area shape="rect" coords="131,164,162,199" onclick="wr('ٱ')" alt="">
+ <area shape="rect" coords="162,165,193,200" onclick="wr('أ')" alt="">
+ <area shape="rect" coords="193,164,222,200" onclick="wr('إ')" alt="">
+ <area shape="rect" coords="223,164,254,200" onclick="wr('ٰ')" alt="dagger alif">
+     
+ <area shape="rect" coords="256,163,287,199" onclick="wr('ٮ')" alt="dotless b">
+ <area shape="rect" coords="287,163,316,199" onclick="wr('ں')" alt="dotless n">
+     
+ <area shape="rect" coords="318,163,347,199" onclick="wr('ڡ')" alt="dotless f">
+ <area shape="rect" coords="348,163,377,199" onclick="wr('ٯ')" alt="dotless q">
+     
+ <area shape="rect" coords="379,163,409,199" onclick="wr('ڧ‎')" alt="maghrebi q">
+ <area shape="rect" coords="409,163,445,199" onclick="wr('ڢ‎')" alt="magrhebi f">
+     
+     
+ <area shape="rect" coords="2,180,27,195">
+ <area shape="rect" coords="29,180,48,196">
+ <area shape="rect" coords="47,180,66,196">
+ <area shape="rect" coords="66,180,85,196">
+                     
+                     
+ <area shape="rect" coords="99,220,131,248" onclick="wr('،')" alt="Arabic comma">
+ <area shape="rect" coords="131,220,162,248" onclick="wr(':')" alt="colon">
+ <area shape="rect" coords="162,220,193,248" onclick="wr('؛')" alt="Arabic semicolon">
+ <area shape="rect" coords="193,219,222,248" onclick="wr('؟')" alt="Arabic question mark">
+ <area shape="rect" coords="223,219,254,248" onclick="wr('.')" alt="full stop">
+                                        
+ <area shape="rect" coords="256,218,287,247" onclick="wr('[')" alt="opening bracket">
+ <area shape="rect" coords="287,218,316,247" onclick="wr(']')" alt="closing bracket">
+                                                 
+ <area shape="rect" coords="318,218,347,247" onclick="wr('(')" alt="opening square bracket">
+ <area shape="rect" coords="348,218,377,247" onclick="wr(')')" alt="closing square bracket">
+                                                    
+ <area shape="rect" coords="379,218,409,247" onclick="wr('{‎')" alt="opening curly bracket">
+ <area shape="rect" coords="409,218,445,247" onclick="wr('}‎')" alt="closing curly bracket">
+</map>
 
 </body>
 </html>
+
 <script>
  
   function copy2Clipboard() {
     /* Get the text field */
     var copyText = document.getElementById("area");
+    /* remove the special characters: */
+    var original_copyText = copyText.value; 
+    var temp_copyText = copyText.value.split("\u25CC").join("");
+    var temp_copyText = temp_copyText.split("\u200A").join("");
+    copyText.value = temp_copyText;
     /* Select the text field */
     copyText.select();
     /* Copy the text inside the text field */
     document.execCommand("copy");
     /* Alert the copied text */
     alert("Copied the text: " + copyText.value);
+    /* Put the original copyText back in */
+    copyText.value = original_copyText;
   }
+  
+  var regexCheckbox = document.getElementById("regexCheck");
+  regexCheckbox.addEventListener( 'change', function() {
+    if(this.checked) {
+        sl("keyboardPic").innerHTML = '<img id="k" src="i/keyboard.png" usemap="#key2" alt="" width="450" height="256" border="0">';
+    } else {
+        sl("keyboardPic").innerHTML = '<img id="k" src="i/keyboard.png" usemap="#key" alt="" width="450" height="256" border="0">';  }
+});
+  
 
 
 </script>
-  
