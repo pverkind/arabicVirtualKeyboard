@@ -6,6 +6,9 @@ body {
     height: 100%;
     padding-left:25;
 }
+p {
+    width: 450px;
+}
 a {
     text-decoration: none;
     color: #666
@@ -24,7 +27,7 @@ h1 {
     padding-bottom: 10px;
 }
 h3 {
-    padding-top: 10px;
+    padding-top: 20px;
     padding-bottom: 10px; 
 }
 .tooltip {
@@ -105,9 +108,7 @@ h3 {
     left: 54px;
     width: 450px;
 }
-p {
-    width: 450px;
-}
+
 #area {
     position: relative;
     height: 132px;
