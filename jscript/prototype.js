@@ -3,12 +3,15 @@ function sl(id) {
 }
 
 
-
 function wr(item) {
     var input = sl('area');
+    if (sl("regexCheck0").checked) {
+        /* add an Arabic letter mark (\u061C) after every character to improve mixed RTL and LTR behavior */
+        item = item + "\u061C"; 
+    }
     if (sl("regexCheck").checked) {
-        /* add a small space after every character to separate the characters */
-        item = item + "\u200A";
+        /* add a small space (\u200A) after every character to separate the Arabic characters */
+        item = item + "\u200A"; 
     }
     input.focus();
     if (input.setSelectionRange) {
@@ -52,8 +55,13 @@ function op(el) {
             var srt = target.selectionStart;
             var len = target.selectionEnd;
             if (srt < len) srt++;
-            target.value = target.value.substr(0, srt - 1) +
-            target.value.substr(len);
+            if (sl("regexCheck").checked && sl("regexCheck0").checked) {
+                target.value = target.value.substr(0, srt - 3) + target.value.substr(len);
+            } else if (sl("regexCheck").checked || sl("regexCheck0").checked) {
+                target.value = target.value.substr(0, srt - 2) + target.value.substr(len);
+            } else {
+                target.value = target.value.substr(0, srt - 1) + target.value.substr(len);
+            }
             target.setSelectionRange(srt - 1, srt - 1);
             target.focus();
         } else
@@ -66,7 +74,13 @@ function op(el) {
             }
             self.VKI_range = document.selection.createRange();
             if (! self.VKI_range.text.length)
-            self.VKI_range.moveStart('character', -1);
+            if (sl("regexCheck").checked && sl("regexCheck0").checked) {
+                self.VKI_range.moveStart('character', -3);
+            } else if (sl("regexCheck").checked || sl("regexCheck0").checked) {
+                self.VKI_range.moveStart('character', -2);
+            } else {
+                self.VKI_range.moveStart('character', -1);
+            }
             self.VKI_range.text = "";
             target.focus();
         } else target.value = target.value.substr(0, target.value.length - 1);
@@ -119,5 +133,4 @@ jQuery.cookie = function (name, value, options) {
         return cookieValue;
     }
 };
-
 
