@@ -1,4 +1,16 @@
-
+/* amiri-regular - latin-ext_arabic_latin */
+@font-face {
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Amiri Regular'), local('Amiri-Regular'),
+       url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.svg#Amiri') format('svg'); /* Legacy iOS */
+}
 html,
 body {
     font-size: 13px;
@@ -141,7 +153,7 @@ h3 {
     grid-template-rows: 30px;
     padding-left: 16px;
     padding-top: 10px;
-    font-family: 'Amiri', serif;
+    
 }
 .rowBgd {
     position: absolute;
@@ -157,7 +169,8 @@ h3 {
     padding-top: 10px;
 }
 .keyCharacter {
-    font-size: 20px;
+    font-size: 15px;
+    font-family: 'Amiri', serif;
 }
 #cheatsheet {
     display: none;
