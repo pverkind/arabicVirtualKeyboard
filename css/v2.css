@@ -225,7 +225,7 @@ textarea {
     display: none;
     position: fixed;
     left: 525px;
-    top: 41px;
+    top: 60px;
     height: 100vh;
     overflow: auto;
 }
