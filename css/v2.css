@@ -108,6 +108,13 @@ textarea {
 .fivePxMargin {
     margin: 5px;
 }
+.footer {
+    padding-top: 40px;
+    padding-bottom: 10px;
+    font-size: 10px;
+    color: #999;
+    width: 450px;
+}
 .keyCharacter {
     font-size: 14px;
     font-family: 'Amiri', serif;
