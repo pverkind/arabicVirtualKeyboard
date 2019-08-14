@@ -152,7 +152,7 @@ h3 {
     grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
     grid-template-rows: 30px;
     padding-left: 16px;
-    padding-top: 10px;
+    padding-top: 6px;
     
 }
 .rowBgd {
@@ -169,7 +169,7 @@ h3 {
     padding-top: 10px;
 }
 .keyCharacter {
-    font-size: 15px;
+    font-size: 14px;
     font-family: 'Amiri', serif;
 }
 #cheatsheet {
