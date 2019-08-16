@@ -485,6 +485,20 @@
        if (character === "none") {
            var character = document.getElementById("extraInput0").value;
            var alias = document.getElementById("extraInputDescr0").value;
+           /* add the key to the cookie */
+           var cookie_keys = getCookie("keys");
+           if (cookie_keys.length > 0) {
+               var keys = JSON.parse(cookie_keys);
+               console.log(keys); 
+               keys.push([character, alias]); 
+               console.log(keys);
+           } else {
+               var keys = [];
+               console.log(keys);
+               keys.push([character, alias]); 
+               console.log(keys);
+               createCookie("keys", JSON.stringify(keys), 365);
+           }
        }
        var xtra = document.getElementById("extraRows");
        var rowList = xtra.getElementsByClassName("extraRow");
@@ -540,9 +554,8 @@
            area.setAttribute("title", alias);
            currentMap.appendChild(area);
        }
-       
-       
     }
+    
     function Toggle(id){
        var el = document.getElementById(id);
        if (el.style.display === "block"){
@@ -553,5 +566,32 @@
            console.log("block");
        }
     }
-  
+    
+    function createCookie(name, value, days) {
+        var expires;
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        }
+        else {
+            expires = "";
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function getCookie(c_name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=");
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) {
+                    c_end = document.cookie.length;
+                }
+                return unescape(document.cookie.substring(c_start, c_end));
+            }
+        }
+        return "";
+    }
 </script>
