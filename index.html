@@ -273,7 +273,7 @@
   });
   */
 
-  function copy2Clipboard() {
+  function copy2Clipboard(msg="") {
     /* Get the text field */
     var ar = document.getElementById("area");
     /* check if something is selected: */
@@ -298,7 +298,9 @@
     /* Put the original copyText back into the textarea */
     ar.value = originalAreaContent;
     /* Alert the copied text */
-    alert("Copied the text: " + copyText + " as " + temp_copyText);
+    if (originalAreaContent) {
+      alert(msg+"Copied the text: " + copyText + " as " + temp_copyText);
+    }
   }
 
 
@@ -591,7 +593,7 @@
     }
     function resetKeys() {
         createCookie("keys", "", 365);
-        copy2Clipboard();
+        copy2Clipboard(msg="Reloading the page... ");
         /* reload the page: */
         location = location;
     }
