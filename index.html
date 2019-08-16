@@ -342,6 +342,12 @@
                          ];
       if (ignoreArray.includes(keyID)) {
           console.log("keyID "+keyID+". Do not do anything");
+      }  else if (keyID === 67) { /* if C key is pressed:*/
+          if (event.ctrlKey) {  /* check if ctrl is also pressed; if so, copy*/
+            copy2Clipboard();
+          } else {
+            wr("");
+          }
       } else {
           wr("");
       }
