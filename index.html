@@ -20,7 +20,7 @@
             Regex mode
             <span class="tooltiptext">Use this mode for writing regular expressions</span>
         </div>
-        : 
+        :
         <input type="checkbox" id="regexCheck0">
     </div>
     <div class="rgxChckbx" id="rgxChckbx">
@@ -29,7 +29,7 @@
             <span class="tooltiptext">By checking this checkbox, the Arabic letters you input will be displayed as separated by an invisible space;
             if you click the "Copy to Clipboard" button, however, the text will be copied without these separators</span>
         </div>
-        : 
+        :
         <input type="checkbox" id="regexCheck">
     </div>
 </div>
@@ -42,13 +42,13 @@
         </span>
     </div>
     <div id="keyboardPic">
-        <img id="k" src="i/keyboard_basic.png" usemap="#key" alt="" width="450" height="256" border="0"> 
+        <img id="k" src="i/keyboard_basic.png" usemap="#key" alt="" width="450" height="256" border="0">
     </div>
 </div>
 
 <div id="extraRows">
     <div class="extraRow" id="extraRow0">
-        <!-- 
+        <!--
             <div class="rowBgd">
                 <img src="i/emptyKeyRow_45x450.png" height="45px" width="450px"></img>
             </div>
@@ -69,15 +69,16 @@
     <p>Add a key with a new character (and an optional description):</p>
     <input type="text" class="extraInput" id="extraInput0" dir="rtl" value="ک"></input>
     <input type="text" class="extraInputDescr" id="extraInputDescr0" value="description"></input>
-    <button class="fivePxMargin" onclick='addKey("none", "none")'>add key</button>
+    <button class="fivePxMargin" onclick='addKey("none", "none")'>Add key</button>
+    <button class="fivePxMargin" onclick='resetKeys()'>Reset keys</button>
 </div>
 <div>
     <div id="cheatsheet">
         <h4>Regex Cheatsheet input (<a href="https://www.rexegg.com/regex-quickstart.html" target="_blank">source</a>)</h4>
-        <!-- 
+        <!--
             <img src="i/regexCheatSheet.jpg"></img>
             -->
-        
+
         <table>
             <tr><td></td><td></td><td><b>Sample regex</b></td><td><b>Sample match</b></td></tr>
             <tr><td><button class="regexInput" onclick="wr('.')">.</button></td><td>Any character except line break</td><td>a.c</td><td><b>abc a.c</b></td></tr>
@@ -185,7 +186,7 @@
       <li><a href="https://apps.timwhitlock.info/unicode/inspect" target="_blank">https://apps.timwhitlock.info/unicode/inspect</a></li>
       <li><a href="https://r12a.github.io/uniview" target="_blank">https://r12a.github.io/uniview</a></li>
     </ul>
-    <p>Unicode blocks related to Arabic:</p> 
+    <p>Unicode blocks related to Arabic:</p>
     <ul>
       <li><a href="http://www.unicode-symbol.com/block/Arabic.html" target="_blank">Unicode code block "Arabic"</a></li>
       <li><a href="http://www.unicode-symbol.com/block/Arabic_Ext_A.html" target="_blank">Unicode code block "Arabic Extended-A"</a></li>
@@ -213,7 +214,7 @@
  <area shape="rect" coords="326,4,355,32" onclick="wr('~')" alt="">
  <area shape="rect" coords="355,4,382,32" onclick="wr('!')" alt="">
  <area shape="rect" coords="384,4,443,32" onclick="op('back')">
-     
+
  <area shape="rect" coords="50,33,79,61" onclick="wr('ض')" alt="">
  <area shape="rect" coords="80,33,108,61" onclick="wr('ص')" alt="">
  <area shape="rect" coords="108,33,137,61" onclick="wr('ث')" alt="">
@@ -227,8 +228,8 @@
  <area shape="rect" coords="342,33,368,60" onclick="wr('ج')" alt="">
  <area shape="rect" coords="369,33,397,60" onclick="wr('د')" alt="">
  <area shape="poly" coords="440,36,441,37,401,35,400,63,379,64,380,89,440,89" onclick="wr('\n')" alt="">
-     
- <area shape="rect" coords="6,64,57,92">       
+
+ <area shape="rect" coords="6,64,57,92">
  <area shape="rect" coords="58,62,87,91" onclick="wr('ش')" alt="">
  <area shape="rect" coords="88,62,116,92" onclick="wr('س')" alt="">
  <area shape="rect" coords="117,62,145,90" onclick="wr('ي')" alt="">
@@ -240,7 +241,7 @@
  <area shape="rect" coords="291,63,319,92" onclick="wr('م')" alt="">
  <area shape="rect" coords="320,62,348,91" onclick="wr('ك')" alt="">
  <area shape="rect" coords="349,62,377,91" onclick="wr('ط')" alt="">
-     
+
  <area shape="rect" coords="7,92,71,120">
  <area shape="rect" coords="71,92,100,120" onclick="wr('ئ')" alt="">
  <area shape="rect" coords="100,92,129,120" onclick="wr('ء')" alt="">
@@ -254,7 +255,7 @@
  <area shape="rect" coords="333,92,362,120" onclick="wr('ظ')" alt="">
  <area shape="rect" coords="362,92,412,120">
  <area shape="rect" coords="413,92,442,120" onclick="wr('ـ')" alt="taṭwīl" title="taṭwīl (kashīda)">
-     
+
  <area shape="rect" coords="115,121,295,149" onclick="wr(' ')" alt="">
  <area shape="rect" coords="408,121,440,145" onclick="sl('area').select()" alt="Text Highlight">
 </map>
@@ -271,8 +272,8 @@
     copy2Clipboard();
   });
   */
- 
-  function copy2Clipboard() {
+
+  function copy2Clipboard(msg="") {
     /* Get the text field */
     var ar = document.getElementById("area");
     /* check if something is selected: */
@@ -281,7 +282,7 @@
     } else {
       var copyText = (ar.value).substring(ar.selectionStart, ar.selectionEnd);
     }
-    var originalAreaContent = ar.value; 
+    var originalAreaContent = ar.value;
     var originalAreaSelection = (ar.selectionStart, ar.selectionEnd);
     /* remove the special characters: */
     var temp_copyText = copyText.split("\u25CC").join("");
@@ -297,17 +298,19 @@
     /* Put the original copyText back into the textarea */
     ar.value = originalAreaContent;
     /* Alert the copied text */
-    alert("Copied the text: " + copyText + " as " + temp_copyText);
+    if (originalAreaContent) {
+      alert(msg+"Copied the text: " + copyText + " as " + temp_copyText);
+    }
   }
-  
 
-  
+
+
   /*
   function buttonwr(id) {
-    var inp = document.getElementById(id).value;    
+    var inp = document.getElementById(id).value;
     wr(inp);
   }
-  
+
 
   function addNewInput(){
     var moreInputsDiv = document.getElementById("moreInputs");
@@ -334,21 +337,20 @@
   }
   */
   function insertALM () {
-      /* ALM = Arabic letter mark, U+061C, "a non-printing character used in the 
-      computerized typesetting of bi-directional text containing mixed 
-      left-to-right scripts and right-to-left scripts. 
-      Similar to Right-to-left mark (RLM), it is used to change the way 
+      /* ALM = Arabic letter mark, U+061C, "a non-printing character used in the
+      computerized typesetting of bi-directional text containing mixed
+      left-to-right scripts and right-to-left scripts.
+      Similar to Right-to-left mark (RLM), it is used to change the way
       adjacent characters are grouped with respect to text direction" */
       var keyID = event.which;
-      console.log(keyID);
+      console.log("keyID:"+keyID);
       var ignoreArray = [37, 38, 39, 40, /*arrow buttons*/
                          35, 36, /*home and end*/
                          8, 48, /*del and backspace*/
-                         17, 18, /*alt and ctrl*/ 
+                         17, 18, /*alt and ctrl*/
                          20, 16, /*caps lock and shift*/
                          ];
       if (ignoreArray.includes(keyID)) {
-          console.log("keyID "+keyID+". Do not do anything");
       }  else if (keyID === 67) { /* if C key is pressed:*/
           if (event.ctrlKey) {  /* check if ctrl is also pressed; if so, copy*/
             copy2Clipboard();
@@ -360,7 +362,7 @@
       }
       /*switchEscapes();*/
   }
-  
+
   /* The following function, meant to display \b instead of b\ etc.
   does not work...
   function switchEscapes() {
@@ -383,23 +385,23 @@
       input.focus();
       input.scrollTop = input.scrollHeight;
   }*/
-  
+
     populateInitialKeys()
     function populateInitialKeys() {
         var initial = [
-          ['\u25ccْ',"sukūn"], 
+          ['\u25ccْ',"sukūn"],
           ['\u25ccّ', "shadda"],
           ['\u25ccَ', "fatḥa"],
           ['\u25ccُ', "ḍamma"],
-          ['\u25ccِ',"kasra"], 
+          ['\u25ccِ',"kasra"],
           ['\u25ccً', "fatḥatān"],
           ['\u25ccٌ',"ḍammatān"],
-          ['\u25ccٍ', "kasratān"], 
+          ['\u25ccٍ', "kasratān"],
           ['\u25cc\u06e1',"Quranic sukun"],
           ['\u25cc\u08f0',"Quranic open fatḥatān"],
           ['\u25cc\u08f1',"Quranic open ḍammatān"],
           ['\u25cc\u08f2',"Quranic open kasratān"],
-          ['\u25ccٰ',"dagger alif"],  
+          ['\u25ccٰ',"dagger alif"],
           ['',""],
           ['آ', "alif madda"],
           ['ٱ', "alif waṣla"],
@@ -410,25 +412,29 @@
           ['ڡ',"dotless f"],
           ['ٯ',"dotless q"],
           ['ڧ',"maghrebi q"],
-          ['ڢ',"maghrebi f"], 
+          ['ڢ',"maghrebi f"],
           ['ک',"final kāf"],
           ['',""],
           ['',""],
           ['',""],
-          ['،', "Arabic comma"], 
-          [':', "colon"], 
-          ['؛', "Arabic semicolon"], 
-          ['؟', "Arabic question mark"], 
-          ['.', "full stop"], 
-          ['[', "opening bracket"], 
-          [']', "closing bracket"], 
-          ['(', "opening square bracket"], 
-          [')', "closing square bracket"], 
-          ['{‎', "opening curly bracket"], 
-          ['}‎', "closing curly bracket"], 
+          ['،', "Arabic comma"],
+          [':', "colon"],
+          ['؛', "Arabic semicolon"],
+          ['؟', "Arabic question mark"],
+          ['.', "full stop"],
+          ['[', "opening bracket"],
+          [']', "closing bracket"],
+          ['(', "opening square bracket"],
+          [')', "closing square bracket"],
+          ['{‎', "opening curly bracket"],
+          ['}‎', "closing curly bracket"],
         ];
       for (i=0; i<initial.length; i++) {
           addKey(initial[i][0], initial[i][1]);
+      }
+      var cookieKeys = getKeysFromCookie();
+      for (i=0; i<cookieKeys.length; i++) {
+          addKey(cookieKeys[i][0], cookieKeys[i][1]);
       }
     }
     function addRowBgd(lastRow) {
@@ -481,27 +487,36 @@
            });
        }
     }
+    function getKeysFromCookie() {
+       var cookie_keys = getCookie("keys");
+       if (cookie_keys) {
+           return JSON.parse(cookie_keys);
+       } else {
+           return [];
+       }
+    }
     function addKey(character, alias) {
        if (character === "none") {
            var character = document.getElementById("extraInput0").value;
            var alias = document.getElementById("extraInputDescr0").value;
+           /* add the key to the cookie */
+           var keys = getKeysFromCookie();
+           keys.push([character, alias]);
+           console.log("new cookie: keys: ");
+           console.log(keys);
+           createCookie("keys", JSON.stringify(keys), 365);
        }
        var xtra = document.getElementById("extraRows");
        var rowList = xtra.getElementsByClassName("extraRow");
-       var keyList = rowList[rowList.length - 1].getElementsByClassName("keyCharacter"); 
-       console.log("keyList:", keyList.length);
+       var keyList = rowList[rowList.length - 1].getElementsByClassName("keyCharacter");
        var lastRow = document.getElementById(rowList[rowList.length - 1].id);
-       console.log("lastRow:", lastRow);
-       console.log("keyList.length:", keyList.length);
-       
+
        if (keyList.length === 0) {
            addRowBgd(lastRow);
        } else if (keyList.length === 14) {
-           console.log("add new row!");
            var rowDiv = document.createElement("div");
            rowDiv.className = "extraRow";
            rowDiv.setAttribute("id", "extraRow" + rowList.length);
-           console.log("extraRow" + rowList.length);
            xtra.appendChild(rowDiv);
            addRowBgd(rowDiv);
            var rowList = xtra.getElementsByClassName("extraRow");
@@ -513,45 +528,73 @@
        keyCharacterDiv.innerHTML = character;
        keyCharacterDiv.setAttribute("class", "keyCharacter");
        lastRow.getElementsByClassName("keyGrid")[0].appendChild(keyCharacterDiv);
-       
+
        /* Add the new key to the current image map: */
-       var currentMap = document.getElementById("map_"+lastRow.id); 
+       var currentMap = document.getElementById("map_"+lastRow.id);
        var coord1_X = 11 + ((keyList.length - 1)*30);
        var coord2_X = 11 + ((keyList.length)*30);
        var area = document.createElement("area");
        area.setAttribute("shape", "rect");
        area.setAttribute("coords", coord1_X+",6,"+coord2_X+",41");
-       console.log("coords", coord1_X+",6,"+coord2_X+",41");
        area.setAttribute("onclick", "wr('" + character + "')");
        area.setAttribute("alt", alias);
        area.setAttribute("title", alias);
        currentMap.appendChild(area);
        /*for the row with the vowels, add an alternative mapping*/
        if (rowList.length === 1) {
-           var currentMap = document.getElementById("alt_map_"+lastRow.id); 
+           var currentMap = document.getElementById("alt_map_"+lastRow.id);
            var coord1_X = 11 + ((keyList.length - 1)*30);
            var coord2_X = 11 + ((keyList.length)*30);
            var area = document.createElement("area");
            area.setAttribute("shape", "rect");
            area.setAttribute("coords", coord1_X+",6,"+coord2_X+",41");
-           console.log("coords", coord1_X+",6,"+coord2_X+",41");
            area.setAttribute("onclick", "wr('" + character[1] + "')");
            area.setAttribute("alt", alias);
            area.setAttribute("title", alias);
            currentMap.appendChild(area);
        }
-       
-       
     }
+
     function Toggle(id){
        var el = document.getElementById(id);
        if (el.style.display === "block"){
            el.style.display = "none";
-           console.log("none");
        } else {
            el.style.display = "block";
-           console.log("block");
        }
     }
-  
+
+    function createCookie(name, value, days) {
+        var expires;
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        }
+        else {
+            expires = "";
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function getCookie(c_name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=");
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) {
+                    c_end = document.cookie.length;
+                }
+                return unescape(document.cookie.substring(c_start, c_end));
+            }
+        }
+        return "";
+    }
+    function resetKeys() {
+        createCookie("keys", "", 365);
+        copy2Clipboard(msg="Reloading the page. ");
+        /* reload the page: */
+        location = location;
+    }
 </script>
