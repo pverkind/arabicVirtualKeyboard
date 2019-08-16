@@ -274,24 +274,31 @@
  
   function copy2Clipboard() {
     /* Get the text field */
-    var copyText = document.getElementById("area");
-    var original_copyText = copyText.value; 
+    var ar = document.getElementById("area");
+    /* check if something is selected: */
+    if (ar.selectionStart === ar.selectionEnd) {
+      var copyText = ar.value;
+    } else {
+      var copyText = (ar.value).substring(ar.selectionStart, ar.selectionEnd);
+    }
+    var originalAreaContent = ar.value; 
+    var originalAreaSelection = (ar.selectionStart, ar.selectionEnd);
     /* remove the special characters: */
-    var temp_copyText = copyText.value.split("\u25CC").join("");
+    var temp_copyText = copyText.split("\u25CC").join("");
     var temp_copyText = temp_copyText.split("\u200A").join("");
     var temp_copyText = temp_copyText.split("\u061C").join("");
-    /* Put the manipulated text back into the text field*/
-    copyText.value = temp_copyText;
+    var temp_copyText = temp_copyText.split("\u0200E").join("");
+    /* put the manipulated text into the textarea */
+    ar.value = temp_copyText;
     /* Select the text field */
-    copyText.select();
+    ar.select();
     /* Copy the text inside the text field */
     document.execCommand("copy");
+    /* Put the original copyText back into the textarea */
+    ar.value = originalAreaContent;
     /* Alert the copied text */
-    alert("Copied the text: " + copyText.value);
-    /* Put the original copyText back in */
-    copyText.value = original_copyText;
+    alert("Copied the text: " + copyText + " as " + temp_copyText);
   }
-  
   
 
   
