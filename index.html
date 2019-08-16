@@ -341,7 +341,7 @@
       Similar to Right-to-left mark (RLM), it is used to change the way
       adjacent characters are grouped with respect to text direction" */
       var keyID = event.which;
-      console.log(keyID);
+      console.log("keyID:"+keyID);
       var ignoreArray = [37, 38, 39, 40, /*arrow buttons*/
                          35, 36, /*home and end*/
                          8, 48, /*del and backspace*/
@@ -349,7 +349,6 @@
                          20, 16, /*caps lock and shift*/
                          ];
       if (ignoreArray.includes(keyID)) {
-          console.log("keyID "+keyID+". Do not do anything");
       }  else if (keyID === 67) { /* if C key is pressed:*/
           if (event.ctrlKey) {  /* check if ctrl is also pressed; if so, copy*/
             copy2Clipboard();
@@ -488,11 +487,11 @@
     }
     function getKeysFromCookie() {
        var cookie_keys = getCookie("keys");
-       if (cookie_keys.length > 0) {
-           var keys = JSON.parse(cookie_keys);
+       if (cookie_keys) {
+           return JSON.parse(cookie_keys);
        } else {
-           var keys = [];
-       return keys;
+           return [];
+       }
     }
     function addKey(character, alias) {
        if (character === "none") {
@@ -500,29 +499,22 @@
            var alias = document.getElementById("extraInputDescr0").value;
            /* add the key to the cookie */
            var keys = getKeysFromCookie();
-           console.log("keys in cookie: ");
-           console.log(keys);
            keys.push([character, alias]);
-           console.log("new keys in cookie: ");
+           console.log("new cookie: keys: ");
            console.log(keys);
            createCookie("keys", JSON.stringify(keys), 365);
        }
        var xtra = document.getElementById("extraRows");
        var rowList = xtra.getElementsByClassName("extraRow");
        var keyList = rowList[rowList.length - 1].getElementsByClassName("keyCharacter");
-       console.log("keyList:", keyList.length);
        var lastRow = document.getElementById(rowList[rowList.length - 1].id);
-       console.log("lastRow:", lastRow);
-       console.log("keyList.length:", keyList.length);
 
        if (keyList.length === 0) {
            addRowBgd(lastRow);
        } else if (keyList.length === 14) {
-           console.log("add new row!");
            var rowDiv = document.createElement("div");
            rowDiv.className = "extraRow";
            rowDiv.setAttribute("id", "extraRow" + rowList.length);
-           console.log("extraRow" + rowList.length);
            xtra.appendChild(rowDiv);
            addRowBgd(rowDiv);
            var rowList = xtra.getElementsByClassName("extraRow");
@@ -542,7 +534,6 @@
        var area = document.createElement("area");
        area.setAttribute("shape", "rect");
        area.setAttribute("coords", coord1_X+",6,"+coord2_X+",41");
-       console.log("coords", coord1_X+",6,"+coord2_X+",41");
        area.setAttribute("onclick", "wr('" + character + "')");
        area.setAttribute("alt", alias);
        area.setAttribute("title", alias);
@@ -555,7 +546,6 @@
            var area = document.createElement("area");
            area.setAttribute("shape", "rect");
            area.setAttribute("coords", coord1_X+",6,"+coord2_X+",41");
-           console.log("coords", coord1_X+",6,"+coord2_X+",41");
            area.setAttribute("onclick", "wr('" + character[1] + "')");
            area.setAttribute("alt", alias);
            area.setAttribute("title", alias);
@@ -567,10 +557,8 @@
        var el = document.getElementById(id);
        if (el.style.display === "block"){
            el.style.display = "none";
-           console.log("none");
        } else {
            el.style.display = "block";
-           console.log("block");
        }
     }
 
