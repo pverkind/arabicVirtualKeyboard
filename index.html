@@ -430,6 +430,9 @@
       for (i=0; i<initial.length; i++) {
           addKey(initial[i][0], initial[i][1]);
       }
+      var cookieKeys = getKeysFromCookie();
+      for (i=0; i<cookieKeys.length; i++) {
+          addKey(cookieKeys[i][0], cookieKeys[i][1]);   
     }
     function addRowBgd(lastRow) {
        /*Add background image: row of empty keys*/
@@ -481,24 +484,26 @@
            });
        }
     }
+    function getKeysFromCookie() {
+       var cookie_keys = getCookie("keys");
+       if (cookie_keys.length > 0) {
+           var keys = JSON.parse(cookie_keys);
+       } else {
+           var keys = [];
+       return keys;    
+    }
     function addKey(character, alias) {
        if (character === "none") {
            var character = document.getElementById("extraInput0").value;
            var alias = document.getElementById("extraInputDescr0").value;
            /* add the key to the cookie */
-           var cookie_keys = getCookie("keys");
-           if (cookie_keys.length > 0) {
-               var keys = JSON.parse(cookie_keys);
-               console.log(keys); 
-               keys.push([character, alias]); 
-               console.log(keys);
-           } else {
-               var keys = [];
-               console.log(keys);
-               keys.push([character, alias]); 
-               console.log(keys);
-               createCookie("keys", JSON.stringify(keys), 365);
-           }
+           var keys = getKeysFromCookie();
+           console.log("keys in cookie: "); 
+           console.log(keys);
+           keys.push([character, alias]); 
+           console.log("new keys in cookie: ");
+           console.log(keys);
+           createCookie("keys", JSON.stringify(keys), 365);
        }
        var xtra = document.getElementById("extraRows");
        var rowList = xtra.getElementsByClassName("extraRow");
