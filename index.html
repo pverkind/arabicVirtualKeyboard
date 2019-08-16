@@ -69,7 +69,8 @@
     <p>Add a key with a new character (and an optional description):</p>
     <input type="text" class="extraInput" id="extraInput0" dir="rtl" value="ک"></input>
     <input type="text" class="extraInputDescr" id="extraInputDescr0" value="description"></input>
-    <button class="fivePxMargin" onclick='addKey("none", "none")'>add key</button>
+    <button class="fivePxMargin" onclick='addKey("none", "none")'>Add key</button>
+    <button class="fivePxMargin" onclick='resetKeys()'>Reset keys</button>
 </div>
 <div>
     <div id="cheatsheet">
@@ -598,5 +599,11 @@
             }
         }
         return "";
+    }
+    function resetKeys() {
+        createCookie("keys", "", 365);
+        copy2Clipboard();
+        /* reload the page: */
+        location = location;
     }
 </script>
