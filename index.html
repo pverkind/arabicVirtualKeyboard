@@ -352,8 +352,8 @@
             [')', "closing bracket"],   
             ['[', "opening square bracket"], 
             [']', "closing square bracket"], 
-            ['{', "opening curly bracket"], 
-            ['}', "closing curly bracket"],
+            ['{‎', "opening curly bracket"], 
+            ['}‎', "closing curly bracket"],
             ['<', "opening angular bracket"], 
             ['>', "closing angular bracket"],
             ];
@@ -388,7 +388,7 @@
        }
        /*Add the character to the grid: */
        var keyCharacterDiv = document.createElement("div");
-       if (character==="\n") {
+       if (character===String.raw`\n`) {
          keyCharacterDiv.innerHTML = "\u2937";
          keyCharacterDiv.setAttribute("class", "keyCharacter tooltip enter");
        } else if (character===String.raw`\\`) {
