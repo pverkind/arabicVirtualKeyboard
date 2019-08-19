@@ -203,19 +203,24 @@ textarea {
 }
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 200px;
+    max-width: 250px;
     background-color: #ccc;
     color: black;
     text-align: center;
     border-radius: 6px;
     padding: 10px;
+    font-size: 10pt;
 
     /* Position the tooltip */
-    position: fixed;
+    position: absolute;
+    top: 100%;
+    left: 50%; 
+    margin-left: -50%;
     z-index: 100;
 }
 .tooltip:hover .tooltiptext {
     visibility: visible;
+
 }
 
 
