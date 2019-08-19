@@ -118,12 +118,13 @@ textarea {
 .keyCharacter {
     border-radius:3px; 
     background-color:white; 
-    padding-top:3px; 
+    padding-top:1px; 
     text-align:center;
-    font-size: 20px;
+    font-size: 18px;
     box-shadow: inset 1px -1px 1px 1px rgba(0,0,0,0.62);
     cursor: pointer;
-    height: 31px;
+    height: 33px;
+    font-family: 'Amiri', serif; 
 }
 .enter {
     grid-row-start: 3;
@@ -209,7 +210,8 @@ textarea {
     text-align: center;
     border-radius: 6px;
     padding: 10px;
-    font-size: 10pt;
+    font-size: 13px;
+    font-family: verdana, arial, helvetica, sans-serif;
 
     /* Position the tooltip */
     position: absolute;
