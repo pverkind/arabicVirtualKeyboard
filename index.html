@@ -41,26 +41,15 @@
             <textarea id="area" dir="rtl" name="area" tabindex="1" onkeyup="insertALM()"></textarea>
         </span>
     </div>
-    <div id="keyboardPic">
-        <img id="k" src="i/keyboard_basic.png" usemap="#key" alt="" width="450" height="256" border="0">
+    <div id="basicKeyboard">
+        <div class="keyGrid keyGridBasic"></div>
+    </div>
+    <div id="extraRows">
+        <div class="keyGrid"></div>
     </div>
 </div>
 
-<div id="extraRows">
-    <div class="extraRow" id="extraRow0">
-        <!--
-            <div class="rowBgd">
-                <img src="i/emptyKeyRow_45x450.png" height="45px" width="450px"></img>
-            </div>
-            <div class="keyGrid">
-                <div class="keyCharacter">ک</div>
-            </div>
-            <div class="rowMapped">
-                <img src="i/emptyKeyRow_45x450.png" height="45px" width="450px"></img>
-            </div>
-         -->
-    </div>
-</div>
+
 <div>
     <button class="btn" onclick="Toggle('cheatsheet')">Toggle Regex Cheatsheet input</button>
 </div>
@@ -199,80 +188,10 @@
 
 <p class="footer">This keyboard is an adaptation of Ahmad Ismail's <a href="http://www.arabic-keyboard.org/" target="_blank">Arabic keyboard</a> to the needs of researchers working with Arabic palaeography and regular expressions.</p>
 
-<map name="key">
- <area shape="rect" coords="4,4,35,35" onclick="wr('ذ')" alt="">
- <area shape="rect" coords="35,4,64,32" onclick="wr('١')" alt="">
- <area shape="rect" coords="65,4,92,32" onclick="wr('٢')" alt="">
- <area shape="rect" coords="92,4,122,32" onclick="wr('٣')" alt="">
- <area shape="rect" coords="123,4,151,32" onclick="wr('٤')" alt="">
- <area shape="rect" coords="151,4,180,32" onclick="wr('٥')" alt="">
- <area shape="rect" coords="179,4,210,32" onclick="wr('٦')" alt="">
- <area shape="rect" coords="210,4,238,32" onclick="wr('٧')" alt="">
- <area shape="rect" coords="238,4,268,32" onclick="wr('٨')" alt="">
- <area shape="rect" coords="268,4,296,32" onclick="wr('٩')" alt="">
- <area shape="rect" coords="296,4,326,32" onclick="wr('٠')" alt="">
- <area shape="rect" coords="326,4,355,32" onclick="wr('~')" alt="">
- <area shape="rect" coords="355,4,382,32" onclick="wr('!')" alt="">
- <area shape="rect" coords="384,4,443,32" onclick="op('back')">
-
- <area shape="rect" coords="50,33,79,61" onclick="wr('ض')" alt="">
- <area shape="rect" coords="80,33,108,61" onclick="wr('ص')" alt="">
- <area shape="rect" coords="108,33,137,61" onclick="wr('ث')" alt="">
- <area shape="rect" coords="138,34,166,61" onclick="wr('ق')" alt="">
- <area shape="rect" coords="167,34,194,62" onclick="wr('ف')" alt="">
- <area shape="rect" coords="196,34,224,61" onclick="wr('غ')" alt="">
- <area shape="rect" coords="225,34,252,62" onclick="wr('ع')" alt="">
- <area shape="rect" coords="253,34,281,61" onclick="wr('ه')" alt="">
- <area shape="rect" coords="282,33,311,61" onclick="wr('خ')" alt="">
- <area shape="rect" coords="312,33,340,60" onclick="wr('ح')" alt="">
- <area shape="rect" coords="342,33,368,60" onclick="wr('ج')" alt="">
- <area shape="rect" coords="369,33,397,60" onclick="wr('د')" alt="">
- <area shape="poly" coords="440,36,441,37,401,35,400,63,379,64,380,89,440,89" onclick="wr('\n')" alt="">
-
- <area shape="rect" coords="6,64,57,92">
- <area shape="rect" coords="58,62,87,91" onclick="wr('ش')" alt="">
- <area shape="rect" coords="88,62,116,92" onclick="wr('س')" alt="">
- <area shape="rect" coords="117,62,145,90" onclick="wr('ي')" alt="">
- <area shape="rect" coords="146,62,174,92" onclick="wr('ب')" alt="">
- <area shape="rect" coords="175,62,203,91" onclick="wr('ل')" alt="">
- <area shape="rect" coords="204,63,232,92" onclick="wr('ا')" alt="">
- <area shape="rect" coords="233,63,261,92" onclick="wr('ت')" alt="">
- <area shape="rect" coords="262,63,290,92" onclick="wr('ن')" alt="">
- <area shape="rect" coords="291,63,319,92" onclick="wr('م')" alt="">
- <area shape="rect" coords="320,62,348,91" onclick="wr('ك')" alt="">
- <area shape="rect" coords="349,62,377,91" onclick="wr('ط')" alt="">
-
- <area shape="rect" coords="7,92,71,120">
- <area shape="rect" coords="71,92,100,120" onclick="wr('ئ')" alt="">
- <area shape="rect" coords="100,92,129,120" onclick="wr('ء')" alt="">
- <area shape="rect" coords="129,92,158,120" onclick="wr('ؤ')" alt="">
- <area shape="rect" coords="159,92,188,120" onclick="wr('ر')" alt="">
- <area shape="rect" coords="188,92,217,120" onclick="wr('لا')" alt="">
- <area shape="rect" coords="217,92,246,120" onclick="wr('ى')" alt="">
- <area shape="rect" coords="246,91,275,119" onclick="wr('ة')" alt="">
- <area shape="rect" coords="275,91,304,119" onclick="wr('و')" alt="">
- <area shape="rect" coords="304,91,333,119" onclick="wr('ز')" alt="">
- <area shape="rect" coords="333,92,362,120" onclick="wr('ظ')" alt="">
- <area shape="rect" coords="362,92,412,120">
- <area shape="rect" coords="413,92,442,120" onclick="wr('ـ')" alt="taṭwīl" title="taṭwīl (kashīda)">
-
- <area shape="rect" coords="115,121,295,149" onclick="wr(' ')" alt="">
- <area shape="rect" coords="408,121,440,145" onclick="sl('area').select()" alt="Select all text">
-</map>
-
 </body>
 </html>
 
 <script>
-  /*document.getElementById("area").addEventListener('copy', function(e) {
-    // This is necessary to prevent the current document selection from
-    // being written to the clipboard.
-    console.log("preventing direct copy");
-    e.preventDefault();
-    copy2Clipboard();
-  });
-  */
-
   function copy2Clipboard(msg="") {
     /* Get the text field */
     var ar = document.getElementById("area");
@@ -303,39 +222,6 @@
     }
   }
 
-
-
-  /*
-  function buttonwr(id) {
-    var inp = document.getElementById(id).value;
-    wr(inp);
-  }
-
-
-  function addNewInput(){
-    var moreInputsDiv = document.getElementById("moreInputs");
-    var inputs = moreInputsDiv.getElementsByTagName("input");
-    var len = inputs.length
-    var div = document.createElement("div");
-    document.getElementById("moreInputs").appendChild(div);
-    var inp = document.createElement("input");
-    inp.className = "extraInput";
-    inp.setAttribute("type", "text");
-    inp.setAttribute("id", "extraInput"+len);
-    div.appendChild(inp);
-    var inp2 = document.createElement("input");
-    inp2.className = "extraInputDescr";
-    inp2.setAttribute("type", "text");
-    inp2.setAttribute("value", "descr");
-    div.appendChild(inp2);
-    var b = document.createElement("button");
-    b.className = "l-btn";
-    b.setAttribute("id", "extraBtn"+len);
-    b.setAttribute("onclick", "buttonwr('extraInput"+len+"')");
-    b.innerHTML="insert";
-    div.appendChild(b);
-  }
-  */
   function insertALM () {
       /* ALM = Arabic letter mark, U+061C, "a non-printing character used in the
       computerized typesetting of bi-directional text containing mixed
@@ -363,130 +249,123 @@
       /*switchEscapes();*/
   }
 
-  /* The following function, meant to display \b instead of b\ etc.
-  does not work...
-  function switchEscapes() {
-      var input = document.getElementById("area");
-      var s = input.value;
-      var r = s.replace(/\\([bBnNtTwWdDrR.])/g, /\1\\/);
-      console.log(r);
-      input.value = r;
-      input.focus();
-      if (input.setSelectionRange) {
-          var srt = input.selectionStart;
-          var len = input.selectionEnd;
-          if (srt < len) srt++;
-          input.value = input.value.substr(0, srt) + "" + input.value.substr(len);
-          input.setSelectionRange(srt, srt);
-      } else {
-          var range = document.selection.createRange();
-          range.text = "";
-      }
-      input.focus();
-      input.scrollTop = input.scrollHeight;
-  }*/
-
     populateInitialKeys()
     function populateInitialKeys() {
-        var initial = [
-          ['\u25ccْ',"sukūn"],
-          ['\u25ccّ', "shadda"],
-          ['\u25ccَ', "fatḥa"],
-          ['\u25ccُ', "ḍamma"],
-          ['\u25ccِ',"kasra"],
-          ['\u25ccً', "fatḥatān"],
-          ['\u25ccٌ',"ḍammatān"],
-          ['\u25ccٍ', "kasratān"],
-          ['\u25cc\u06e1',"Quranic sukun"],
-          ['\u25cc\u08f0',"Quranic open fatḥatān"],
-          ['\u25cc\u08f1',"Quranic open ḍammatān"],
-          ['\u25cc\u08f2',"Quranic open kasratān"],
-          ['\u25ccٰ',"dagger alif"],
-          ['',""],
-          ['آ', "alif madda"],
-          ['ٱ', "alif waṣla"],
-          ['أ', "alif with hamza on top"],
-          ['إ', "alif with hamza below"],
-          ['ٮ',"dotless b"],
-          ['ں',"dotless n"],
-          ['ڡ',"dotless f"],
-          ['ٯ',"dotless q"],
-          ['ڧ',"Maghribi q"],
-          ['ڢ',"Maghribi f"],
-          ['ک',"Farsi kāf"],
-          ['',""],
-          ['',""],
-          ['',""],
-          ['،', "Arabic comma"],
-          [':', "colon"],
-          ['؛', "Arabic semicolon"],
-          ['؟', "Arabic question mark"],
-          ['.', "full stop"],
-          ['[', "opening bracket"],
-          [']', "closing bracket"],
-          ['(', "opening square bracket"],
-          [')', "closing square bracket"],
-          ['{‎', "opening curly bracket"],
-          ['}‎', "closing curly bracket"],
-        ];
+        var basic = [
+            ["ذ", ""],
+            ["١", ""],
+            ["٢", ""],
+            ["٣", ""],
+            ["٤", ""],
+            ["٥", ""],
+            ["٦", ""],
+            ["٧", ""],
+            ["٨", ""],
+            ["٩", ""],
+            ["٠", ""],
+            ["\u279e", "backspace"], /*Row 1*/
+            ["ض", ""],
+            ["ص", ""],
+            ["ث", ""],
+            ["ق", ""],
+            ["ف", ""],
+            ["غ", ""],
+            ["ع", ""],
+            ["ه", ""],
+            ["خ", ""],
+            ["ح", ""],
+            ["ج", ""],
+            ["د", ""],  /*Row 2*/
+            ["ش", ""],
+            ["س", ""],
+            ["ي", ""],
+            ["ب", ""],
+            ["ل", ""],
+            ["ا", ""],
+            ["ت", ""],
+            ["ن", ""],
+            ["م", ""],
+            ["ك", ""],
+            ["ط", ""],
+            ["\n", "enter"],  /*Row 3*/
+            ["ئ", ""],
+            ["ء", ""],
+            ["ؤ", ""],
+            ["ر", ""],
+            ["لا", ""],
+            ["ى", ""],
+            ["ة", ""],
+            ["و", ""],
+            ["ز", ""],
+            ["ظ", ""],
+            ["ـ", "taṭwīl (kashīda)"], /*Row 4*/
+            ['،', "Arabic comma"], 
+            [':', "colon"], 
+            ['؛', "Arabic semicolon"],
+            [" ", ""],  
+            ['؟', "Arabic question mark"], 
+            ['.', "full stop"], 
+            ["!", "exclamation mark"],/*Row 5*/
+            ];
+        for (i=0; i<basic.length; i++) {
+            addKey(basic[i][0], basic[i][1], keyGridNo=0);
+        }        
+        var initial = [           
+            ['\u25ccْ',"sukūn"], 
+            ['\u25ccّ', "shadda"],
+            ['\u25ccَ', "fatḥa"],
+            ['\u25ccُ', "ḍamma"],
+            ['\u25ccِ',"kasra"], 
+            ['\u25ccً', "fatḥatān"],
+            ['\u25ccٌ',"ḍammatān"],
+            ['\u25ccٍ', "kasratān"], 
+            ['\u25cc\u06e1',"Quranic sukūn"],
+            ['\u25cc\u08f0',"Quranic open fatḥatān"],
+            ['\u25cc\u08f1',"Quranic open ḍammatān"],
+            ['\u25cc\u08f2',"Quranic open kasratān"],  /*Row 6*/
+            ['\u25ccٰ',"dagger alif"],  
+            ['آ', "alif madda"],
+            ['ٱ', "alif waṣla"],
+            ['أ', "alif with hamza on top"],
+            ['إ', "alif with hamza below"],
+            ['ٮ',"dotless b"],
+            ['ں',"dotless n"],
+            ['ڡ',"dotless f"],
+            ['ٯ',"dotless q"],
+            ['ڧ‎',"maghrebi q"],
+            ['ڢ‎',"maghrebi f"], 
+            ['ٯ\u065c',"qāf with dot below"],  /*Row 7*/
+            ['پ', "Persian p"],
+            ['چ', "Persian ch"],
+            ['ک', "Persian kāf"],
+            ['گ', "Persian gāf"],
+            ['.', "full stop"],
+            [',', "latin comma"], 
+            ['?', "latin question mark"],  
+            ['-', "hyphen"], 
+            ['+', "plus"],
+            ['*', "asterisk"],
+            ['/', "forward slash"],
+            [String.raw`\\`, "backslash"],    /*Row 8*/
+            ['|', "vertical bar (pipe)"],
+            ['(', "opening bracket"], 
+            [')', "closing bracket"],   
+            ['[', "opening square bracket"], 
+            [']', "closing square bracket"], 
+            ['{‎', "opening curly bracket"], 
+            ['}‎', "closing curly bracket"],
+            ['<', "opening angular bracket"], 
+            ['>', "closing angular bracket"],
+            ];
       for (i=0; i<initial.length; i++) {
-          addKey(initial[i][0], initial[i][1]);
+          addKey(initial[i][0], initial[i][1], keyGridNo=1);
       }
       var cookieKeys = getKeysFromCookie();
       for (i=0; i<cookieKeys.length; i++) {
-          addKey(cookieKeys[i][0], cookieKeys[i][1]);
+          addKey(cookieKeys[i][0], cookieKeys[i][1], keyGridNo=1);
       }
     }
-    function addRowBgd(lastRow) {
-       /*Add background image: row of empty keys*/
-       var bgdDiv = document.createElement("div");
-       bgdDiv.className = "rowBgd";
-       lastRow.appendChild(bgdDiv);
-       var img = document.createElement("img");
-       img.src = "i/emptyKeyRow_45x450.png";
-       img.setAttribute("width", "450px");
-       img.setAttribute("height", "45px");
-       bgdDiv.appendChild(img);
 
-       /*Add second version of background image, fully transparent*/
-       var mappedDiv = document.createElement("div");
-       mappedDiv.className = "rowMapped";
-       lastRow.appendChild(mappedDiv);
-       var img = document.createElement("img");
-       img.src = "i/emptyKeyRow_45x450.png";
-       img.setAttribute("width", "450px");
-       img.setAttribute("height", "45px");
-       img.setAttribute("usemap", "#map_"+lastRow.id);
-       mappedDiv.appendChild(img);
-
-
-       /*Add the grid div that will contain the characters: */
-       var keyGridDiv = document.createElement("div");
-       keyGridDiv.setAttribute("class", "keyGrid");
-       lastRow.appendChild(keyGridDiv);
-       /*create a new map element*/
-       var newMap = document.createElement("map");
-       newMap.setAttribute("name", ("map_"+lastRow.id));
-       newMap.setAttribute("id", ("map_"+lastRow.id));
-       document.getElementsByTagName("body")[0].appendChild(newMap);
-
-       /*for the row with the vowels, add an alternative mapping: */
-       if (lastRow.id === "extraRow0") {
-           var newMap = document.createElement("map");
-           newMap.setAttribute("name", ("alt_map_"+lastRow.id));
-           newMap.setAttribute("id", ("alt_map_"+lastRow.id));
-           document.getElementsByTagName("body")[0].appendChild(newMap);
-           img.setAttribute("usemap", "#alt_map_"+lastRow.id);
-           var regexCheckbox0 = document.getElementById("regexCheck0");
-           regexCheckbox0.addEventListener( 'change', function() {
-             if(this.checked) {
-                 img.setAttribute("usemap", "#map_"+lastRow.id);
-             } else {
-                 img.setAttribute("usemap", "#alt_map_"+lastRow.id);
-             }
-           });
-       }
-    }
     function getKeysFromCookie() {
        var cookie_keys = getCookie("keys");
        if (cookie_keys) {
@@ -495,7 +374,8 @@
            return [];
        }
     }
-    function addKey(character, alias) {
+
+    function addKey(character, alias, keyGridNo=1) {
        if (character === "none") {
            var character = document.getElementById("extraInput0").value;
            var alias = document.getElementById("extraInputDescr0").value;
@@ -506,52 +386,29 @@
            console.log(keys);
            createCookie("keys", JSON.stringify(keys), 365);
        }
-       var xtra = document.getElementById("extraRows");
-       var rowList = xtra.getElementsByClassName("extraRow");
-       var keyList = rowList[rowList.length - 1].getElementsByClassName("keyCharacter");
-       var lastRow = document.getElementById(rowList[rowList.length - 1].id);
-
-       if (keyList.length === 0) {
-           addRowBgd(lastRow);
-       } else if (keyList.length === 14) {
-           var rowDiv = document.createElement("div");
-           rowDiv.className = "extraRow";
-           rowDiv.setAttribute("id", "extraRow" + rowList.length);
-           xtra.appendChild(rowDiv);
-           addRowBgd(rowDiv);
-           var rowList = xtra.getElementsByClassName("extraRow");
-           var lastRow = document.getElementById(rowList[rowList.length - 1].id);
-           var keyList = rowList[rowList.length - 1].getElementsByClassName("keyCharacter");
-       }
        /*Add the character to the grid: */
        var keyCharacterDiv = document.createElement("div");
-       keyCharacterDiv.innerHTML = character;
-       keyCharacterDiv.setAttribute("class", "keyCharacter");
-       lastRow.getElementsByClassName("keyGrid")[0].appendChild(keyCharacterDiv);
-
-       /* Add the new key to the current image map: */
-       var currentMap = document.getElementById("map_"+lastRow.id);
-       var coord1_X = 11 + ((keyList.length - 1)*30);
-       var coord2_X = 11 + ((keyList.length)*30);
-       var area = document.createElement("area");
-       area.setAttribute("shape", "rect");
-       area.setAttribute("coords", coord1_X+",6,"+coord2_X+",41");
-       area.setAttribute("onclick", "wr('" + character + "')");
-       area.setAttribute("alt", alias);
-       area.setAttribute("title", alias);
-       currentMap.appendChild(area);
-       /*for the row with the vowels, add an alternative mapping*/
-       if (rowList.length === 1) {
-           var currentMap = document.getElementById("alt_map_"+lastRow.id);
-           var coord1_X = 11 + ((keyList.length - 1)*30);
-           var coord2_X = 11 + ((keyList.length)*30);
-           var area = document.createElement("area");
-           area.setAttribute("shape", "rect");
-           area.setAttribute("coords", coord1_X+",6,"+coord2_X+",41");
-           area.setAttribute("onclick", "wr('" + character[1] + "')");
-           area.setAttribute("alt", alias);
-           area.setAttribute("title", alias);
-           currentMap.appendChild(area);
+       if (character==="\n") {
+         keyCharacterDiv.innerHTML = "\u2937";
+         keyCharacterDiv.setAttribute("class", "keyCharacter tooltip enter");
+       } else if (character===String.raw`\\`) {
+         keyCharacterDiv.innerHTML = "&#92;";
+         keyCharacterDiv.setAttribute("class", "keyCharacter tooltip");
+       } else {
+         keyCharacterDiv.innerHTML = character;
+         if (character===" ") {
+           keyCharacterDiv.setAttribute("class", "keyCharacter tooltip space");
+         } else {
+           keyCharacterDiv.setAttribute("class", "keyCharacter tooltip");
+         }
+       }
+       keyCharacterDiv.setAttribute("onclick", "wr('"+character+"')");
+       document.getElementsByClassName("keyGrid")[keyGridNo].appendChild(keyCharacterDiv);
+       if (alias) {
+           var ttSpan = document.createElement("span");
+           ttSpan.setAttribute("class", "tooltiptext");
+           ttSpan.innerHTML = alias;
+           keyCharacterDiv.appendChild(ttSpan);
        }
     }
 

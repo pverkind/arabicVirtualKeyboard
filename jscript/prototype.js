@@ -7,11 +7,13 @@ function wr(item) {
     var input = sl('area');
     if (sl("regexCheck0").checked) {
         /* add an Arabic letter mark (\u061C) after every character to improve mixed RTL and LTR behavior */
-        item = item + "\u061C"; 
+        item = item + "\u061C";
     }
     if (sl("regexCheck").checked) {
-        /* add a small space (\u200A) after every character to separate the Arabic characters */
-        item = item + "\u200A"; 
+        /* add a small space (\u200A) before every character to separate the Arabic characters */
+        item = "\u200A" + item;
+    } else {
+        item = item.replace("\u25cc", "");
     }
     input.focus();
     if (input.setSelectionRange) {
@@ -133,4 +135,3 @@ jQuery.cookie = function (name, value, options) {
         return cookieValue;
     }
 };
-
