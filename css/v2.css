@@ -4,11 +4,11 @@
     font-style: normal;
     font-weight: 400;
     src: url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.eot'); /* IE9 Compat Modes */
-    src: local('Amiri Regular'), local('Amiri-Regular'), 
-url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ 
-url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.woff2') format('woff2'), /* Super Modern Browsers */ 
-url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.woff') format('woff'), /* Modern Browsers */ 
-url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */ 
+    src: local('Amiri Regular'), local('Amiri-Regular'),
+url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.woff') format('woff'), /* Modern Browsers */
+url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
 url('../fonts/amiri-v13-latin-ext_arabic_latin-regular.svg#Amiri') format('svg'); /* Legacy iOS */
 }
 
@@ -92,6 +92,19 @@ textarea {
     margin-bottom: 2px;
     margin-top: 2px;
 }
+/* modal msgBox Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 .extraInput {
     width: 20px;
     float: left;
@@ -116,38 +129,60 @@ textarea {
     width: 450px;
 }
 .keyCharacter {
-    border-radius:3px; 
-    background-color:white; 
-    padding-top:1px; 
+    border-radius:3px;
+    background-color:white;
+    padding-top:1px;
     text-align:center;
     font-size: 18px;
     box-shadow: inset 1px -1px 1px 1px rgba(0,0,0,0.62);
     cursor: pointer;
     height: 33px;
-    font-family: 'Amiri', serif; 
+    font-family: 'Amiri', serif;
 }
 .enter {
     grid-row-start: 3;
     grid-row-end: 5;
     grid-column-start: 12;
     grid-column-end: 12;
-    height: 68px;                
+    height: 68px;
 }
 .keyGrid {
-    display: inline-grid; 
+    display: inline-grid;
     grid-template-columns: 34px 34px 34px 34px 34px 34px 34px 34px 34px 34px 34px 34px;
     grid-column-gap: 3px;
     grid-row-gap: 3px;
     grid-template-rows: 34px;
     padding: 5px;
     background-color: #dddddd;
-    border-radius: 0px 0px 3px 3px; 
+    border-radius: 0px 0px 3px 3px;
 }
 .keyGridBasic {
     background-color: #bbbbbb;
 }
 .l-btn {
     float: left;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }
 .regexInput {
     width: 70px;
@@ -163,7 +198,7 @@ textarea {
 }
 .rgxChckbx {
     float: left;
-    padding-left: 10px;
+    padding-left: 8px;
     margin-top: 4px;
 }
 .rowBgd {
@@ -195,34 +230,33 @@ textarea {
     grid-row-start: 5;
     grid-row-end: 6;
     grid-column-start: 4;
-    grid-column-end: 10;                
+    grid-column-end: 10;
 }
 .tooltip {
     position: relative;
     display: inline-block;
+}
+.dotted {
     border-bottom: 1px dotted black;
 }
 .tooltip .tooltiptext {
     visibility: hidden;
-    max-width: 250px;
-    background-color: #ccc;
+    background-color: #70d4bb;
     color: black;
     text-align: center;
     border-radius: 6px;
     padding: 10px;
     font-size: 13px;
     font-family: verdana, arial, helvetica, sans-serif;
-
+    width: 75px;
     /* Position the tooltip */
     position: absolute;
     top: 100%;
-    left: 50%; 
-    margin-left: -50%;
+    left: 50%;
     z-index: 100;
 }
 .tooltip:hover .tooltiptext {
     visibility: visible;
-
 }
 
 
@@ -242,7 +276,7 @@ textarea {
     font-size: 14pt;
     border-radius: 3px 3px 0px 0px;
     padding-right: 4px;
-    overflow: auto
+    overflow: auto;
 }
 #cheatsheet {
     display: none;
@@ -268,8 +302,3 @@ textarea {
     display: inline-grid;
     grid-template-columns: 200px 200px;
 }
-
-
-
-
-

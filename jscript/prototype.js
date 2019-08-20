@@ -6,12 +6,16 @@ function sl(id) {
 function wr(item) {
     var input = sl('area');
     if (sl("regexCheck0").checked) {
-        /* add an Arabic letter mark (\u061C) after every character to improve mixed RTL and LTR behavior */
+        /* add an Arabic letter mark (\u061C) after every character
+        to fix the display order for every character from right to left*/
         item = item + "\u061C";
+    } else {
+        item = item.replace("\u061C", "");
     }
     if (sl("regexCheck").checked) {
-        /* add a small space (\u200A) before every character to separate the Arabic characters */
-        item = "\u200A" + item;
+        /* add a ZERO-WIDTH NON-JOINER (\u200C) before every character
+        to separate the Arabic characters */
+        item = "\u200C" + item;
     } else {
         item = item.replace("\u25cc", "");
     }
@@ -90,48 +94,3 @@ function op(el) {
         return true;
     }
 }
-
-
-
-
-
-
-jQuery.cookie = function (name, value, options) {
-    if (typeof value != 'undefined') {
-        // name and value given, set cookie
-        options = options || {
-        };
-        if (value === null) {
-            value = '';
-            options.expires = -1;
-        }
-        var expires = '';
-        if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
-            var date;
-            if (typeof options.expires == 'number') {
-                date = new Date();
-                date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
-            } else {
-                date = options.expires;
-            }
-            expires = '; expires=' + date.toUTCString();
-        }
-        var path = options.path ? '; path=' + (options.path): '';
-        var domain = options.domain ? '; domain=' + (options.domain): '';
-        var secure = options.secure ? '; secure': '';
-        document.cookie =[name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
-    } else {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-};

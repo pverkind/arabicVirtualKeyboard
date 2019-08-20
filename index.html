@@ -1,10 +1,9 @@
 <html>
 <head>
-<title>Arabic Keyboard</title>
+<title>Arabic Virtual Keyboard</title>
 <meta name="description" content="online editor to write Arabic, especially for transcribing manuscripts and composing regular expressions. Based on Ahmad Ismail's Arabic keyboard at http://www.arabic-keyboard.org/">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="css/v2.css?13">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script>
 <script src="jscript/prototype.js?13" type="text/javascript"></script>
 
 </head>
@@ -12,24 +11,39 @@
 <body style="">
 
 <div id="intro">
-    <h1>Arabic keyboard</h1>
+    <h1>Arabic virtual keyboard</h1>
     <button class="btn l-btn" onclick="copy2Clipboard()">Copy to clipboard</button>
 
     <div class="rgxChckbx" id="rgxChckbx0">
-        <div class="tooltip">
-            Regex mode
-            <span class="tooltiptext">Use this mode for writing regular expressions</span>
+        <div class="tooltip dotted">
+            RTL regex mode:
+            <span class="tooltiptext" style="width:250px">Use this mode for writing right-to-left (RTL)
+                <a href="https://www.regular-expressions.info/" target="_blank">
+                    regular expressions.
+                </a>
+                All characters (even latin letters) will appear in RTL order
+                (abc will appear as cba). Copying the regex to clipboard will
+                remove the characters (U+061C (ARABIC LETTER MARK)) that force
+                this behavior.
+            </span>
         </div>
-        :
         <input type="checkbox" id="regexCheck0">
     </div>
-    <div class="rgxChckbx" id="rgxChckbx">
-        <div class="tooltip">
-            Separate Arabic letters
-            <span class="tooltiptext">By checking this checkbox, the Arabic letters you input will be displayed as separated by an invisible space;
-            if you click the "Copy to Clipboard" button, however, the text will be copied without these separators</span>
+    <div id="msgBox" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onclick="closeMsgBox()">&times;</span>
         </div>
-        :
+    </div>
+    <div class="rgxChckbx" id="rgxChckbx">
+        <div class="tooltip dotted">
+            Separate Arabic letters:
+            <span class="tooltiptext" style="width:250px">The Arabic letters you input
+                while this checkbox is checked will be displayed as separated
+                (by Unicode character U+200C (ZERO-WIDTH NON-JOINER)). This is especially
+                useful for writing character disjunctions [abc] and ranges [a-c].
+                Copying the regex to clipboard will remove these separators.</span>
+        </div>
         <input type="checkbox" id="regexCheck">
     </div>
 </div>
@@ -38,7 +52,7 @@
 <div id="keyboard">
     <div>
         <span>
-            <textarea id="area" dir="rtl" name="area" tabindex="1" onkeyup="insertALM()"></textarea>
+            <textarea id="area" dir="rtl" name="area" tabindex="1" onkeyup="insertALM()" autocomplete="off"></textarea>
         </span>
     </div>
     <div id="basicKeyboard">
@@ -71,27 +85,27 @@
         <table>
             <tr><td></td><td></td><td><b>Sample regex</b></td><td><b>Sample match</b></td></tr>
             <tr><td><button class="regexInput" onclick="wr('.')">.</button></td><td>Any character except line break</td><td>a.c</td><td><b>abc a.c</b></td></tr>
-            <tr><td><button class="regexInput" onclick="wr('\')">\</button></td><td>Escapes a special character</td><td>a\.c</td><td>abc <b>a.c</b></td></tr>
+            <tr><td><button class="regexInput" onclick="wr('\\')">\</button></td><td>Escapes a special character</td><td>a\.c</td><td>abc <b>a.c</b></td></tr>
         </table>
         <div class="regexTitle" onclick="Toggle('charGroups')">Character groups &or;</div>
         <div class="regexClass" id="charGroups">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('\d')">\d</button></td><td>one Unicode digit in any script</td><td>file_\d_\d</td><td><b>file_9_ ٩</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\w')">\w</button></td><td>"word character": Unicode letter, ideogram, digit, or underscore</td><td>\w-\w\w\w</td><td><b>字-ま_۳</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\s')">\s</button></td><td>"whitespace character": any Unicode separator</td><td>a\sb\sc</td><td>aaa<b>a b
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\d`)">\d</button></td><td>one Unicode digit in any script</td><td>file_\d_\d</td><td><b>file_9_ ٩</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\w`)">\w</button></td><td>"word character": Unicode letter, ideogram, digit, or underscore</td><td>\w-\w\w\w</td><td><b>字-ま_۳</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\s`)">\s</button></td><td>"whitespace character": any Unicode separator</td><td>a\sb\sc</td><td>aaa<b>a b
                     c</b>ccdde</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\D')">\D</button></td><td>One character that is not a digit</td><td>2\D\D\D</td><td>1<b>2ABC</b>34</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\W')">\W</button></td><td>One character that is not a word character</td><td>\W\W\W\W\W</td><td><b>*-+=)</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\S')">\S</button></td><td>One character that is not a whitespace character</td><td>\S\S\S\S</td><td><b>Yo3) </b> Y o3</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\D`)">\D</button></td><td>One character that is not a digit</td><td>2\D\D\D</td><td>1<b>2ABC</b>34</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\W`)">\W</button></td><td>One character that is not a word character</td><td>\W\W\W\W\W</td><td><b>*-+=)</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\S`)">\S</button></td><td>One character that is not a whitespace character</td><td>\S\S\S\S</td><td><b>Yo3) </b> Y o3</td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('whiteSpace')">More White-Space &or;</div>
         <div class="regexClass" id="whiteSpace">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('\t')">\t</button></td><td>Tab</td><td>T\t\w\w</td><td>A <b>T     ab</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\r')">\r</button></td><td>Carriage return character</td><td>see below</td><td></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\n')">\n</button></td><td>Line feed character</td><td>see below</td><td></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\r\n')">\r\n</button></td><td>Line separator on Windows</td><td>AB\r\nCD</td><td><b>AB<br/>CD</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\t`)">\t</button></td><td>Tab</td><td>T\t\w\w</td><td>A <b>T     ab</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\r`)">\r</button></td><td>Carriage return character</td><td>see below</td><td></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\n`)">\n</button></td><td>Line feed character</td><td>see below</td><td></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\r`+'\u061C'+String.raw`\n`)">\r\n</button></td><td>Line separator on Windows</td><td>AB\r\nCD</td><td><b>AB<br/>CD</b></td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('quantifiers')">Quantifiers &or;</div>
@@ -119,8 +133,8 @@
             <table>
                 <tr><td><button class="regexInput" onclick="wr('|')">|</button></td><td>Alternation / OR operand</td><td>22|33</td><td><b>22</b> + 11 = <b>33</b></td></tr>
                 <tr><td><button class="regexInput" onclick="wr('()')">( … )</button></td><td>Capturing group</td><td>A(nt|pple)</td><td>An <b>A<span class="underline">nt</span></b> on an <b>A<span class="underline">pple</span></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\1')">\1</button></td><td>Contents of Group 1</td><td>r(\w)g\1x</td><td><b>regex</b> not rigex</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\2')">\2</button></td><td>Contents of Group 2</td><td>(\d\d)\+(\d\d)=\2\+\1</td><td><b>12+65=65+12</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\1`)">\1</button></td><td>Contents of Group 1</td><td>r(\w)g\1x</td><td><b>regex</b> not rigex</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\2`)">\2</button></td><td>Contents of Group 2</td><td>(\d\d)\+(\d\d)=\2\+\1</td><td><b>12+65=65+12</b></td></tr>
                 <tr><td><button class="regexInput" onclick="wr('(?:)')">(?: … )</button></td><td>Non-capturing group</td><td>A(?:nt|pple)</td><td>An <b>Ant</b> on an <b>Apple</b></td></tr>
             </table>
         </div>
@@ -138,8 +152,8 @@
             <table>
                 <tr><td><button class="regexInput" onclick="wr('^')">^</button></td><td>Start of line</td><td>^abc [1-9]*</td><td><b>abc 18</b> abc 19</td></tr>
                 <tr><td><button class="regexInput" onclick="wr('$')">$</button></td><td>End of line</td><td>abc [1-9]*$</td><td>abc 18 <b>abc 19</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\b')">\b</button></td><td>Word boundary: position where one side only is a letter, digit or underscore</td><td>\bكتب\b</td><td><b>كتب</b> مكتبه كتبه</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('\B')">\B</button></td><td>Not a word boundary</td><td>\S*\Bكتب\B\S*</td><td>كتب <b>مكتبه</b> كتبه</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\b`)">\b</button></td><td>Word boundary: position where one side only is a letter, digit or underscore</td><td>\bكتب\b</td><td><b>كتب</b> مكتبه كتبه</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\B`)">\B</button></td><td>Not a word boundary</td><td>\S*\Bكتب\B\S*</td><td>كتب <b>مكتبه</b> كتبه</td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('lookarounds')">Lookarounds &or;</div>
@@ -186,12 +200,34 @@
     </ul>
 </div>
 
-<p class="footer">This keyboard is an adaptation of Ahmad Ismail's <a href="http://www.arabic-keyboard.org/" target="_blank">Arabic keyboard</a> to the needs of researchers working with Arabic palaeography and regular expressions.</p>
+<p class="footer">This keyboard is an adaptation of Ahmad Ismail's
+    <a href="http://www.arabic-keyboard.org/" target="_blank">Arabic keyboard</a>
+    to the needs of researchers working with Arabic palaeography and regular
+    expressions. The source code is on
+    <a href="https://github.com/pverkind/arabicVirtualKeyboard" target="_blank">GitHub.</a>
+    You can report issues
+    <a href="https://github.com/pverkind/arabicVirtualKeyboard/issues" target="_blank">here.</a>
+</p>
 
 </body>
 </html>
 
 <script>
+  /*set up the modal message box*/
+  var modal = document.getElementById("msgBox");
+  var modalContent = document.getElementsByClassName("modal-content")[0];
+  var xSpan = document.getElementsByClassName("close")[0];
+  function closeMsgBox() {
+      modalContent.innerHTML = '<span class="close" onclick="closeMsgBox()">&times;</span>';
+      modal.style.display = "none";
+  }
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modalContent.innerHTML = '<span class="close" onclick="closeMsgBox()">&times;</span>';
+      modal.style.display = "none";
+    }
+  }
   function copy2Clipboard(msg="") {
     /* Get the text field */
     var ar = document.getElementById("area");
@@ -204,10 +240,11 @@
     var originalAreaContent = ar.value;
     var originalAreaSelection = (ar.selectionStart, ar.selectionEnd);
     /* remove the special characters: */
-    var temp_copyText = copyText.split("\u25CC").join("");
-    var temp_copyText = temp_copyText.split("\u200A").join("");
-    var temp_copyText = temp_copyText.split("\u061C").join("");
-    var temp_copyText = temp_copyText.split("\u0200E").join("");
+    var temp_copyText = copyText.split("\u25CC").join(""); /*dotted circle*/
+    var temp_copyText = temp_copyText.split("\u200A").join(""); /*hair space*/
+    var temp_copyText = temp_copyText.split("\u200C").join(""); /*Zero-width non-joiner*/
+    var temp_copyText = temp_copyText.split("\u061C").join(""); /*Arabic letter mark*/
+    var temp_copyText = temp_copyText.split("\u200E").join(""); /*left-to-right mark*/
     /* put the manipulated text into the textarea */
     ar.value = temp_copyText;
     /* Select the text field */
@@ -217,8 +254,17 @@
     /* Put the original copyText back into the textarea */
     ar.value = originalAreaContent;
     /* Alert the copied text */
+
     if (originalAreaContent) {
-      alert(msg+"Copied the text: " + copyText + " as " + temp_copyText);
+      /*alert(msg+"Copied the text: " + copyText + " as " + temp_copyText);*/
+      var modal = document.getElementById("msgBox");
+      var modalContent = document.getElementsByClassName("modal-content")[0];
+      var p = document.createElement("p");
+      var t = '<br/>You can inspect the characters copied \
+      <a href="http://www.babelstone.co.uk/Unicode/whatisit.html" target="_blank">here</a>';
+      p.innerHTML = msg+"Copied the text: " + copyText + " as " + temp_copyText + t;
+      modalContent.appendChild(p);
+      modal.style.display = "block";
     }
   }
 
@@ -299,31 +345,31 @@
             ["ز", ""],
             ["ظ", ""],
             ["ـ", "taṭwīl (kashīda)"], /*Row 4*/
-            ['،', "Arabic comma"], 
-            [':', "colon"], 
+            ['،', "Arabic comma"],
+            [':', "colon"],
             ['؛', "Arabic semicolon"],
-            [" ", ""],  
-            ['؟', "Arabic question mark"], 
-            ['.', "full stop"], 
+            [" ", ""],
+            ['؟', "Arabic question mark"],
+            ['.', "full stop"],
             ["!", "exclamation mark"],/*Row 5*/
             ];
         for (i=0; i<basic.length; i++) {
             addKey(basic[i][0], basic[i][1], keyGridNo=0);
-        }        
-        var initial = [           
-            ['\u25ccْ',"sukūn"], 
+        }
+        var initial = [
+            ['\u25ccْ',"sukūn"],
             ['\u25ccّ', "shadda"],
             ['\u25ccَ', "fatḥa"],
             ['\u25ccُ', "ḍamma"],
-            ['\u25ccِ',"kasra"], 
+            ['\u25ccِ',"kasra"],
             ['\u25ccً', "fatḥatān"],
             ['\u25ccٌ',"ḍammatān"],
-            ['\u25ccٍ', "kasratān"], 
+            ['\u25ccٍ', "kasratān"],
             ['\u25cc\u06e1',"Quranic sukūn"],
             ['\u25cc\u08f0',"Quranic open fatḥatān"],
             ['\u25cc\u08f1',"Quranic open ḍammatān"],
             ['\u25cc\u08f2',"Quranic open kasratān"],  /*Row 6*/
-            ['\u25ccٰ',"dagger alif"],  
+            ['\u25ccٰ',"dagger alif"],
             ['آ', "alif madda"],
             ['ٱ', "alif waṣla"],
             ['أ', "alif with hamza on top"],
@@ -333,28 +379,29 @@
             ['ڡ',"dotless f"],
             ['ٯ',"dotless q"],
             ['ڧ',"maghrebi q"],
-            ['ڢ',"maghrebi f"], 
+            ['ڢ',"maghrebi f"],
             ['ٯ\u065c',"qāf with dot below"],  /*Row 7*/
             ['پ', "Persian p"],
             ['چ', "Persian ch"],
             ['ک', "Persian kāf"],
             ['گ', "Persian gāf"],
+            ['ی', "Persian yeh"],
             ['.', "full stop"],
-            [',', "latin comma"], 
-            ['?', "latin question mark"],  
-            ['-', "hyphen"], 
+            [',', "latin comma"],
+            ['?', "latin question mark"],
+            ['-', "hyphen"],
             ['+', "plus"],
             ['*', "asterisk"],
+            ['|', "vertical bar (pipe)"],    /*Row 8*/
             ['/', "forward slash"],
-            [String.raw`\\`, "backslash"],    /*Row 8*/
-            ['|', "vertical bar (pipe)"],
-            ['(', "opening bracket"], 
-            [')', "closing bracket"],   
-            ['[', "opening square bracket"], 
-            [']', "closing square bracket"], 
-            ['{‎', "opening curly bracket"], 
+            [String.raw`\\`, "backslash"],
+            ['(', "opening bracket"],
+            [')', "closing bracket"],
+            ['[', "opening square bracket"],
+            [']', "closing square bracket"],
+            ['{‎', "opening curly bracket"],
             ['}‎', "closing curly bracket"],
-            ['<', "opening angular bracket"], 
+            ['<', "opening angular bracket"],
             ['>', "closing angular bracket"],
             ];
       for (i=0; i<initial.length; i++) {
