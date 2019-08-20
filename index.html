@@ -360,7 +360,7 @@
         for (i=0; i<basic.length; i++) {
             addKey(basic[i][0], basic[i][1], keyGridNo=0);
         }
-        var initial = [
+        var additional = [
             ['\u25ccْ',"sukūn"],
             ['\u25ccّ', "shadda"],
             ['\u25ccَ', "fatḥa"],
@@ -378,26 +378,43 @@
             ['ٱ', "alif waṣla"],
             ['أ', "alif with hamza on top"],
             ['إ', "alif with hamza below"],
+        ];
+        var palaeo = [
             ['ٮ',"dotless b"],
             ['ں',"dotless n"],
             ['ڡ',"dotless f"],
             ['ٯ',"dotless q"],
             ['ڧ',"maghrebi q"],
             ['ڢ',"maghrebi f"],
-            ['ٯ\u065c',"qāf with dot below"],  /*Row 7*/
-            ['پ', "Persian p"],
-            ['چ', "Persian ch"],
+            ['ٯ\u065c',"qāf with dot below"],/*Row 7*/
+        ];
+        var persian = [
+            ["۱", "Persian digit 1"],
+            ["۲", "Persian digit 2"],
+            ["۳", "Persian digit 3"],
+            ["۴", "Persian digit 4"],
+            ["۵", "Persian digit 5"],
+            ["۶", "Persian digit 6"],
+            ["۷", "Persian digit 7"],
+            ["۸", "Persian digit 8"],
+            ["۹", "Persian digit 9"],
+            ["۰", "Persian digit 0"],
+            ['پ', "Persian peh"],
+            ['چ', "Persian cheh"],     /*Row 8*/
+            ['ژ', "Persian zheh"],
             ['ک', "Persian kāf"],
             ['گ', "Persian gāf"],
             ['ی', "Persian yeh"],
             ['\u06c2', "Persian heh-yeh"],
+        ];
+        var regexchars = [
             ['.', "full stop"],
             [',', "latin comma"],
             ['?', "latin question mark"],
             ['-', "hyphen"],
             ['+', "plus"],
             ['*', "asterisk"],
-            ['|', "vertical bar (pipe)"],    /*Row 8*/
+            ['|', "vertical bar (pipe)"],     /*Row 9*/
             ['/', "forward slash"],
             [String.raw`\\`, "backslash"],
             ['(', "opening bracket"],
@@ -406,19 +423,25 @@
             [']', "closing square bracket"],
             ['{‎', "opening curly bracket"],
             ['}‎', "closing curly bracket"],
+            ['<', "opening angular bracket"],
+            ['>', "closing angular bracket"],
             ['^', "caret / circonflex"],
             ['$', "dollar sign"],
             ['@', "ampersand"],
-            ['<', "opening angular bracket"],
-            ['>', "closing angular bracket"],
-            ];
-      for (i=0; i<initial.length; i++) {
-          addKey(initial[i][0], initial[i][1], keyGridNo=1);
-      }
-      var cookieKeys = getKeysFromCookie();
-      for (i=0; i<cookieKeys.length; i++) {
-          addKey(cookieKeys[i][0], cookieKeys[i][1], keyGridNo=1);
-      }
+            ['%', "percent / modulo"],
+            ['"', "double quote"],
+            ["'", "single quote"],
+            ["_", "underscore"],
+            ["=", "equals"],
+        ];
+        var cookieKeys = getKeysFromCookie();
+        var categories = [additional, palaeo, persian, regexchars, cookieKeys];
+        for (i=0; i<categories.length; i++) {
+            var cat = categories[i];
+            for (j=0; j<cat.length; j++) {
+              addKey(cat[j][0], cat[j][1], keyGridNo=1);
+          }
+        }
     }
 
     function getKeysFromCookie() {
