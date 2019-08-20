@@ -230,7 +230,7 @@ textarea {
     grid-row-start: 5;
     grid-row-end: 6;
     grid-column-start: 4;
-    grid-column-end: 10;
+    grid-column-end: 9;
 }
 .tooltip {
     position: relative;

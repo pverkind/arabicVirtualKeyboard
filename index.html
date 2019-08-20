@@ -21,10 +21,10 @@
                 <a href="https://www.regular-expressions.info/" target="_blank">
                     regular expressions.
                 </a>
-                All characters (even latin letters) will appear in RTL order
-                (abc will appear as cba). Copying the regex to clipboard will
+                All characters (even latin letters) will appear in RTL order:
+                e.g., abc will appear as cba. Copying the regex to clipboard will
                 remove the characters (U+061C (ARABIC LETTER MARK)) that force
-                this behavior.
+                this behavior so that they do not impact the functioning of the regex.
             </span>
         </div>
         <input type="checkbox" id="regexCheck0">
@@ -40,9 +40,11 @@
             Separate Arabic letters:
             <span class="tooltiptext" style="width:250px">The Arabic letters you input
                 while this checkbox is checked will be displayed as separated
-                (by Unicode character U+200C (ZERO-WIDTH NON-JOINER)). This is especially
+                (by inserting the separator character U+180E). This is especially
                 useful for writing character disjunctions [abc] and ranges [a-c].
-                Copying the regex to clipboard will remove these separators.</span>
+                Copying the regex to clipboard will remove these separators
+                so that they do not impact the functioning of the regex.
+            </span>
         </div>
         <input type="checkbox" id="regexCheck">
     </div>
@@ -241,10 +243,11 @@
     var originalAreaSelection = (ar.selectionStart, ar.selectionEnd);
     /* remove the special characters: */
     var temp_copyText = copyText.split("\u25CC").join(""); /*dotted circle*/
-    var temp_copyText = temp_copyText.split("\u200A").join(""); /*hair space*/
-    var temp_copyText = temp_copyText.split("\u200C").join(""); /*Zero-width non-joiner*/
-    var temp_copyText = temp_copyText.split("\u061C").join(""); /*Arabic letter mark*/
-    var temp_copyText = temp_copyText.split("\u200E").join(""); /*left-to-right mark*/
+    temp_copyText = temp_copyText.split("\u200A").join(""); /*hair space*/
+    /*var temp_copyText = temp_copyText.split("\u200C").join("");*/ /*Zero-width non-joiner*/
+    temp_copyText = temp_copyText.split("\u061C").join(""); /*Arabic letter mark*/
+    temp_copyText = temp_copyText.split("\u180E").join(""); /*Mongolian Vowel Separator*/
+    temp_copyText = temp_copyText.split("\u200E").join(""); /*left-to-right mark*/
     /* put the manipulated text into the textarea */
     ar.value = temp_copyText;
     /* Select the text field */
@@ -349,6 +352,7 @@
             [':', "colon"],
             ['؛', "Arabic semicolon"],
             [" ", ""],
+            ['\u200c', "zero-width non-joiner (فاصلهٔ مجازی)"],
             ['؟', "Arabic question mark"],
             ['.', "full stop"],
             ["!", "exclamation mark"],/*Row 5*/
@@ -386,6 +390,7 @@
             ['ک', "Persian kāf"],
             ['گ', "Persian gāf"],
             ['ی', "Persian yeh"],
+            ['\u06c2', "Persian heh-yeh"],
             ['.', "full stop"],
             [',', "latin comma"],
             ['?', "latin question mark"],
@@ -401,6 +406,9 @@
             [']', "closing square bracket"],
             ['{‎', "opening curly bracket"],
             ['}‎', "closing curly bracket"],
+            ['^', "caret / circonflex"],
+            ['$', "dollar sign"],
+            ['@', "ampersand"],
             ['<', "opening angular bracket"],
             ['>', "closing angular bracket"],
             ];
@@ -441,7 +449,10 @@
        } else if (character===String.raw`\\`) {
          keyCharacterDiv.innerHTML = "&#92;";
          keyCharacterDiv.setAttribute("class", "keyCharacter tooltip");
-       } else {
+       } else  if (character==='\u200c') {
+         keyCharacterDiv.innerHTML = '<img src="img/zwnj.bmp" style="height:25px; padding-top:3px"></img>';
+         keyCharacterDiv.setAttribute("class", "keyCharacter tooltip");
+       } else{
          keyCharacterDiv.innerHTML = character;
          if (character===" ") {
            keyCharacterDiv.setAttribute("class", "keyCharacter tooltip space");

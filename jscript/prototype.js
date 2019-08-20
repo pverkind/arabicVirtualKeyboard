@@ -13,11 +13,11 @@ function wr(item) {
         item = item.replace("\u061C", "");
     }
     if (sl("regexCheck").checked) {
-        /* add a ZERO-WIDTH NON-JOINER (\u200C) before every character
+        /* add a MONGOLIAN VOWEL SEPARATOR (\u180E) before every character
         to separate the Arabic characters */
-        item = "\u200C" + item;
+        item = "\u180E" + item;
     } else {
-        item = item.replace("\u25cc", "");
+        item = item.replace("\u25cc", ""); /*remove the dotted circles from vowels*/
     }
     input.focus();
     if (input.setSelectionRange) {
