@@ -215,13 +215,6 @@
 </html>
 
 <script>
-  var copies = localStorage.getItem("copies");
-  function incrementCount() {
-      /*Count the number of times users have copied something from the text area*/
-      copies++;
-      localStorage.setItem("copies", copies);
-      console.log("copy#"+copies);
-  }
   /*set up the modal message box*/
   var modal = document.getElementById("msgBox");
   var modalContent = document.getElementsByClassName("modal-content")[0];
@@ -238,7 +231,6 @@
     }
   }
   function copy2Clipboard(msg="") {
-    incrementCount();
     /* Get the text field */
     var ar = document.getElementById("area");
     /* check if something is selected: */
