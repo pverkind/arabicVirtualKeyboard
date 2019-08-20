@@ -8,7 +8,7 @@
 
 </head>
 
-<body style="">
+<body>
 
 <div id="intro">
     <h1>Arabic virtual keyboard</h1>
@@ -215,6 +215,13 @@
 </html>
 
 <script>
+  var copies = localStorage.getItem("copies");
+  function incrementCount() {
+      /*Count the number of times users have copied something from the text area*/
+      copies++;
+      localStorage.setItem("copies", copies);
+      console.log("copy#"+copies);
+  }
   /*set up the modal message box*/
   var modal = document.getElementById("msgBox");
   var modalContent = document.getElementsByClassName("modal-content")[0];
@@ -231,6 +238,7 @@
     }
   }
   function copy2Clipboard(msg="") {
+    incrementCount();
     /* Get the text field */
     var ar = document.getElementById("area");
     /* check if something is selected: */
@@ -278,7 +286,7 @@
       Similar to Right-to-left mark (RLM), it is used to change the way
       adjacent characters are grouped with respect to text direction" */
       var keyID = event.which;
-      console.log("keyID:"+keyID);
+      //console.log("keyID:"+keyID);
       var ignoreArray = [37, 38, 39, 40, /*arrow buttons*/
                          35, 36, /*home and end*/
                          8, 48, /*del and backspace*/
