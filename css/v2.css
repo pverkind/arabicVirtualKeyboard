@@ -288,6 +288,9 @@ textarea {
     height: 90vh;
     overflow: auto;
 }
+#extraRows {
+    display: none;
+}
 #k {
     position: relative;
     top: 0px;
