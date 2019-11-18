@@ -62,21 +62,23 @@
     </div>
     <div id="extraRows">
         <div class="keyGrid"></div>
+        <div id="addNewKeyInput">
+            <h3>Need more special characters? </h3>
+            <p>Add a key with a new character (and an optional description):</p>
+            <input type="text" class="extraInput" id="extraInput0" dir="rtl" placeholder="ک"></input>
+            <input type="text" class="extraInputDescr" id="extraInputDescr0" placeholder="description"></input>
+            <button class="fivePxMargin" onclick='addKey("none", "none")'>Add key</button>
+            <button class="fivePxMargin" onclick='resetKeys()'>Reset keys</button>
+        </div>
     </div>
 </div>
 
 
 <div>
     <button class="btn" onclick="Toggle('cheatsheet')">Toggle Regex Cheatsheet input</button>
+    <button class="btn" onclick="Toggle('extraRows')">Toggle additional keys</button>
 </div>
-<div id="addNewKeyInput">
-    <h3>Need more special characters? </h3>
-    <p>Add a key with a new character (and an optional description):</p>
-    <input type="text" class="extraInput" id="extraInput0" dir="rtl" placeholder="ک"></input>
-    <input type="text" class="extraInputDescr" id="extraInputDescr0" placeholder="description"></input>
-    <button class="fivePxMargin" onclick='addKey("none", "none")'>Add key</button>
-    <button class="fivePxMargin" onclick='resetKeys()'>Reset keys</button>
-</div>
+
 <div>
     <div id="cheatsheet">
         <h4>Regex Cheatsheet input (<a href="https://www.rexegg.com/regex-quickstart.html" target="_blank">source</a>)</h4>
