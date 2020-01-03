@@ -89,85 +89,86 @@
 
         <table>
             <tr><td></td><td></td><td><b>Sample regex</b></td><td><b>Sample match</b></td></tr>
-            <tr><td><button class="regexInput" onclick="wr('.')">.</button></td><td>Any character except line break</td><td>a.c</td><td><b>abc a.c</b></td></tr>
-            <tr><td><button class="regexInput" onclick="wr('\\')">\</button></td><td>Escapes a special character</td><td>a\.c</td><td>abc <b>a.c</b></td></tr>
+            <tr><td><button class="regexInput" onclick="wr('.')">.</button></td><td>Any character except line break</td><td>a.c</td><td><b><mark>abc</mark></b> <b><mark>a.c</mark></b></td></tr>
+            <tr><td><button class="regexInput" onclick="wr('\\')">\</button></td><td>Escapes a special character</td><td>a\.c</td><td>abc <b><mark>a.c</mark></b></td></tr>
         </table>
         <div class="regexTitle" onclick="Toggle('charGroups')">Character groups &or;</div>
         <div class="regexClass" id="charGroups">
             <table>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\d`)">\d</button></td><td>one Unicode digit in any script</td><td>file_\d_\d</td><td><b>file_9_ ٩</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\w`)">\w</button></td><td>"word character": Unicode letter, ideogram, digit, or underscore</td><td>\w-\w\w\w</td><td><b>字-ま_۳</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\s`)">\s</button></td><td>"whitespace character": any Unicode separator</td><td>a\sb\sc</td><td>aaa<b>a b
-                    c</b>ccdde</td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\D`)">\D</button></td><td>One character that is not a digit</td><td>2\D\D\D</td><td>1<b>2ABC</b>34</td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\W`)">\W</button></td><td>One character that is not a word character</td><td>\W\W\W\W\W</td><td><b>*-+=)</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\S`)">\S</button></td><td>One character that is not a whitespace character</td><td>\S\S\S\S</td><td><b>Yo3) </b> Y o3</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\d`)">\d</button></td><td>one Unicode digit in any script</td><td>file_\d_\d</td><td><b><mark>file_9_ ٩</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\w`)">\w</button></td><td>"word character": Unicode letter, ideogram, digit, or underscore</td><td>\w-\w\w\w</td><td><b><mark>字-ま_۳</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\s`)">\s</button></td><td>"whitespace character": any Unicode separator</td><td>a\sb\sc</td><td>aaa<b><mark>a b
+                    c</mark></b>ccdde</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\D`)">\D</button></td><td>One character that is not a digit</td><td>2\D\D\D</td><td>1<b><mark>2ABC</mark></b>34</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\W`)">\W</button></td><td>One character that is not a word character</td><td>\W\W\W\W\W</td><td><b><mark>*-+=)</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\S`)">\S</button></td><td>One character that is not a whitespace character</td><td>\S\S\S\S</td><td><b><mark>Yo3)</mark></b> Y o3</td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('whiteSpace')">More White-Space &or;</div>
         <div class="regexClass" id="whiteSpace">
             <table>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\t`)">\t</button></td><td>Tab</td><td>T\t\w\w</td><td>A <b>T     ab</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\t`)">\t</button></td><td>Tab</td><td>T\t\w\w</td><td>A <b><mark>T     ab</mark></b></td></tr>
                 <tr><td><button class="regexInput" onclick="wr(String.raw`\r`)">\r</button></td><td>Carriage return character</td><td>see below</td><td></td></tr>
                 <tr><td><button class="regexInput" onclick="wr(String.raw`\n`)">\n</button></td><td>Line feed character</td><td>see below</td><td></td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\r`+'\u061C'+String.raw`\n`)">\r\n</button></td><td>Line separator on Windows</td><td>AB\r\nCD</td><td><b>AB<br/>CD</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\r`+'\u061C'+String.raw`\n`)">\r\n</button></td><td>Line separator on Windows</td><td>AB\r\nCD</td><td><b><mark>AB<br/>CD</mark></b></td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('quantifiers')">Quantifiers &or;</div>
         <div class="regexClass" id="quantifiers">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('?')">?</button></td><td>Once or none</td><td>plurals?</td><td><b>plural</b> and <b>plurals</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('*')">*</button></td><td>Zero or more times (greedy) </td><td>aB*a bB*b aB*</td><td><b>aBBa bb aBBBBB</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('+')">+</button></td><td>One or more (greedy) </td><td>Version \w-\w+</td><td><b>Version A-b1_100</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{}')">{3}</button></td><td>Exactly three times</td><td>\D{3}</td><td><b>ABC</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{,}')">{2,4}</button></td><td>Two to four times (greedy) </td><td>\d{2,4}</td><td><b>156</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{,}')">{3,}</button></td><td>Three or more times (greedy) </td><td>\w{4,}</td><td><b>regex_</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('?')">?</button></td><td>Once or none</td><td>plurals?</td><td><b><mark>plural</mark></b> and <b><mark>plurals</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('*')">*</button></td><td>Zero or more times (greedy) </td><td>aB*a bB*b aB*</td><td><b><mark>aBBa bb aBBBBB</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('+')">+</button></td><td>One or more (greedy) </td><td>Version \w-\w+</td><td><b><mark>Version A-b1_100</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{}')">{3}</button></td><td>Exactly three times</td><td>\D{3}</td><td><b><mark>ABC</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{,}')">{2,4}</button></td><td>Two to four times (greedy) </td><td>\d{2,4}</td><td><b><mark>156</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{,}')">{3,}</button></td><td>Three or more times (greedy) </td><td>\w{4,}</td><td><b><mark>regex_</mark></b></td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('lazyQuantifiers')">Lazy quantifiers (w/ question mark) &or;</div>
         <div class="regexClass" id="lazyQuantifiers">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('+?')">+?</button></td><td>One or more (lazy) </td><td>Version \w-\w+?</td><td><b>Version A-b1_1</b>00</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{,}?')">{2,4}?</button></td><td>Two to four times (lazy) </td><td>\d{2,4}?</td><td><b>15</b>6</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{,}?')">{3,}?</button></td><td>Three or more times (lazy) </td><td>\w{4,}?</td><td><b>rege</b>x_</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('*?')">*?</button></td><td>Zero or more times (lazy) </td><td>aB*a b* aB*?</td><td><b>aBBa bb a</b>BBBBB</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('??')">?</button></td><td>Once or none (lazy)</td><td>plurals?</td><td><b><mark>plural</mark></b> and <b><mark>plural</mark></b>s</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('+?')">+?</button></td><td>One or more (lazy) </td><td>Version \w-\w+?</td><td><b><mark>Version A-b</mark></b>1_100</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{,}?')">{2,4}?</button></td><td>Two to four times (lazy) </td><td>\d{2,4}?</td><td><b><mark>15</mark></b>6</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{,}?')">{3,}?</button></td><td>Three or more times (lazy) </td><td>\w{4,}?</td><td><b><mark>rege</mark></b>x_</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('*?')">*?</button></td><td>Zero or more times (lazy) </td><td>aB*a b* aB*?</td><td><b><mark>aBBa bb a</mark></b>BBBBB</td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('logic')">Logic &or;</div>
         <div class="regexClass" id="logic">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('|')">|</button></td><td>Alternation / OR operand</td><td>22|33</td><td><b>22</b> + 11 = <b>33</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('()')">( … )</button></td><td>Capturing group</td><td>A(nt|pple)</td><td>An <b>A<span class="underline">nt</span></b> on an <b>A<span class="underline">pple</span></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\1`)">\1</button></td><td>Contents of Group 1</td><td>r(\w)g\1x</td><td><b>regex</b> not rigex</td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\2`)">\2</button></td><td>Contents of Group 2</td><td>(\d\d)\+(\d\d)=\2\+\1</td><td><b>12+65=65+12</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('(?:)')">(?: … )</button></td><td>Non-capturing group</td><td>A(?:nt|pple)</td><td>An <b>Ant</b> on an <b>Apple</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('|')">|</button></td><td>Alternation / OR operand</td><td>22|33</td><td><b><mark>22</mark></b> + 11 = <b><mark>33</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('()')">( … )</button></td><td>Capturing group</td><td>A(nt|pple)</td><td>An <b><mark>A<span class="underline">nt</span></mark></b> on an <b><mark>A<span class="underline">pple</span></mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\1`)">\1</button></td><td>Contents of Group 1</td><td>r(\w)g\1x</td><td><b><mark>regex</mark></b> not rigex</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\2`)">\2</button></td><td>Contents of Group 2</td><td>(\d\d)\+(\d\d)=\2\+\1</td><td><b><mark>12+65=65+12</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?:)')">(?: … )</button></td><td>Non-capturing group</td><td>A(?:nt|pple)</td><td>An <b><mark>Ant</mark></b> on an <b><mark>Apple</mark></b></td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('charClasses')">Character Classes &or;</div>
         <div class="regexClass" id="charClasses">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('[]')">[ … ]</button></td><td>One of the characters in the brackets</td><td>T[ao]p</td><td><b>Tap</b> and <b>Top</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('[-]')">[x-y]</button></td><td>One of the characters in the range from x to y</td><td>[A-Z]+</td><td><b>UPPER</b>case <b>LE</b>tter<b>S</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('[^]')">[^xy]</button></td><td>One character that is not x or y</td><td>[^12]</td><td><b>A</b>1<b>b</b>2<b>+</b>1</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('[^-]')">[^x-y]</button></td><td>One of the characters not in the range from x to y</td><td>[^a-z]{3}</td><td>ab<b>A1! </b>cd</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('[]')">[ … ]</button></td><td>One of the characters in the brackets</td><td>T[ao]p</td><td><b><mark>Tap</mark></b> and <b><mark>Top</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('[-]')">[x-y]</button></td><td>One of the characters in the range from x to y</td><td>[A-Z]+</td><td><b><mark>UPPER</mark></b>case <b><mark>LE</mark></b>tter<b><mark>S</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('[^]')">[^xy]</button></td><td>One character that is not x or y</td><td>[^12]</td><td><b><mark>A</mark></b>1<b><mark>b</mark></b>2<b><mark>+</mark></b>1</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('[^-]')">[^x-y]</button></td><td>One of the characters not in the range from x to y</td><td>[^a-z]{3}</td><td>ab<b><mark>A1! </mark></b>cd</td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('anchors')">Anchors and Boundaries &or;</div>
         <div class="regexClass" id="anchors">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('^')">^</button></td><td>Start of line</td><td>^abc [1-9]*</td><td><b>abc 18</b> abc 19</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('$')">$</button></td><td>End of line</td><td>abc [1-9]*$</td><td>abc 18 <b>abc 19</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\b`)">\b</button></td><td>Word boundary: position where one side only is a letter, digit or underscore</td><td>\bكتب\b</td><td><b>كتب</b> مكتبه كتبه</td></tr>
-                <tr><td><button class="regexInput" onclick="wr(String.raw`\B`)">\B</button></td><td>Not a word boundary</td><td>\S*\Bكتب\B\S*</td><td>كتب <b>مكتبه</b> كتبه</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('^')">^</button></td><td>Start of line</td><td>^abc [1-9]*</td><td><b><mark>abc 18</mark></b> abc 19</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('$')">$</button></td><td>End of line</td><td>abc [1-9]*$</td><td>abc 18 <b><mark>abc 19</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\b`)">\b</button></td><td>Word boundary: position where one side only is a letter, digit or underscore</td><td>\bكتب\b</td><td><b><mark>كتب</mark></b> مكتبه كتبه</td></tr>
+                <tr><td><button class="regexInput" onclick="wr(String.raw`\B`)">\B</button></td><td>Not a word boundary</td><td>\Bكتب\B</td><td>كتب م<b><mark>كتب</mark></b>ه كتبه</td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('lookarounds')">Lookarounds &or;</div>
         <div class="regexClass" id="lookarounds">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('(?=)')">(?=…)</button></td><td>Positive lookahead</td><td>(?=\d{10})\d{5}</td><td><b>01234</b>56789</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('(?\u3008=)')">(?&lt;=…)</button></td><td>Positive lookbehind</td><td>(?&lt;=\d) cat</td><td>1 <b>cat</b> white cat</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('(?!)')">(?!…)</button></td><td>Negative lookahead</td><td>(?!theatre)the\w*</td><td><b>the</b> theatre <b>theme</b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('(?\u3008!)')">(?&lt;!…)</button></td><td>Negative lookbehind</td><td>(?&lt;!USD)\d{3,}</td><td>USD300 = GBP<b>250</b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?=)')">(?=…)</button></td><td>Positive lookahead</td><td>(?=\d{10})\d{5}</td><td><b><mark>01234</mark></b>56789</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?\u3008=)')">(?&lt;=…)</button></td><td>Positive lookbehind</td><td>(?&lt;=\d\s)cat</td><td>1 <b><mark>cat</mark></b> white cat</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?!)')">(?!…)</button></td><td>Negative lookahead</td><td>(?!theatre)the\w*</td><td><b><mark>the</mark></b> theatre <b><mark>theme</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?\u3008!)')">(?&lt;!…)</button></td><td>Negative lookbehind</td><td>(?&lt;!USD)\d{3,}</td><td>USD300 = GBP<b><mark>250</mark></b></td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('arabic')">Arabic Unicode &or;</div>
@@ -266,8 +267,12 @@
       var modal = document.getElementById("msgBox");
       var modalContent = document.getElementsByClassName("modal-content")[0];
       var p = document.createElement("p");
-      var t = '<br/>You can inspect the characters copied \
-      <a href="http://www.babelstone.co.uk/Unicode/whatisit.html" target="_blank">here</a>';
+      /*var t = '<br/>You can inspect the characters copied \
+      <a href="http://www.babelstone.co.uk/Unicode/whatisit.html" \
+      target="_blank">here</a>';*/
+      var link = 'http://www.babelstone.co.uk/Unicode/whatisit.html?string=';
+      var t = '<br/>You can inspect the characters copied <a href="';
+      t = t + link + temp_copyText + '" target="_blank">here</a>';
       p.innerHTML = msg+"Copied the text: " + copyText + " as " + temp_copyText + t;
       modalContent.appendChild(p);
       modal.style.display = "block";
@@ -424,8 +429,8 @@
             [')', "closing bracket"],
             ['[', "opening square bracket"],
             [']', "closing square bracket"],
-            ['{‎', "opening curly bracket"],
-            ['}‎', "closing curly bracket"],
+            ['{‎', "opening brace"],
+            ['}‎', "closing brace"],
             ['<', "opening angular bracket"],
             ['>', "closing angular bracket"],
             ['^', "caret / circonflex"],
