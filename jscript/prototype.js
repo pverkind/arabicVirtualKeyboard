@@ -8,14 +8,18 @@ function wr(item) {
     if (sl("regexCheck0").checked) {
         /* add an Arabic letter mark (\u061C) after every character
         to fix the display order for every character from right to left*/
-        item = item + "\u061C";
+        /*item = item + "\u061C";*/
+        item = item.split("");
+        item = item.join("\u061C")+"\u061C";
     } else {
         item = item.replace("\u061C", "");
     }
     if (sl("regexCheck").checked) {
         /* add a MONGOLIAN VOWEL SEPARATOR (\u180E) before every character
         to separate the Arabic characters */
-        item = "\u180E" + item;
+        /*item = "\u180E" + item;*/
+        item = item.split("");
+        item = "\u180E"+item.join("\u180E");        
     } else {
         item = item.replace("\u25cc", ""); /*remove the dotted circles from vowels*/
     }
