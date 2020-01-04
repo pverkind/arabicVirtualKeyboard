@@ -12,19 +12,23 @@
 
 <div id="intro">
     <h1>Arabic virtual keyboard</h1>
-    <button class="btn l-btn" onclick="copy2Clipboard()">Copy to clipboard</button>
+    <button class="btn l-btn" onclick="copy2Clipboard()">
+      Copy to clipboard
+    </button>
 
     <div class="rgxChckbx" id="rgxChckbx0">
         <div class="tooltip dotted">
             RTL regex mode:
-            <span class="tooltiptext" style="width:250px">Use this mode for writing right-to-left (RTL)
+            <span class="tooltiptext" style="width:250px">
+                Use this mode for writing right-to-left (RTL)
                 <a href="https://www.regular-expressions.info/" target="_blank">
                     regular expressions.
                 </a>
                 All characters (even latin letters) will appear in RTL order:
-                e.g., abc will appear as cba. Copying the regex to clipboard will
-                remove the characters (U+061C (ARABIC LETTER MARK)) that force
-                this behavior so that they do not impact the functioning of the regex.
+                e.g., abc will appear as cba. Copying the regex to clipboard
+                will remove the characters (U+061C (ARABIC LETTER MARK)) that
+                force this behavior so that they do not impact the functioning
+                of the regex.
             </span>
         </div>
         <input type="checkbox" id="regexCheck0">
@@ -38,10 +42,11 @@
     <div class="rgxChckbx" id="rgxChckbx">
         <div class="tooltip dotted">
             Separate Arabic letters:
-            <span class="tooltiptext" style="width:250px">The Arabic letters you input
-                while this checkbox is checked will be displayed as separated
-                (by inserting the separator character U+180E). This is especially
-                useful for writing character disjunctions [abc] and ranges [a-c].
+            <span class="tooltiptext" style="width:250px">The Arabic letters
+                you input while this checkbox is checked will be displayed as
+                separated (by inserting the separator character U+180E).
+                This is especially useful for writing
+                character disjunctions [abc] and ranges [a-c].
                 Copying the regex to clipboard will remove these separators
                 so that they do not impact the functioning of the regex.
             </span>
@@ -54,7 +59,7 @@
 <div id="keyboard">
     <div>
         <span>
-            <textarea id="area" dir="rtl" name="area" tabindex="1" onkeyup="insertALM()" autocomplete="off"></textarea>
+            <textarea id="area" dir="rtl" name="area" tabindex="1" onkeydown="checkKey()" onkeyup="insertALM()" autocomplete="off"></textarea>
         </span>
     </div>
     <div id="basicKeyboard">
@@ -234,6 +239,9 @@
       modal.style.display = "none";
     }
   }
+
+
+
   function copy2Clipboard(msg="") {
     /* Get the text field */
     var ar = document.getElementById("area");
@@ -279,6 +287,18 @@
     }
   }
 
+  function checkKey() {
+    // prevent default function of selected keys at keypress
+    var keyID = event.which;
+    var disableArray = [8,   // backspace
+                        46,  // del
+                        37,  // left arrow
+                        39]; // right arrow
+    if (disableArray.includes(keyID)) {
+      event.preventDefault();
+    }
+  }
+
   function insertALM () {
       /* ALM = Arabic letter mark, U+061C, "a non-printing character used in the
       computerized typesetting of bi-directional text containing mixed
@@ -287,19 +307,27 @@
       adjacent characters are grouped with respect to text direction" */
       var keyID = event.which;
       //console.log("keyID:"+keyID);
-      var ignoreArray = [37, 38, 39, 40, /*arrow buttons*/
+      var ignoreArray = [38, 40, /*up and down arrow buttons*/
                          35, 36, /*home and end*/
-                         8, 48, /*del and backspace*/
                          17, 18, /*alt and ctrl*/
                          20, 16, /*caps lock and shift*/
                          ];
       if (ignoreArray.includes(keyID)) {
+        //do nothing
       }  else if (keyID === 67) { /* if C key is pressed:*/
           if (event.ctrlKey) {  /* check if ctrl is also pressed; if so, copy*/
             copy2Clipboard();
           } else {
             wr("");
           }
+      } else if (keyID === 8) { /* if backspace key is pressed:*/
+        backspace();
+      } else if (keyID === 46) { /* if delete key is pressed:*/
+        del();
+      } else if (keyID === 37) { /* if arrow left key is pressed:*/
+         arrowL();
+      } else if (keyID === 39) { /* if arrow right key is pressed:*/
+         arrowR();
       } else {
           wr("");
       }
