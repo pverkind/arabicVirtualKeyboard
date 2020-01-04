@@ -4,6 +4,7 @@ function sl(id) {
 
 var arLet = "\u061C";
 var vowSep = "\u180E";
+// for testing purposes:
 //var arLet = "-";
 //var vowSep = "_";
 
@@ -14,20 +15,15 @@ function wr(item) {
     if (sl("regexCheck0").checked) {
         /* add an Arabic letter mark (\u061C) after every character
         to fix the display order for every character from right to left*/
-        /*item = item + "\u061C";*/
         item = item.split("");
-        /*item = item.join("\u061C") + "\u061C";*/
         item = item.join(arLet) + arLet;
     } else {
-        /*item = item.replace("\u061C", "");*/
         item = item.replace(arLet, "");
     }
     if (sl("regexCheck").checked) {
         /* add a MONGOLIAN VOWEL SEPARATOR (\u180E) before every character
         to separate the Arabic characters */
-        /*item = "\u180E" + item;*/
         item = item.split("");
-        /*item = "\u180E"+item.join("\u180E");*/
         item = vowSep + item.join(vowSep);
     } else {
         item = item.replace("\u25cc", ""); /*remove the dotted circles from vowels*/
@@ -66,24 +62,14 @@ function wr(item) {
 // (before any ALM or character separator)
 function toPrevChar(pos, txt) {
   //console.log(pos);
-  if (pos > 0) {
-    var precededByNonChar = [arLet, vowSep].includes(txt.substring(pos-1, pos));
-    while (precededByNonChar) {
-      precededByNonChar = [arLet, vowSep].includes(txt.substring(pos-1, pos));
-      if (precededByNonChar) pos--;
-    }
-  }
+  while ([arLet, vowSep].includes(txt.substring(pos-1, pos))) pos--;
   return pos;
 }
 
 // Move the cursor position to just before the next real character
 // (after any nonChar (i.e., ALM or character separator))
 function toNextChar(pos, txt) {
-  var followedByNonChar = true;
-  while (followedByNonChar) {
-    followedByNonChar = [arLet, vowSep].includes(txt.substring(pos, pos+1));
-    if (followedByNonChar) pos++;
-  }
+  while ([arLet, vowSep].includes(txt.substring(pos, pos+1))) pos++;
   return pos;
 }
 
@@ -94,30 +80,42 @@ function getSelection(target) {
   return [srt, end];
 }
 
-function arrowR() {
+function arrowR(shiftKey) {
   var target = sl("area");
   [srt, end] = getSelection(target);
   //console.log([srt, end]);
   if (srt < end) {  // if something is selected, move cursor to start of selection
     srt = toPrevChar(srt, target.value);
+    if (shiftKey) srt--;
+    if (srt < 0) srt = 0; // make sure selection does not go beyond position 0
   } else {  // if nothing is selected, move cursor to position before previous character
     srt = toPrevChar(end, target.value);
     srt--;
   }
-  target.setSelectionRange(srt, srt);
+  if (shiftKey) {
+    target.setSelectionRange(srt, end);
+  } else {
+    target.setSelectionRange(srt, srt);
+  }
   target.focus();
 }
 
-function arrowL() {
+function arrowL(shiftKey) {
   var target = sl("area");
   [srt, end] = getSelection(target);
   if (srt < end) {  // if something is selected, move cursor to end of selection
-    srt = toNextChar(end, target.value);
+    end = toNextChar(end, target.value);
+    if (shiftKey) end++;
   } else {  // if nothing is selected, move cursor to position after next character
-    srt = toNextChar(end, target.value);
-    srt++;
+    end = toNextChar(end, target.value);
+    end++;
+    if (end > target.value.length) end = 0;
   }
-  target.setSelectionRange(srt, srt);
+  if (shiftKey) {
+    target.setSelectionRange(srt, end);
+  } else {
+    target.setSelectionRange(end, end);
+  }
   target.focus();
 }
 

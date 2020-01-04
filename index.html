@@ -325,9 +325,9 @@
       } else if (keyID === 46) { /* if delete key is pressed:*/
         del();
       } else if (keyID === 37) { /* if arrow left key is pressed:*/
-         arrowL();
+         arrowL(event.shiftKey);
       } else if (keyID === 39) { /* if arrow right key is pressed:*/
-         arrowR();
+         arrowR(event.shiftKey);
       } else {
           wr("");
       }
