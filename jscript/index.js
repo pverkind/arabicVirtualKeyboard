@@ -1,13 +1,13 @@
-function sl(id) {
-    return document.getElementById(id);
-}
-
-//const arLet = "\u061C";
-//const vowSep = "\u180E";
-// for testing purposes:
+//* Define the main cosmetic markers used to force RTL
+const arLet = "\u061C"; // Arabic letter mark
+const vowSep = "\u180E"; // Mongolian vowel separator
+const circle = "\u25cc"; // dotted circle for diacritics
+// */
+/*
+for testing purposes:
 const arLet = "-";
 const vowSep = "_";
-
+// */
 
 
 //-----------------------------------------------------------------------------
@@ -77,23 +77,23 @@ function populateInitialKeys() {
         addKey(basic[i][0], basic[i][1], keyGridNo=0);
     }
     var additional = [
-        ['\u25cc\u0652',"sukūn"],
-        ['\u25cc\u064b', "fatḥatān"],
-        ['\u25cc\u064c',"ḍammatān"],
-        ['\u25cc\u064d', "kasratān"],
-        ['\u25cc\u064e', "fatḥa"],
-        ['\u25cc\u064f', "ḍamma"],
-        ['\u25cc\u0650',"kasra"],
-        ['\u25cc\u0651', "shadda"],
+        [circle+'\u0652',"sukūn"],
+        [circle+'\u064b', "fatḥatān"],
+        [circle+'\u064c',"ḍammatān"],
+        [circle+'\u064d', "kasratān"],
+        [circle+'\u064e', "fatḥa"],
+        [circle+'\u064f', "ḍamma"],
+        [circle+'\u0650',"kasra"],
+        [circle+'\u0651', "shadda"],
         ['آ', "alif madda"],
         ['ٱ', "alif waṣla"],
         ['أ', "alif with hamza on top"],
         ['إ', "alif with hamza below"],                           // Row 6
-        ['\u25cc\u06e1',"Quranic sukūn"],
-        ['\u25cc\u08f0',"Quranic open fatḥatān"],
-        ['\u25cc\u08f1',"Quranic open ḍammatān"],
-        ['\u25cc\u08f2',"Quranic open kasratān"],
-        ['\u25cc\u0670',"dagger alif"],
+        [circle+'\u06e1',"Quranic sukūn"],
+        [circle+'\u08f0',"Quranic open fatḥatān"],
+        [circle+'\u08f1',"Quranic open ḍammatān"],
+        [circle+'\u08f2',"Quranic open kasratān"],
+        [circle+'\u0670',"dagger alif"],
     ];
     var palaeo = [
         ['ٮ',"dotless b"],
@@ -335,9 +335,9 @@ for(var i = 0; i < checkboxids.length; i++) {
         end = (end - vowelsBefore - vowelsInSel) / 2;
       }
     } else {  // Arabic letter order checkbox changed
-      var circle = new RegExp("\u25cc", "g");
-      var vowelsBefore = (cont.substring(0,srt).match(circle) || []).length;
-      var vowelsInSel = (cont.substring(srt,end).match(circle) || []).length;
+      var circleRE = new RegExp(circle, "g");
+      var vowelsBefore = (cont.substring(0,srt).match(circleRE) || []).length;
+      var vowelsInSel = (cont.substring(srt,end).match(circleRE) || []).length;
       if (this.checked) {
         srt = ((srt - vowelsBefore) * 2) + vowelsBefore;
         end = ((end - vowelsBefore - vowelsInSel) * 2) + vowelsBefore + vowelsInSel;
@@ -360,6 +360,10 @@ for(var i = 0; i < checkboxids.length; i++) {
 
 
 //-----------------------------------------------------------------------------
+
+function sl(id) {
+    return document.getElementById(id);
+}
 
 
 /**
@@ -398,9 +402,9 @@ function copy2Clipboard(msg="", asIs=false) {
     ar.value = copyText;
   } else {
     // remove the special characters:
-    var temp_copyText = copyText.split("\u25CC").join("");   // dotted circle
-    temp_copyText = temp_copyText.split("\u061C").join("");  // Arabic letter mark
-    temp_copyText = temp_copyText.split("\u180E").join("");  // Mongolian Vowel Separator
+    var temp_copyText = copyText.split(circle).join("");   // dotted circle
+    temp_copyText = temp_copyText.split(arLet).join("");  // Arabic letter mark
+    temp_copyText = temp_copyText.split(vowSep).join("");  // Mongolian Vowel Separator
     // previously used separators, no longer used:
     //temp_copyText = temp_copyText.split("\u200E").join(""); //left-to-right mark
     //temp_copyText = temp_copyText.split("\u200A").join(""); //hair space
@@ -451,7 +455,7 @@ function wr(item, offset=0) {
 
     item = item.split(arLet).join("");
     item = item.split(vowSep).join("");
-    item = item.split("\u25cc").join("");
+    item = item.split(circle).join("");
     //console.log("adapted item: "+item);
     //console.log("adapted item length: "+item.length);
 
@@ -522,7 +526,7 @@ function vowelSigns(txt, include=true) {
   console.log("add vowel signs:"+include);
   if (include) {
     for (i=0, j=vowels.length; i<j; i++) {
-      txt = txt.split(vowels[i]).join("\u25cc"+vowels[i]); // add dotted circles
+      txt = txt.split(vowels[i]).join(circle+vowels[i]); // add dotted circles
     }
     txt = txt.replace(/\u25cc+/g, "\u25cc");
   } else {
@@ -542,7 +546,7 @@ function vowelSigns(txt, include=true) {
 
 function toPrevChar(pos, txt) {
   //console.log(pos);
-  while ([arLet, vowSep, "\u25cc"].includes(txt.substring(pos-1, pos))) pos--;
+  while ([arLet, vowSep, circle].includes(txt.substring(pos-1, pos))) pos--;
   return pos;
 }
 
@@ -556,7 +560,7 @@ function toPrevChar(pos, txt) {
  */
 
 function toNextChar(pos, txt) {
-  while ([arLet, vowSep, "\u25cc"].includes(txt.substring(pos, pos+1))) pos++;
+  while ([arLet, vowSep, circle].includes(txt.substring(pos, pos+1))) pos++;
   return pos;
 }
 
