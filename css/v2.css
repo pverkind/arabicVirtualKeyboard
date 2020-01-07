@@ -108,18 +108,18 @@ textarea {
 .extraInput {
     width: 20px;
     float: left;
-    margin: 5px;
+    margin: 0px 0px 10px 0px;
 }
 .extraInputDescr {
-    margin: 5px;
-    width: 100px;
+    margin: 0px 0px 10px 5px;
+    width: 105px;
     float: left;
 }
 .extraRow {
     position: static;
 }
 .fivePxMargin {
-    margin: 5px;
+    margin: 0px 0px 10px 4px;
 }
 .footer {
     padding-top: 40px;
