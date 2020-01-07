@@ -40,11 +40,11 @@
     <div class="rgxChckbx" id="rgxChckbx">
         <div class="tooltip dotted">
             Separate Arabic letters:
-            <span class="tooltiptext" style="width:250px">The Arabic letters
-                you input while this checkbox is checked will be displayed as
-                separated (by inserting the separator character U+180E).
+            <span class="tooltiptext" style="width:250px">Arabic letters
+                will be displayed as separated (by inserting the separator
+                character U+180E "MONGOLIAN VOWEL SEPARATOR").
                 This is especially useful for writing
-                character disjunctions [abc] and ranges [a-c].
+                character disjunctions `[abc]` and ranges `[a-c]`.
                 Copying the regex to clipboard will remove these separators
                 so that they do not impact the functioning of the regex.
             </span>
@@ -57,7 +57,7 @@
 <div id="keyboard">
     <div>
         <span>
-            <textarea id="area" dir="rtl" name="area" tabindex="1" onkeydown="interceptOnKeyDown()" autocomplete="off"></textarea>
+            <textarea id="area" dir="rtl" name="area" tabindex="1" onkeydown="interceptOnKeyDown()" autocomplete="ignore"></textarea>
         </span>
     </div>
     <div id="basicKeyboard">
