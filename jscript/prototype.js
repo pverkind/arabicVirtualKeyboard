@@ -9,41 +9,92 @@ var vowSep = "\u180E";
 //var vowSep = "_";
 
 
-
-function wr(item) {
+// insert an item in the text area
+function wr(item, offset=0) {
+    //console.log("wr() item "+item);
     var input = sl('area');
-    if (sl("regexCheck0").checked) {
+    item = item.split(arLet).join("");
+    item = item.split(vowSep).join("");
+    item = item.split("\u25cc").join("");
+    //console.log("adapted item: "+item);
+    //console.log("adapted item length: "+item.length);
+    offsetQ = 1;
+    if (sl("regexCheck0").checked && sl("regexCheck").checked) {
+        offsetQ = 4;
+        item = item.split("");
+        var tr = vowSep+arLet+vowSep;
+        item = tr + item.join(tr) + tr;
+    } else if (sl("regexCheck0").checked) {
         /* add an Arabic letter mark (\u061C) after every character
         to fix the display order for every character from right to left*/
+        offsetQ = 2;
         item = item.split("");
-        item = item.join(arLet) + arLet;
-    } else {
-        item = item.replace(arLet, "");
-    }
-    if (sl("regexCheck").checked) {
+        item = arLet + item.join(arLet) + arLet;
+    } else if (sl("regexCheck").checked) {
         /* add a MONGOLIAN VOWEL SEPARATOR (\u180E) before every character
         to separate the Arabic characters */
+        offsetQ = 2;
         item = item.split("");
-        item = vowSep + item.join(vowSep);
-    } else {
-        item = item.replace("\u25cc", ""); /*remove the dotted circles from vowels*/
+        item = vowSep + item.join(vowSep) + vowSep;
     }
+    //console.log("item after adding/deleting separators: "+item);
+    //console.log("item length after adding/deleting separators: "+item.length);
+
+    // add or remove dotted vowel circles:
+    item = vowelSigns(item, include=sl("regexCheck").checked);
+    //console.log("item after adding/deleting vowel signs: "+item);
+    //console.log("item length after adding/deleting vowel signs: "+item.length);
+
     input.focus();
-    if (input.setSelectionRange) {
-        var srt = input.selectionStart;
-        var len = input.selectionEnd;
-        if (srt < len) srt++;
-        input.value = input.value.substring(0, srt) + item + input.value.substring(len);
-        input.setSelectionRange(srt + item.length, srt + item.length);
+    var srt = input.selectionStart;
+    var len = input.selectionEnd;
+    if (srt < len) srt++;
+    txt = input.value.substring(0, srt) + item + input.value.substring(len);
+    txt = txt.replace(vowSep+vowSep, vowSep);
+    txt = txt.replace(arLet+arLet, arLet);
+    txt = txt.replace(vowSep+arLet+vowSep+arLet, vowSep+arLet);
+    txt = txt.replace(arLet+vowSep+arLet+vowSep, arLet+vowSep);
+    input.value = txt;
+    if (offset > 0) {
+      console.log("srt: ", srt);
+      srt = toPrevChar(srt + (offsetQ * offset), txt);
+      input.setSelectionRange(srt, srt);
+      console.log("> ", srt);
     } else {
-        var range = document.selection.createRange();
-        range.text = item;
+      input.setSelectionRange(srt + item.length, srt + item.length);
     }
     input.focus();
     input.scrollTop = input.scrollHeight;
 }
 
+var vowels = [
+    '\u0652', //sukūn
+    '\u064b', //fatḥatān
+    '\u064c', //ḍammatān
+    '\u064d', //kasratān
+    '\u064e', //fatḥa
+    '\u064f', //ḍamma
+    '\u0650', //kasra
+    '\u0651', //shadda
+    '\u06e1', //Quranic sukūn
+    '\u08f0', //Quranic open fatḥatān
+    '\u08f1', //Quranic open ḍammatān
+    '\u08f2', //Quranic open kasratān
+    '\u0670', //dagger alif
+];
 
+function vowelSigns(txt, include=true) {
+  console.log("add vowel signs:"+include);
+  if (include) {
+    for (i=0; i<vowels.length; i++) {
+      txt = txt.split(vowels[i]).join("\u25cc"+vowels[i]); // add dotted circles
+    }
+    txt = txt.replace(/\u25cc+/g, "\u25cc");
+  } else {
+    txt = txt.split("\u25cc").join(""); // remove dotted circles
+  }
+  return txt;
+}
 
 /*function setSelectionRange(input, selectionStart, selectionEnd) {
     if (input.setSelectionRange) {
@@ -62,14 +113,14 @@ function wr(item) {
 // (before any ALM or character separator)
 function toPrevChar(pos, txt) {
   //console.log(pos);
-  while ([arLet, vowSep].includes(txt.substring(pos-1, pos))) pos--;
+  while ([arLet, vowSep, "\u25cc"].includes(txt.substring(pos-1, pos))) pos--;
   return pos;
 }
 
 // Move the cursor position to just before the next real character
 // (after any nonChar (i.e., ALM or character separator))
 function toNextChar(pos, txt) {
-  while ([arLet, vowSep].includes(txt.substring(pos, pos+1))) pos++;
+  while ([arLet, vowSep, "\u25cc"].includes(txt.substring(pos, pos+1))) pos++;
   return pos;
 }
 
@@ -81,16 +132,21 @@ function getSelection(target) {
 }
 
 function arrowR(shiftKey) {
+  // NB both arrow keys bring the caret to immediately after a character.
   var target = sl("area");
   [srt, end] = getSelection(target);
   //console.log([srt, end]);
   if (srt < end) {  // if something is selected, move cursor to start of selection
     srt = toPrevChar(srt, target.value);
-    if (shiftKey) srt--;
+    if (shiftKey) { // if shift is pressed, extend the selection to the right
+      srt--;
+      srt = toPrevChar(srt, target.value); // include all nonChars before character
+    }
     if (srt < 0) srt = 0; // make sure selection does not go beyond position 0
-  } else {  // if nothing is selected, move cursor to position before previous character
-    srt = toPrevChar(end, target.value);
+  } else {  // if nothing is selected, move cursor to  before previous character
+    srt = toPrevChar(srt, target.value);
     srt--;
+    srt = toPrevChar(srt, target.value);
   }
   if (shiftKey) {
     target.setSelectionRange(srt, end);
@@ -101,11 +157,16 @@ function arrowR(shiftKey) {
 }
 
 function arrowL(shiftKey) {
+  // NB: both arrow keys always bring caret to immediately after a character
   var target = sl("area");
   [srt, end] = getSelection(target);
   if (srt < end) {  // if something is selected, move cursor to end of selection
-    end = toNextChar(end, target.value);
-    if (shiftKey) end++;
+    srt = toPrevChar(srt, target.value);
+    end = toPrevChar(end, target.value);
+    if (shiftKey) {
+      toNextChar(end, target.value);
+      end++;
+    }
   } else {  // if nothing is selected, move cursor to position after next character
     end = toNextChar(end, target.value);
     end++;

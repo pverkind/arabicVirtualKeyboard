@@ -59,7 +59,7 @@
 <div id="keyboard">
     <div>
         <span>
-            <textarea id="area" dir="rtl" name="area" tabindex="1" onkeydown="checkKey()" onkeyup="insertALM()" autocomplete="off"></textarea>
+            <textarea id="area" dir="rtl" name="area" tabindex="1" onkeydown="interceptOnKeyDown()" autocomplete="off"></textarea>
         </span>
     </div>
     <div id="basicKeyboard">
@@ -124,9 +124,9 @@
                 <tr><td><button class="regexInput" onclick="wr('?')">?</button></td><td>Once or none</td><td>plurals?</td><td><b><mark>plural</mark></b> and <b><mark>plurals</mark></b></td></tr>
                 <tr><td><button class="regexInput" onclick="wr('*')">*</button></td><td>Zero or more times (greedy) </td><td>aB*a bB*b aB*</td><td><b><mark>aBBa bb aBBBBB</mark></b></td></tr>
                 <tr><td><button class="regexInput" onclick="wr('+')">+</button></td><td>One or more (greedy) </td><td>Version \w-\w+</td><td><b><mark>Version A-b1_100</mark></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{}')">{3}</button></td><td>Exactly three times</td><td>\D{3}</td><td><b><mark>ABC</mark></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{,}')">{2,4}</button></td><td>Two to four times (greedy) </td><td>\d{2,4}</td><td><b><mark>156</mark></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{,}')">{3,}</button></td><td>Three or more times (greedy) </td><td>\w{4,}</td><td><b><mark>regex_</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{}', offset = 1)">{3}</button></td><td>Exactly three times</td><td>\D{3}</td><td><b><mark>ABC</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{,}', offset = 1)">{2,4}</button></td><td>Two to four times (greedy) </td><td>\d{2,4}</td><td><b><mark>156</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{,}', offset = 1)">{3,}</button></td><td>Three or more times (greedy) </td><td>\w{4,}</td><td><b><mark>regex_</mark></b></td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('lazyQuantifiers')">Lazy quantifiers (w/ question mark) &or;</div>
@@ -134,8 +134,8 @@
             <table>
                 <tr><td><button class="regexInput" onclick="wr('??')">?</button></td><td>Once or none (lazy)</td><td>plurals?</td><td><b><mark>plural</mark></b> and <b><mark>plural</mark></b>s</td></tr>
                 <tr><td><button class="regexInput" onclick="wr('+?')">+?</button></td><td>One or more (lazy) </td><td>Version \w-\w+?</td><td><b><mark>Version A-b</mark></b>1_100</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{,}?')">{2,4}?</button></td><td>Two to four times (lazy) </td><td>\d{2,4}?</td><td><b><mark>15</mark></b>6</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('{,}?')">{3,}?</button></td><td>Three or more times (lazy) </td><td>\w{4,}?</td><td><b><mark>rege</mark></b>x_</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{,}?', offset = 1)">{2,4}?</button></td><td>Two to four times (lazy) </td><td>\d{2,4}?</td><td><b><mark>15</mark></b>6</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('{,}?', offset = 1)">{3,}?</button></td><td>Three or more times (lazy) </td><td>\w{4,}?</td><td><b><mark>rege</mark></b>x_</td></tr>
                 <tr><td><button class="regexInput" onclick="wr('*?')">*?</button></td><td>Zero or more times (lazy) </td><td>aB*a b* aB*?</td><td><b><mark>aBBa bb a</mark></b>BBBBB</td></tr>
             </table>
         </div>
@@ -143,19 +143,19 @@
         <div class="regexClass" id="logic">
             <table>
                 <tr><td><button class="regexInput" onclick="wr('|')">|</button></td><td>Alternation / OR operand</td><td>22|33</td><td><b><mark>22</mark></b> + 11 = <b><mark>33</mark></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('()')">( … )</button></td><td>Capturing group</td><td>A(nt|pple)</td><td>An <b><mark>A<span class="underline">nt</span></mark></b> on an <b><mark>A<span class="underline">pple</span></mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('()', offset=1)">( … )</button></td><td>Capturing group</td><td>A(nt|pple)</td><td>An <b><mark>A<span class="underline">nt</span></mark></b> on an <b><mark>A<span class="underline">pple</span></mark></b></td></tr>
                 <tr><td><button class="regexInput" onclick="wr(String.raw`\1`)">\1</button></td><td>Contents of Group 1</td><td>r(\w)g\1x</td><td><b><mark>regex</mark></b> not rigex</td></tr>
                 <tr><td><button class="regexInput" onclick="wr(String.raw`\2`)">\2</button></td><td>Contents of Group 2</td><td>(\d\d)\+(\d\d)=\2\+\1</td><td><b><mark>12+65=65+12</mark></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('(?:)')">(?: … )</button></td><td>Non-capturing group</td><td>A(?:nt|pple)</td><td>An <b><mark>Ant</mark></b> on an <b><mark>Apple</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?:)', offset=3)">(?: … )</button></td><td>Non-capturing group</td><td>A(?:nt|pple)</td><td>An <b><mark>Ant</mark></b> on an <b><mark>Apple</mark></b></td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('charClasses')">Character Classes &or;</div>
         <div class="regexClass" id="charClasses">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('[]')">[ … ]</button></td><td>One of the characters in the brackets</td><td>T[ao]p</td><td><b><mark>Tap</mark></b> and <b><mark>Top</mark></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('[-]')">[x-y]</button></td><td>One of the characters in the range from x to y</td><td>[A-Z]+</td><td><b><mark>UPPER</mark></b>case <b><mark>LE</mark></b>tter<b><mark>S</mark></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('[^]')">[^xy]</button></td><td>One character that is not x or y</td><td>[^12]</td><td><b><mark>A</mark></b>1<b><mark>b</mark></b>2<b><mark>+</mark></b>1</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('[^-]')">[^x-y]</button></td><td>One of the characters not in the range from x to y</td><td>[^a-z]{3}</td><td>ab<b><mark>A1! </mark></b>cd</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('[]', offset=1)">[ … ]</button></td><td>One of the characters in the brackets</td><td>T[ao]p</td><td><b><mark>Tap</mark></b> and <b><mark>Top</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('[-]', offset=1)">[x-y]</button></td><td>One of the characters in the range from x to y</td><td>[A-Z]+</td><td><b><mark>UPPER</mark></b>case <b><mark>LE</mark></b>tter<b><mark>S</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('[^]', offset=2)">[^xy]</button></td><td>One character that is not x or y</td><td>[^12]</td><td><b><mark>A</mark></b>1<b><mark>b</mark></b>2<b><mark>+</mark></b>1</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('[^-]', offset=2)">[^x-y]</button></td><td>One of the characters not in the range from x to y</td><td>[^a-z]{3}</td><td>ab<b><mark>A1! </mark></b>cd</td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('anchors')">Anchors and Boundaries &or;</div>
@@ -170,10 +170,10 @@
         <div class="regexTitle" onclick="Toggle('lookarounds')">Lookarounds &or;</div>
         <div class="regexClass" id="lookarounds">
             <table>
-                <tr><td><button class="regexInput" onclick="wr('(?=)')">(?=…)</button></td><td>Positive lookahead</td><td>(?=\d{10})\d{5}</td><td><b><mark>01234</mark></b>56789</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('(?\u3008=)')">(?&lt;=…)</button></td><td>Positive lookbehind</td><td>(?&lt;=\d\s)cat</td><td>1 <b><mark>cat</mark></b> white cat</td></tr>
-                <tr><td><button class="regexInput" onclick="wr('(?!)')">(?!…)</button></td><td>Negative lookahead</td><td>(?!theatre)the\w*</td><td><b><mark>the</mark></b> theatre <b><mark>theme</mark></b></td></tr>
-                <tr><td><button class="regexInput" onclick="wr('(?\u3008!)')">(?&lt;!…)</button></td><td>Negative lookbehind</td><td>(?&lt;!USD)\d{3,}</td><td>USD300 = GBP<b><mark>250</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?=)', offset = 3)">(?=…)</button></td><td>Positive lookahead</td><td>(?=\d{10})\d{5}</td><td><b><mark>01234</mark></b>56789</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?\u003e=)', offset = 4)">(?&lt;=…)</button></td><td>Positive lookbehind</td><td>(?&lt;=\d\s)cat</td><td>1 <b><mark>cat</mark></b> white cat</td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?!)', offset = 3)">(?!…)</button></td><td>Negative lookahead</td><td>(?!theatre)the\w*</td><td><b><mark>the</mark></b> theatre <b><mark>theme</mark></b></td></tr>
+                <tr><td><button class="regexInput" onclick="wr('(?\u003e!)', offset = 4)">(?&lt;!…)</button></td><td>Negative lookbehind</td><td>(?&lt;!USD)\d{3,}</td><td>USD300 = GBP<b><mark>250</mark></b></td></tr>
             </table>
         </div>
         <div class="regexTitle" onclick="Toggle('arabic')">Arabic Unicode &or;</div>
@@ -224,115 +224,273 @@
 </html>
 
 <script>
-  /*set up the modal message box*/
+  //set up the modal message box
   var modal = document.getElementById("msgBox");
   var modalContent = document.getElementsByClassName("modal-content")[0];
   var xSpan = document.getElementsByClassName("close")[0];
   function closeMsgBox() {
       modalContent.innerHTML = '<span class="close" onclick="closeMsgBox()">&times;</span>';
       modal.style.display = "none";
+      ar = document.getElementById("area");
+      ar.focus();
   }
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
     if (event.target == modal) {
       modalContent.innerHTML = '<span class="close" onclick="closeMsgBox()">&times;</span>';
       modal.style.display = "none";
+      ar = document.getElementById("area");
+      ar.focus();
     }
   }
 
 
+  // adapt the paste event in the text area: use the wr() function to input the copied text.
+  var ar = document.getElementById('area');
+  ar.onpaste = function(e) {
+    var pastedText = "";
+    if (window.clipboardData && window.clipboardData.getData) { // IE
+      pastedText = window.clipboardData.getData('Text');
+    } else if (e.clipboardData && e.clipboardData.getData) {
+      pastedText = e.clipboardData.getData('text/plain');
+    }
+    wr(pastedText);
+    return false; // Prevent the default handler from running.
+  };
 
-  function copy2Clipboard(msg="") {
-    /* Get the text field */
+
+  // Adapt the text area content on checkbox change:
+  var checkboxids = ["regexCheck0", "regexCheck"];
+  for(var i = 0; i < checkboxids.length; i++) {
+    var chckbx = document.getElementById(checkboxids[i]);
+    chckbx.onchange = function() {
+      console.log(this.id+"changed");
+      console.log("> regexCheck0 (RTL): "+document.getElementById("regexCheck0").checked);
+      console.log("> regexCheck (letter sep): "+document.getElementById("regexCheck").checked);
+      ar = document.getElementById("area");
+      ar.focus();
+      cont = ar.value;
+      srt = toPrevChar(ar.selectionStart, ar.value);
+      end = toPrevChar(ar.selectionEnd, ar.value);
+      console.log("srt, end: "+[srt, end]);
+      console.log(ar.value);
+      ar.value = "";
+      wr(cont);
+      if (this.id==="regexCheck") { // letter separation checkbox changed
+        //console.log(vowels.join("|"));
+        var vowelRegex = new RegExp(vowels.join("|"), 'g');
+        console.log("before adjusting for adding/removing vowel circles: ");
+        console.log("  before sel: "+ar.value.substring(0,srt));
+        //console.log(ar.value.substring(0,srt).match(vowelRegex));
+        //console.log((ar.value.substring(0,srt).match(vowelRegex) || []).length);
+        console.log("  sel itself: "+ar.value.substring(srt,end));
+        //console.log(ar.value.substring(srt,end).match(vowelRegex));
+        //console.log((ar.value.substring(srt,end).match(vowelRegex) || []).length);
+        vowelsBefore = (cont.substring(0,srt).match(vowelRegex) || []).length;
+        vowelsInSel = (cont.substring(srt,end).match(vowelRegex) || []).length;
+        if (this.checked) {
+          srt = (srt*2) + vowelsBefore;
+          end = (end*2) + vowelsBefore + vowelsInSel;
+        } else {
+          srt =(srt - vowelsBefore) / 2;
+          end = (end - vowelsBefore - vowelsInSel) / 2;
+        }
+        console.log("after adjusting for adding/removing vowel circles: ");
+        console.log("  before sel: "+ar.value.substring(0,srt));
+        console.log("  sel itself: "+ar.value.substring(srt,end));
+      } else {
+        var circle = new RegExp("\u25cc", "g");
+        var vowelsBefore = (cont.substring(0,srt).match(circle) || []).length;
+        var vowelsInSel = (cont.substring(srt,end).match(circle) || []).length;
+        if (this.checked) {
+          srt = ((srt - vowelsBefore) * 2) + vowelsBefore;
+          end = ((end - vowelsBefore - vowelsInSel) * 2) + vowelsBefore + vowelsInSel;
+        } else {
+          srt = ((srt - vowelsBefore) / 2) + vowelsBefore;
+          end = ((end - vowelsBefore - vowelsInSel) / 2) + vowelsBefore + vowelsInSel;
+        }
+      }
+      srt = Math.max(0, toPrevChar(srt, ar.value));
+      end = Math.min(ar.value.length, toPrevChar(end, ar.value));
+      //console.log(this.checked);
+      console.log(">"+[srt, end]);
+      //console.log("this is "+this.id);
+      //console.log(this.id==="regexCheck");
+
+      ar.setSelectionRange(srt, end);
+    }
+  }
+
+  function copy2Clipboard(msg="", asIs=false) {
+    // Get the text field
     var ar = document.getElementById("area");
-    /* check if something is selected: */
+    // check if something is selected:
     if (ar.selectionStart === ar.selectionEnd) {
       var copyText = ar.value;
     } else {
       var copyText = (ar.value).substring(ar.selectionStart, ar.selectionEnd);
     }
     var originalAreaContent = ar.value;
-    var originalAreaSelection = (ar.selectionStart, ar.selectionEnd);
-    /* remove the special characters: */
-    var temp_copyText = copyText.split("\u25CC").join(""); /*dotted circle*/
-    temp_copyText = temp_copyText.split("\u200A").join(""); /*hair space*/
-    /*var temp_copyText = temp_copyText.split("\u200C").join("");*/ /*Zero-width non-joiner*/
-    temp_copyText = temp_copyText.split("\u061C").join(""); /*Arabic letter mark*/
-    temp_copyText = temp_copyText.split("\u180E").join(""); /*Mongolian Vowel Separator*/
-    temp_copyText = temp_copyText.split("\u200E").join(""); /*left-to-right mark*/
-    /* put the manipulated text into the textarea */
-    ar.value = temp_copyText;
-    /* Select the text field */
-    ar.select();
-    /* Copy the text inside the text field */
-    document.execCommand("copy");
-    /* Put the original copyText back into the textarea */
-    ar.value = originalAreaContent;
-    /* Alert the copied text */
+    var srt = ar.selectionStart;
+    var end = ar.selectionEnd;
+    if (asIs) { // copy with all separators
+      //console.log("Copying as is...");
+      // Select the text field:
+      ar.value = copyText;
+      ar.select();
+      // Copy the text inside the text field:
+      document.execCommand("copy");
+      ar.value = originalAreaContent;
+      ar.setSelectionRange(srt, end);
+    } else { // copy without separators
+      //console.log(asIs);
+      // remove the special characters:
+      var temp_copyText = copyText.split("\u25CC").join(""); //dotted circle
+      temp_copyText = temp_copyText.split("\u200A").join(""); //hair space
+      temp_copyText = temp_copyText.split("\u061C").join(""); //Arabic letter mark
+      temp_copyText = temp_copyText.split("\u180E").join(""); //Mongolian Vowel Separator
+      temp_copyText = temp_copyText.split("\u200E").join(""); //left-to-right mark
+      // put the manipulated text into the textarea
+      ar.value = temp_copyText;
+      // Select the text field
+      ar.select();
+      // Copy the text inside the text field
+      document.execCommand("copy");
+      // Put the original copyText back into the textarea
+      ar.value = originalAreaContent;
+      ar.setSelectionRange(srt, end);
 
-    if (originalAreaContent) {
-      /*alert(msg+"Copied the text: " + copyText + " as " + temp_copyText);*/
-      var modal = document.getElementById("msgBox");
-      var modalContent = document.getElementsByClassName("modal-content")[0];
-      var p = document.createElement("p");
-      /*var t = '<br/>You can inspect the characters copied \
-      <a href="http://www.babelstone.co.uk/Unicode/whatisit.html" \
-      target="_blank">here</a>';*/
-      var link = 'http://www.babelstone.co.uk/Unicode/whatisit.html?string=';
-      var t = '<br/>You can inspect the characters copied <a href="';
-      t = t + link + temp_copyText + '" target="_blank">here</a>';
-      p.innerHTML = msg+"Copied the text: " + copyText + " as " + temp_copyText + t;
-      modalContent.appendChild(p);
-      modal.style.display = "block";
+      if (originalAreaContent) {
+        var modal = document.getElementById("msgBox");
+        var modalContent = document.getElementsByClassName("modal-content")[0];
+        var p = document.createElement("p");
+        var link = 'http://www.babelstone.co.uk/Unicode/whatisit.html?string=';
+        var t = "<br/> (Use ctrl+shift+C to copy the text as is)"
+        t = t + '<br/>You can inspect the characters copied <a href="';
+        t = t + link + temp_copyText + '" target="_blank">here</a>';
+        p.innerHTML = msg+"Copied the text: " + copyText + " as " + temp_copyText + t;
+        modalContent.appendChild(p);
+        modal.style.display = "block";
+      }
     }
   }
 
-  function checkKey() {
-    // prevent default function of selected keys at keypress
-    var keyID = event.which;
-    var disableArray = [8,   // backspace
-                        46,  // del
-                        37,  // left arrow
-                        39]; // right arrow
-    if (disableArray.includes(keyID)) {
-      event.preventDefault();
-    }
-  }
 
-  function insertALM () {
-      /* ALM = Arabic letter mark, U+061C, "a non-printing character used in the
-      computerized typesetting of bi-directional text containing mixed
-      left-to-right scripts and right-to-left scripts.
-      Similar to Right-to-left mark (RLM), it is used to change the way
-      adjacent characters are grouped with respect to text direction" */
+  // Change the functionality of some keys:
+  function interceptOnKeyDown() {
+      //console.log("keyDown: "+event.key);
       var keyID = event.which;
+      //console.log(event.key);
+      if (event.ctrlKey) { // if Ctrl key is pressed:
+        if (keyID === 67) {  // check if c key is also pressed;
+          // if so, adapt the copy event:
+          event.preventDefault();
+          if(event.shiftKey) {  // ctrl+shift+c: copy as is
+            copy2Clipboard(msg="", asIs=true);
+          } else {  // ctrl+c: copy without the separator characters
+            copy2Clipboard();
+          }
+        } else {
+          // do nothing: let the standard event happen (ctrl+v, ctrl+f, ...)
+        }
+      } else if (keyID === 8) { // if backspace key is pressed:
+        event.preventDefault();
+        backspace();
+      } else if (keyID === 46) { // if delete key is pressed:
+        event.preventDefault();
+        del();
+      } else if (keyID === 37) { // if arrow left key is pressed:
+        event.preventDefault();
+        arrowL(event.shiftKey);
+      } else if (keyID === 39) { // if arrow right key is pressed:
+        event.preventDefault();
+        arrowR(event.shiftKey);
+      } else if (event.key.length === 1) { // use wr() function to insert letter and number keys
+        event.preventDefault();
+        wr(event.key);
+      } else {
+        // do nothing: normal functionality of the key.
+      }
+  }
+
+  /*function interceptOnKeyDown() {
+    // prevent default function of selected keys at keypress
+    //var keyID = event.which;
+    //var disableArray = [8,   // backspace
+    //                    46,  // del
+    //                    37,  // left arrow
+    //                    39]; // right arrow
+    //if (disableArray.includes(keyID)) {
+    //  event.preventDefault();
+    //} else if (keyID === 67 && event.ctrlKey && event.shiftKey) {
+    //  console.log("ctrl+shift+c");
+    //  event.preventDefault();
+    //}
+
+    console.log("keyDown: "+event.key);
+    var keyID = event.which;
+    //console.log(event.key+event.key.length);
+    if (event.key.length === 1) {
+      console.log(event.key);
+      console.log((event.ctrlKey && event.altKey));
+      console.log(event.key === 'AltGraph');
+      if (!((event.ctrlKey && event.altKey) || event.key === 'AltGraph')) {
+        event.preventDefault();
+        console.log("default prevented");
+      } else console.log("default not prevented");
+    } else {
+      var disableArray = [8,   // backspace
+                          46,  // del
+                          37,  // left arrow
+                          39]; // right arrow
+      if (disableArray.includes(keyID)) {
+        event.preventDefault();
+      }
+    }
+  }
+
+  function interceptOnKeyUp () {
+      // ALM = Arabic letter mark, U+061C, "a non-printing character used in the
+      //computerized typesetting of bi-directional text containing mixed
+      //left-to-right scripts and right-to-left scripts.
+      //Similar to Right-to-left mark (RLM), it is used to change the way
+      //adjacent characters are grouped with respect to text direction"
+      console.log("keyUp: "+event.key);
+      var keyID = event.which;
+      console.log(event.key);
       //console.log("keyID:"+keyID);
-      var ignoreArray = [38, 40, /*up and down arrow buttons*/
-                         35, 36, /*home and end*/
-                         17, 18, /*alt and ctrl*/
-                         20, 16, /*caps lock and shift*/
+      var ignoreArray = [38, 40, //up and down arrow buttons
+                         35, 36, //home and end
+                         17, 18, 225, //alt, ctrl, altgr
+                         20, 16, //caps lock and shift
                          ];
       if (ignoreArray.includes(keyID)) {
+        //console.log(keyID);
         //do nothing
-      }  else if (keyID === 67) { /* if C key is pressed:*/
-          if (event.ctrlKey) {  /* check if ctrl is also pressed; if so, copy*/
-            copy2Clipboard();
+      }  else if (keyID === 67) { // if C key is pressed:
+          if (event.ctrlKey) {  // check if ctrl is also pressed; if so, copy
+            if(event.shiftKey) {
+              console.log("shift key pressed");
+              copy2Clipboard(msg="", asIs=true);
+            } else {
+              console.log("shift key not detected");
+              copy2Clipboard();
+            }
           } else {
-            wr("");
+            wr(event.key);
           }
-      } else if (keyID === 8) { /* if backspace key is pressed:*/
+      } else if (keyID === 8) { // if backspace key is pressed:
         backspace();
-      } else if (keyID === 46) { /* if delete key is pressed:*/
+      } else if (keyID === 46) { // if delete key is pressed:
         del();
-      } else if (keyID === 37) { /* if arrow left key is pressed:*/
+      } else if (keyID === 37) { // if arrow left key is pressed:
          arrowL(event.shiftKey);
-      } else if (keyID === 39) { /* if arrow right key is pressed:*/
+      } else if (keyID === 39) { // if arrow right key is pressed:
          arrowR(event.shiftKey);
       } else {
-          wr("");
+          wr(event.key);
       }
-      /*switchEscapes();*/
-  }
+  }*/
 
     populateInitialKeys()
     function populateInitialKeys() {
@@ -348,7 +506,7 @@
             ["٨", ""],
             ["٩", ""],
             ["٠", ""],
-            ["\u279e", "backspace"], /*Row 1*/
+            ["\u279e", "backspace"],                                  // Row 1
             ["ض", ""],
             ["ص", ""],
             ["ث", ""],
@@ -360,7 +518,7 @@
             ["خ", ""],
             ["ح", ""],
             ["ج", ""],
-            ["د", ""],  /*Row 2*/
+            ["د", ""],                                                 //Row 2
             ["ش", ""],
             ["س", ""],
             ["ي", ""],
@@ -372,7 +530,7 @@
             ["م", ""],
             ["ك", ""],
             ["ط", ""],
-            [String.raw`\n`, "enter"],  /*Row 3*/
+            [String.raw`\n`, "enter"],                                // Row 3
             ["ئ", ""],
             ["ء", ""],
             ["ؤ", ""],
@@ -383,7 +541,7 @@
             ["و", ""],
             ["ز", ""],
             ["ظ", ""],
-            ["ـ", "taṭwīl (kashīda)"], /*Row 4*/
+            ["ـ", "taṭwīl (kashīda)"],                                // Row 4
             ['،', "Arabic comma"],
             [':', "colon"],
             ['؛', "Arabic semicolon"],
@@ -391,29 +549,29 @@
             ['\u200c', "zero-width non-joiner (فاصلهٔ مجازی)"],
             ['؟', "Arabic question mark"],
             ['.', "full stop"],
-            ["!", "exclamation mark"],/*Row 5*/
+            ["!", "exclamation mark"],                                // Row 5
             ];
         for (i=0; i<basic.length; i++) {
             addKey(basic[i][0], basic[i][1], keyGridNo=0);
         }
         var additional = [
-            ['\u25ccْ',"sukūn"],
-            ['\u25ccً', "fatḥatān"],
-            ['\u25ccٌ',"ḍammatān"],
-            ['\u25ccٍ', "kasratān"],
-            ['\u25ccَ', "fatḥa"],
-            ['\u25ccُ', "ḍamma"],
-            ['\u25ccِ',"kasra"],
-            ['\u25ccّ', "shadda"],
+            ['\u25cc\u0652',"sukūn"],
+            ['\u25cc\u064b', "fatḥatān"],
+            ['\u25cc\u064c',"ḍammatān"],
+            ['\u25cc\u064d', "kasratān"],
+            ['\u25cc\u064e', "fatḥa"],
+            ['\u25cc\u064f', "ḍamma"],
+            ['\u25cc\u0650',"kasra"],
+            ['\u25cc\u0651', "shadda"],
             ['آ', "alif madda"],
             ['ٱ', "alif waṣla"],
             ['أ', "alif with hamza on top"],
-            ['إ', "alif with hamza below"],   /*Row 6*/
+            ['إ', "alif with hamza below"],                           // Row 6
             ['\u25cc\u06e1',"Quranic sukūn"],
             ['\u25cc\u08f0',"Quranic open fatḥatān"],
             ['\u25cc\u08f1',"Quranic open ḍammatān"],
             ['\u25cc\u08f2',"Quranic open kasratān"],
-            ['\u25ccٰ',"dagger alif"],
+            ['\u25cc\u0670',"dagger alif"],
         ];
         var palaeo = [
             ['ٮ',"dotless b"],
@@ -422,7 +580,7 @@
             ['ٯ',"dotless q"],
             ['ڧ',"maghrebi q"],
             ['ڢ',"maghrebi f"],
-            ['ٯ\u065c',"qāf with dot below"],/*Row 7*/
+            ['ٯ\u065c',"qāf with dot below"],                         // Row 7
         ];
         var persian = [
             ["۱", "Persian digit 1"],
@@ -436,7 +594,7 @@
             ["۹", "Persian digit 9"],
             ["۰", "Persian digit 0"],
             ['پ', "Persian peh"],
-            ['چ', "Persian cheh"],     /*Row 8*/
+            ['چ', "Persian cheh"],                                     //Row 8
             ['ژ', "Persian zheh"],
             ['ک', "Persian kāf"],
             ['گ', "Persian gāf"],
@@ -450,7 +608,7 @@
             ['-', "hyphen"],
             ['+', "plus"],
             ['*', "asterisk"],
-            ['|', "vertical bar (pipe)"],     /*Row 9*/
+            ['|', "vertical bar (pipe)"],                             // Row 9
             ['/', "forward slash"],
             [String.raw`\\`, "backslash"],
             ['(', "opening bracket"],
@@ -493,14 +651,14 @@
        if (character === "none") {
            var character = document.getElementById("extraInput0").value;
            var alias = document.getElementById("extraInputDescr0").value;
-           /* add the key to the cookie */
+           // add the key to the cookie:
            var keys = getKeysFromCookie();
            keys.push([character, alias]);
            console.log("new cookie: keys: ");
            console.log(keys);
            createCookie("keys", JSON.stringify(keys), 365);
        }
-       /*Add the character to the grid: */
+       // Add the character to the grid:
        var keyCharacterDiv = document.createElement("div");
        if (character===String.raw`\n`) {
          keyCharacterDiv.innerHTML = "\u2937";
@@ -569,10 +727,11 @@
         }
         return "";
     }
+
     function resetKeys() {
         createCookie("keys", "", 365);
         copy2Clipboard(msg="Reloading the page. ");
-        /* reload the page: */
+        // reload the page:
         location = location;
     }
 </script>
