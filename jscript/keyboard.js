@@ -4,9 +4,10 @@ const vowSep = "\u180E"; // Mongolian vowel separator
 const circle = "\u25cc"; // dotted circle for diacritics
 // */
 /*
-for testing purposes:
+// for testing purposes:
 const arLet = "-";
 const vowSep = "_";
+const circle = "\u25cc"; // dotted circle for diacritics
 // */
 
 
@@ -523,7 +524,7 @@ var vowels = [
 ];
 
 function vowelSigns(txt, include=true) {
-  console.log("add vowel signs:"+include);
+  //console.log("add vowel signs:"+include);
   if (include) {
     for (i=0, j=vowels.length; i<j; i++) {
       txt = txt.split(vowels[i]).join(circle+vowels[i]); // add dotted circles
@@ -675,7 +676,7 @@ function arrowL(shiftKey) {
   [srt, end] = getSelection(target, prev=true);
   if (srt < end) {   // if something is selected
     if (shiftKey) {  // if shift is pressed, extend the selection to the left
-      toNextChar(end, target.value);
+      end = toNextChar(end, target.value);
       end++;
     } else {         // if shift is not pressed, move cursor to end of selection
       srt = end;
