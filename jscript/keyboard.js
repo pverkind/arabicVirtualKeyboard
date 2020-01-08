@@ -15,162 +15,207 @@ const circle = "\u25cc"; // dotted circle for diacritics
 
 // Populate the virtual keyboard's keys:
 
+var shownCategories = [];
+
+var basic = [
+    ["ذ", ""],
+    ["١", ""],
+    ["٢", ""],
+    ["٣", ""],
+    ["٤", ""],
+    ["٥", ""],
+    ["٦", ""],
+    ["٧", ""],
+    ["٨", ""],
+    ["٩", ""],
+    ["٠", ""],
+    ["\u279e", "backspace"],                                  // Row 1
+    ["ض", ""],
+    ["ص", ""],
+    ["ث", ""],
+    ["ق", ""],
+    ["ف", ""],
+    ["غ", ""],
+    ["ع", ""],
+    ["ه", ""],
+    ["خ", ""],
+    ["ح", ""],
+    ["ج", ""],
+    ["د", ""],                                                 //Row 2
+    ["ش", ""],
+    ["س", ""],
+    ["ي", ""],
+    ["ب", ""],
+    ["ل", ""],
+    ["ا", ""],
+    ["ت", ""],
+    ["ن", ""],
+    ["م", ""],
+    ["ك", ""],
+    ["ط", ""],
+    [String.raw`\n`, "enter"],                                // Row 3
+    ["ئ", ""],
+    ["ء", ""],
+    ["ؤ", ""],
+    ["ر", ""],
+    ["لا", ""],
+    ["ى", ""],
+    ["ة", ""],
+    ["و", ""],
+    ["ز", ""],
+    ["ظ", ""],
+    ["ـ", "taṭwīl (kashīda)"],                                // Row 4
+    ['،', "Arabic comma"],
+    [':', "colon"],
+    ['؛', "Arabic semicolon"],
+    [" ", ""],
+    ['\u200c', "zero-width non-joiner (فاصلهٔ مجازی)"],
+    ['؟', "Arabic question mark"],
+    ['.', "full stop"],
+    ["!", "exclamation mark"],                                // Row 5
+    ];
+
 populateInitialKeys()
 function populateInitialKeys() {
-  var basic = [
-        ["ذ", ""],
-        ["١", ""],
-        ["٢", ""],
-        ["٣", ""],
-        ["٤", ""],
-        ["٥", ""],
-        ["٦", ""],
-        ["٧", ""],
-        ["٨", ""],
-        ["٩", ""],
-        ["٠", ""],
-        ["\u279e", "backspace"],                                  // Row 1
-        ["ض", ""],
-        ["ص", ""],
-        ["ث", ""],
-        ["ق", ""],
-        ["ف", ""],
-        ["غ", ""],
-        ["ع", ""],
-        ["ه", ""],
-        ["خ", ""],
-        ["ح", ""],
-        ["ج", ""],
-        ["د", ""],                                                 //Row 2
-        ["ش", ""],
-        ["س", ""],
-        ["ي", ""],
-        ["ب", ""],
-        ["ل", ""],
-        ["ا", ""],
-        ["ت", ""],
-        ["ن", ""],
-        ["م", ""],
-        ["ك", ""],
-        ["ط", ""],
-        [String.raw`\n`, "enter"],                                // Row 3
-        ["ئ", ""],
-        ["ء", ""],
-        ["ؤ", ""],
-        ["ر", ""],
-        ["لا", ""],
-        ["ى", ""],
-        ["ة", ""],
-        ["و", ""],
-        ["ز", ""],
-        ["ظ", ""],
-        ["ـ", "taṭwīl (kashīda)"],                                // Row 4
-        ['،', "Arabic comma"],
-        [':', "colon"],
-        ['؛', "Arabic semicolon"],
-        [" ", ""],
-        ['\u200c', "zero-width non-joiner (فاصلهٔ مجازی)"],
-        ['؟', "Arabic question mark"],
-        ['.', "full stop"],
-        ["!", "exclamation mark"],                                // Row 5
-        ];
-    for (i=0, j=basic.length; i<j; i++) {
-        addKey(basic[i][0], basic[i][1], keyGridNo=0);
-    }
-    var additional = [
-        [circle+'\u0652',"sukūn"],
-        [circle+'\u064b', "fatḥatān"],
-        [circle+'\u064c',"ḍammatān"],
-        [circle+'\u064d', "kasratān"],
-        [circle+'\u064e', "fatḥa"],
-        [circle+'\u064f', "ḍamma"],
-        [circle+'\u0650',"kasra"],
-        [circle+'\u0651', "shadda"],
-        ['آ', "alif madda"],
-        ['ٱ', "alif waṣla"],
-        ['أ', "alif with hamza on top"],
-        ['إ', "alif with hamza below"],                           // Row 6
-        [circle+'\u06e1',"Quranic sukūn"],
-        [circle+'\u08f0',"Quranic open fatḥatān"],
-        [circle+'\u08f1',"Quranic open ḍammatān"],
-        [circle+'\u08f2',"Quranic open kasratān"],
-        [circle+'\u0670',"dagger alif"],
-    ];
-    var palaeo = [
-        ['ٮ',"dotless b"],
-        ['ں',"dotless n"],
-        ['ڡ',"dotless f"],
-        ['ٯ',"dotless q"],
-        ['ڧ',"maghrebi q"],
-        ['ڢ',"maghrebi f"],
-        ['ٯ\u065c',"qāf with dot below"],                         // Row 7
-    ];
-    var persian = [
-        ["۱", "Persian digit 1"],
-        ["۲", "Persian digit 2"],
-        ["۳", "Persian digit 3"],
-        ["۴", "Persian digit 4"],
-        ["۵", "Persian digit 5"],
-        ["۶", "Persian digit 6"],
-        ["۷", "Persian digit 7"],
-        ["۸", "Persian digit 8"],
-        ["۹", "Persian digit 9"],
-        ["۰", "Persian digit 0"],
-        ['پ', "Persian peh"],
-        ['چ', "Persian cheh"],                                     //Row 8
-        ['ژ', "Persian zheh"],
-        ['ک', "Persian kāf"],
-        ['گ', "Persian gāf"],
-        ['ی', "Persian yeh"],
-        ['\u06c2', "Persian heh-yeh"],
-    ];
-    var regexchars = [
-        ['.', "full stop"],
-        [',', "latin comma"],
-        ['?', "latin question mark"],
-        ['-', "hyphen"],
-        ['+', "plus"],
-        ['*', "asterisk"],
-        ['|', "vertical bar (pipe)"],                             // Row 9
-        ['/', "forward slash"],
-        [String.raw`\\`, "backslash"],
-        ['(', "opening bracket"],
-        [')', "closing bracket"],
-        ['[', "opening square bracket"],
-        [']', "closing square bracket"],
-        ['{‎', "opening brace"],
-        ['}‎', "closing brace"],
-        ['<', "opening angular bracket"],
-        ['>', "closing angular bracket"],
-        ['^', "caret / circonflex"],
-        ['$', "dollar sign"],
-        ['@', "ampersand"],
-        ['%', "percent / modulo"],
-        ['"', "double quote"],
-        ["'", "single quote"],
-        ["_", "underscore"],
-        ["=", "equals"],
-    ];
-    var cookieKeys = getKeysFromCookie();
-    var categories = [additional, palaeo, persian, regexchars, cookieKeys];
-    for (i=0, j=categories.length; i<j; i++) {
-        var cat = categories[i];
-        for (k=0, l=cat.length; k<l; k++) {
-          addKey(cat[k][0], cat[k][1], keyGridNo=1);
-      }
-    }
+  addKeys(basic, keyGridNo=0);
 }
 
+var additional = [
+    [circle+'\u0652',"sukūn"],
+    [circle+'\u064b', "fatḥatān"],
+    [circle+'\u064c',"ḍammatān"],
+    [circle+'\u064d', "kasratān"],
+    [circle+'\u064e', "fatḥa"],
+    [circle+'\u064f', "ḍamma"],
+    [circle+'\u0650',"kasra"],
+    [circle+'\u0651', "shadda"],
+    ['آ', "alif madda"],
+    ['ٱ', "alif waṣla"],
+    ['أ', "alif with hamza on top"],
+    ['إ', "alif with hamza below"],                           // Row 6
+];
+var palaeo = [
+    [circle+'\u06e1',"Quranic sukūn"],
+    [circle+'\u08f0',"Quranic open fatḥatān"],
+    [circle+'\u08f1',"Quranic open ḍammatān"],
+    [circle+'\u08f2',"Quranic open kasratān"],
+    [circle+'\u0670',"dagger alif"],
+    ['ٮ',"dotless b"],
+    ['ں',"dotless n"],
+    ['ڡ',"dotless f"],
+    ['ٯ',"dotless q"],
+    ['ڧ',"maghrebi q"],
+    ['ڢ',"maghrebi f"],
+    ['ٯ\u065c',"qāf with dot below"],                         // Row 7
+];
+var persian = [
+    ["۱", "Persian digit 1"],
+    ["۲", "Persian digit 2"],
+    ["۳", "Persian digit 3"],
+    ["۴", "Persian digit 4"],
+    ["۵", "Persian digit 5"],
+    ["۶", "Persian digit 6"],
+    ["۷", "Persian digit 7"],
+    ["۸", "Persian digit 8"],
+    ["۹", "Persian digit 9"],
+    ["۰", "Persian digit 0"],
+    ['پ', "Persian peh"],
+    ['چ', "Persian cheh"],                                     //Row 8
+    ['ژ', "Persian zheh"],
+    ['ک', "Persian kāf"],
+    ['گ', "Persian gāf"],
+    ['ی', "Persian yeh"],
+    ['\u06c2', "Persian heh-yeh"],
+];
+var regexchars = [
+    ['.', "dot"],
+    [',', "latin comma"],
+    ['?', "latin question mark"],
+    ['-', "hyphen"],
+    ['+', "plus"],
+    ['*', "asterisk"],
+    ['|', "vertical bar (pipe)"],                             // Row 9
+    ['/', "forward slash"],
+    [String.raw`\\`, "backslash"],
+    ['(', "opening bracket"],
+    [')', "closing bracket"],
+    ['[', "opening square bracket"],
+    [']', "closing square bracket"],
+    ['{‎', "opening brace"],
+    ['}‎', "closing brace"],
+    ['<', "opening angular bracket"],
+    ['>', "closing angular bracket"],
+    ['^', "caret / circonflex"],
+    ['$', "dollar sign"],
+    ['@', "ampersand"],
+    ['%', "percent / modulo"],
+    ['"', "double quote"],
+    ["'", "single quote"],
+    ["_", "underscore"],
+    ["=", "equals"],
+];
+
+
+var cookieKeys = getKeysFromCookie();
 function getKeysFromCookie() {
-   var cookie_keys = getCookie("keys");
-   if (cookie_keys) {
-       return JSON.parse(cookie_keys);
-   } else {
-       return [];
-   }
+  var cookie_keys = getCookie("keys");
+  if (cookie_keys) {
+    return JSON.parse(cookie_keys);
+  } else {
+    return [];
+  }
 }
 
-function addKey(character, alias, keyGridNo=1) {
+var keyCategories = [additional, palaeo, persian, regexchars, cookieKeys];
+
+function toggleAllKeys() {
+  makeVisible('extraRows');
+  var keyToggles = document.getElementsByClassName("keyToggle");
+  if (shownCategories.length === keyCategories.length) { // all are displayed
+    removeAllKeys();
+    for (i=0, j=keyToggles.length; i<j-1; i++) {  // switch off all toggles except cheatsheet
+      keyToggles[i].checked = false;
+    }
+  } else {  // some or no toggles are checked
+    removeAllKeys();
+    // refresh the cookieKeys in the keyCategories array:
+    keyCategories = keyCategories.slice(0, -1);
+    keyCategories.push(cookieKeys);
+    for (i=0, j=keyCategories.length; i<j; i++) {
+      var cat = keyCategories[i];
+      addKeys(cat, keyGridNo=1);
+    }
+    for (i=0, j=keyToggles.length; i<j-1; i++) {  // switch on all toggles except cheatsheet
+      keyToggles[i].checked = true;
+    }
+  }
+}
+
+
+function addKeys(cat, keyGridNo) {
+  if (keyGridNo === 1) makeVisible('extraRows');
+  if (!shownCategories.includes(cat)) {
+    for (k=0, l=cat.length; k<l; k++) {
+      addKey(cat[k][0], cat[k][1], keyGridNo, cat);
+    }
+    if (keyGridNo === 1) shownCategories.push(cat);
+    if (cat === cookieKeys) makeVisible('addNewKeyInput');
+  } else {
+    removeKeys(cat, keyGridNo)
+    if (cat === cookieKeys) toggle('addNewKeyInput');
+  }
+  console.log(shownCategories);
+  if (shownCategories.length !== 0) {
+    if (shownCategories.length === keyCategories.length) {
+      document.getElementById("c6").checked = true;
+    } else {
+      document.getElementById("c6").checked = false;
+    }
+  }
+}
+
+function addKey(character, alias, keyGridNo=1, cat="") {
+   // new character added by user:
    if (character === "none") {
        var character = document.getElementById("extraInput0").value;
        var alias = document.getElementById("extraInputDescr0").value;
@@ -180,24 +225,29 @@ function addKey(character, alias, keyGridNo=1) {
        console.log("new cookie: keys: ");
        console.log(keys);
        createCookie("keys", JSON.stringify(keys), 365);
+       removeKeys(cookieKeys, keyGridNo=1);
+       shownCategories = shownCategories.filter(function(e) { return e !== cookieKeys});
+       cookieKeys = keys;
+       addKeys(cookieKeys, keyGridNo=1);
+       return true;
    }
    // Add the character to the grid:
    var keyCharacterDiv = document.createElement("div");
    if (character===String.raw`\n`) {
      keyCharacterDiv.innerHTML = "\u2937";
-     keyCharacterDiv.setAttribute("class", "keyCharacter tooltip enter");
+     keyCharacterDiv.setAttribute("class", "keyCharacter tooltip enter "+cat);
    } else if (character===String.raw`\\`) {
      keyCharacterDiv.innerHTML = "&#92;";
-     keyCharacterDiv.setAttribute("class", "keyCharacter tooltip");
+     keyCharacterDiv.setAttribute("class", "keyCharacter tooltip "+cat);
    } else  if (character==='\u200c') {
      keyCharacterDiv.innerHTML = '<img src="img/zwnj.bmp" style="height:25px; padding-top:3px"></img>';
-     keyCharacterDiv.setAttribute("class", "keyCharacter tooltip");
+     keyCharacterDiv.setAttribute("class", "keyCharacter tooltip "+cat);
    } else{
      keyCharacterDiv.innerHTML = character;
      if (character===" ") {
-       keyCharacterDiv.setAttribute("class", "keyCharacter tooltip space");
+       keyCharacterDiv.setAttribute("class", "keyCharacter tooltip space "+cat);
      } else {
-       keyCharacterDiv.setAttribute("class", "keyCharacter tooltip");
+       keyCharacterDiv.setAttribute("class", "keyCharacter tooltip "+cat);
      }
    }
    if (alias==="backspace") {
@@ -205,6 +255,7 @@ function addKey(character, alias, keyGridNo=1) {
    } else {
        keyCharacterDiv.setAttribute("onclick", "wr('"+character+"')");
    }
+   keyCharacterDiv.id = makeKeyId(character, alias);
    document.getElementsByClassName("keyGrid")[keyGridNo].appendChild(keyCharacterDiv);
    if (alias) {
        var ttSpan = document.createElement("span");
@@ -212,6 +263,41 @@ function addKey(character, alias, keyGridNo=1) {
        ttSpan.innerHTML = alias;
        keyCharacterDiv.appendChild(ttSpan);
    }
+   return true;
+}
+
+function makeKeyId(character, alias) {
+  if (alias) {
+    return "key_"+alias.replace(new RegExp("\W+", "g"), "_");
+  } else {
+    return "key_"+character; // Math.random().toString(36).substr(2, 5); // random id
+  }
+}
+
+function removeAllKeys() {
+  while (shownCategories.length > 0) {
+    console.log("in while loop");
+    removeKeys(shownCategories[0], keyGridNo=1)
+  }
+}
+
+function removeKeys(cat, keyGridNo) {
+  for (k=0, l=cat.length; k<l; k++) {
+    removeKey(cat[k][0], cat[k][1], keyGridNo, cat);
+  }
+  // remove the category from the list of shown categories
+  shownCategories = shownCategories.filter(function(e) { return e !== cat});
+  console.log(shownCategories);
+  console.log("shownCategories.length: "+shownCategories.length);
+  if (shownCategories.length === 0) {
+    console.log("toggling extraRows")
+    toggle('extraRows');
+  }
+}
+
+function removeKey(character, alias, keyGridNo=1, cat="") {
+  var key = document.getElementById(makeKeyId(character, alias));
+  key.remove();
 }
 
 function createCookie(name, value, days) {
@@ -258,13 +344,18 @@ function resetKeys() {
  * @param {string} id - the id of the html element
  */
 
-function Toggle(id) {
+function toggle(id) {
    var el = document.getElementById(id);
    if (el.style.display === "block"){
        el.style.display = "none";
    } else {
        el.style.display = "block";
    }
+}
+
+function makeVisible(id) {
+   var el = document.getElementById(id);
+   el.style.display = "block";
 }
 
 //set up the modal message box:

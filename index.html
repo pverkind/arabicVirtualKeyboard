@@ -17,7 +17,7 @@
     <div class="rgxChckbx" id="rgxChckbx0">
         <div class="tooltip dotted">
             RTL regex mode:
-            <span class="tooltiptext" style="width:250px">
+            <span class="tooltiptext rgxtooltip" style="width:250px">
                 Use this mode for writing right-to-left (RTL)
                 <a href="https://www.regular-expressions.info/" target="_blank">
                     regular expressions.
@@ -40,7 +40,7 @@
     <div class="rgxChckbx" id="rgxChckbx">
         <div class="tooltip dotted">
             Separate Arabic letters:
-            <span class="tooltiptext" style="width:250px">Arabic letters
+            <span class="tooltiptext rgxtooltip" style="width:250px">Arabic letters
                 will be displayed as separated (by inserting the separator
                 character U+180E "MONGOLIAN VOWEL SEPARATOR").
                 This is especially useful for writing
@@ -53,7 +53,6 @@
     </div>
 </div>
 
-
 <div id="keyboard">
     <div>
         <span>
@@ -65,22 +64,54 @@
     </div>
     <div id="extraRows">
         <div class="keyGrid"></div>
-        <div id="addNewKeyInput">
-            <p>Need more special characters? </p>
-            <p>Add a key with a new character (and an optional description):</p>
-            <input type="text" class="extraInput" id="extraInput0" dir="rtl" placeholder="ک"></input>
-            <input type="text" class="extraInputDescr" id="extraInputDescr0" placeholder="description"></input>
-            <button class="fivePxMargin" onclick='addKey("none", "none")'>Add key</button>
-            <button class="fivePxMargin" onclick='resetKeys()'>Reset keys</button>
-            <br/>
-        </div>
+    </div>
+    <div class="keyToggleRow">
+      <span class="fivePxMargin">
+        <input type="checkbox" class="keyToggle" onclick='addKeys(additional, keyGridNo=1)' id="c1">
+          <label for="c1"> Vowels </label>
+        </input>
+      </span>
+      <span class="fivePxMargin">
+        <input type="checkbox" class="keyToggle" onclick='addKeys(palaeo, keyGridNo=1)' id="c2">
+          <label for="c2"> Palaeo </label>
+        </input>
+      </span>
+      <span class="fivePxMargin">
+        <input type="checkbox" class="keyToggle" onclick='addKeys(persian, keyGridNo=1)' id="c3">
+          <label for="c3"> Persian </label>
+        </input>
+      </span>
+      <span class="fivePxMargin">
+        <input type="checkbox" class="keyToggle" onclick='addKeys(regexchars, keyGridNo=1)' id="c4">
+          <label for="c4"> Regex </label>
+        </input>
+      </span>
+      <span class="fivePxMargin">
+        <input type="checkbox" class="keyToggle" onclick='addKeys(cookieKeys, keyGridNo=1)' id="c5">
+          <label for="c5"> Custom </label>
+        </input>
+      </span>
+      <span class="fivePxMargin">
+        <input type="checkbox" class="keyToggle" onclick='toggleAllKeys(cookieKeys, keyGridNo=1)' id="c6">
+          <label for="c6"> All </label>
+        </input>
+      </span>
+      <span class="fivePxMargin">
+        <input type="checkbox" class="keyToggle" onclick="toggle('cheatsheet')" id="c7">
+          <label for="c7"> Cheatsheet </label>
+        </input>
+      </span>
     </div>
 </div>
 
-
-<div>
-    <button class="btn" onclick="Toggle('cheatsheet')">Toggle Regex Cheatsheet input</button>
-    <button class="btn" onclick="Toggle('extraRows')">Toggle additional keys</button>
+<div id="addNewKeyInput">
+  <p>Need more special characters? </p>
+  <p>Add a key with a new character (and an optional description):</p>
+  <input type="text" class="extraInput fivePxMargin" id="extraInput0" dir="rtl" placeholder="ک"></input>
+  <input type="text" class="extraInputDescr fivePxMargin" id="extraInputDescr0" placeholder="description"></input>
+  <button class="fivePxMargin" onclick='addKey("none", "none")'>Add key</button>
+  <button class="fivePxMargin" onclick='resetKeys()'>Reset keys</button>
+  <br/>
 </div>
 
 <div>
@@ -95,7 +126,7 @@
             <tr><td><button class="regexInput" onclick="wr('.')">.</button></td><td>Any character except line break</td><td>a.c</td><td><b><mark>abc</mark></b> <b><mark>a.c</mark></b></td></tr>
             <tr><td><button class="regexInput" onclick="wr('\\')">\</button></td><td>Escapes a special character</td><td>a\.c</td><td>abc <b><mark>a.c</mark></b></td></tr>
         </table>
-        <div class="regexTitle" onclick="Toggle('charGroups')">Character groups &or;</div>
+        <div class="regexTitle" onclick="toggle('charGroups')">Character groups &or;</div>
         <div class="regexClass" id="charGroups">
             <table>
                 <tr><td><button class="regexInput" onclick="wr(String.raw`\d`)">\d</button></td><td>one Unicode digit in any script</td><td>file_\d_\d</td><td><b><mark>file_9_ ٩</mark></b></td></tr>
@@ -107,7 +138,7 @@
                 <tr><td><button class="regexInput" onclick="wr(String.raw`\S`)">\S</button></td><td>One character that is not a whitespace character</td><td>\S\S\S\S</td><td><b><mark>Yo3)</mark></b> Y o3</td></tr>
             </table>
         </div>
-        <div class="regexTitle" onclick="Toggle('whiteSpace')">More White-Space &or;</div>
+        <div class="regexTitle" onclick="toggle('whiteSpace')">More White-Space &or;</div>
         <div class="regexClass" id="whiteSpace">
             <table>
                 <tr><td><button class="regexInput" onclick="wr(String.raw`\t`)">\t</button></td><td>Tab</td><td>T\t\w\w</td><td>A <b><mark>T     ab</mark></b></td></tr>
@@ -116,7 +147,7 @@
                 <tr><td><button class="regexInput" onclick="wr(String.raw`\r`+'\u061C'+String.raw`\n`)">\r\n</button></td><td>Line separator on Windows</td><td>AB\r\nCD</td><td><b><mark>AB<br/>CD</mark></b></td></tr>
             </table>
         </div>
-        <div class="regexTitle" onclick="Toggle('quantifiers')">Quantifiers &or;</div>
+        <div class="regexTitle" onclick="toggle('quantifiers')">Quantifiers &or;</div>
         <div class="regexClass" id="quantifiers">
             <table>
                 <tr><td><button class="regexInput" onclick="wr('?')">?</button></td><td>Once or none</td><td>plurals?</td><td><b><mark>plural</mark></b> and <b><mark>plurals</mark></b></td></tr>
@@ -127,7 +158,7 @@
                 <tr><td><button class="regexInput" onclick="wr('{,}', offset = 2)">{3,}</button></td><td>Three or more times (greedy) </td><td>\w{4,}</td><td><b><mark>regex_</mark></b></td></tr>
             </table>
         </div>
-        <div class="regexTitle" onclick="Toggle('lazyQuantifiers')">Lazy quantifiers (w/ question mark) &or;</div>
+        <div class="regexTitle" onclick="toggle('lazyQuantifiers')">Lazy quantifiers (w/ question mark) &or;</div>
         <div class="regexClass" id="lazyQuantifiers">
             <table>
                 <tr><td><button class="regexInput" onclick="wr('??')">?</button></td><td>Once or none (lazy)</td><td>plurals?</td><td><b><mark>plural</mark></b> and <b><mark>plural</mark></b>s</td></tr>
@@ -137,7 +168,7 @@
                 <tr><td><button class="regexInput" onclick="wr('*?')">*?</button></td><td>Zero or more times (lazy) </td><td>aB*a b* aB*?</td><td><b><mark>aBBa bb a</mark></b>BBBBB</td></tr>
             </table>
         </div>
-        <div class="regexTitle" onclick="Toggle('logic')">Logic &or;</div>
+        <div class="regexTitle" onclick="toggle('logic')">Logic &or;</div>
         <div class="regexClass" id="logic">
             <table>
                 <tr><td><button class="regexInput" onclick="wr('|')">|</button></td><td>Alternation / OR operand</td><td>22|33</td><td><b><mark>22</mark></b> + 11 = <b><mark>33</mark></b></td></tr>
@@ -147,7 +178,7 @@
                 <tr><td><button class="regexInput" onclick="wr('(?:)', offset=1)">(?: … )</button></td><td>Non-capturing group</td><td>A(?:nt|pple)</td><td>An <b><mark>Ant</mark></b> on an <b><mark>Apple</mark></b></td></tr>
             </table>
         </div>
-        <div class="regexTitle" onclick="Toggle('charClasses')">Character Classes &or;</div>
+        <div class="regexTitle" onclick="toggle('charClasses')">Character Classes &or;</div>
         <div class="regexClass" id="charClasses">
             <table>
                 <tr><td><button class="regexInput" onclick="wr('[]', offset=1)">[ … ]</button></td><td>One of the characters in the brackets</td><td>T[ao]p</td><td><b><mark>Tap</mark></b> and <b><mark>Top</mark></b></td></tr>
@@ -156,7 +187,7 @@
                 <tr><td><button class="regexInput" onclick="wr('[^-]', offset=2)">[^x-y]</button></td><td>One of the characters not in the range from x to y</td><td>[^a-z]{3}</td><td>ab<b><mark>A1! </mark></b>cd</td></tr>
             </table>
         </div>
-        <div class="regexTitle" onclick="Toggle('anchors')">Anchors and Boundaries &or;</div>
+        <div class="regexTitle" onclick="toggle('anchors')">Anchors and Boundaries &or;</div>
         <div class="regexClass" id="anchors">
             <table>
                 <tr><td><button class="regexInput" onclick="wr('^')">^</button></td><td>Start of line</td><td>^abc [1-9]*</td><td><b><mark>abc 18</mark></b> abc 19</td></tr>
@@ -165,7 +196,7 @@
                 <tr><td><button class="regexInput" onclick="wr(String.raw`\B`)">\B</button></td><td>Not a word boundary</td><td>\Bكتب\B</td><td>كتب م<b><mark>كتب</mark></b>ه كتبه</td></tr>
             </table>
         </div>
-        <div class="regexTitle" onclick="Toggle('lookarounds')">Lookarounds &or;</div>
+        <div class="regexTitle" onclick="toggle('lookarounds')">Lookarounds &or;</div>
         <div class="regexClass" id="lookarounds">
             <table>
                 <tr><td><button class="regexInput" onclick="wr('(?=)', offset = 1)">(?=…)</button></td><td>Positive lookahead</td><td>(?=\d{10})\d{5}</td><td><b><mark>01234</mark></b>56789</td></tr>
@@ -174,7 +205,7 @@
                 <tr><td><button class="regexInput" onclick="wr('(?\u003e!)', offset = 1)">(?&lt;!…)</button></td><td>Negative lookbehind</td><td>(?&lt;!USD)\d{3,}</td><td>USD300 = GBP<b><mark>250</mark></b></td></tr>
             </table>
         </div>
-        <div class="regexTitle" onclick="Toggle('arabic')">Arabic Unicode &or;</div>
+        <div class="regexTitle" onclick="toggle('arabic')">Arabic Unicode &or;</div>
         <div class="regexClass" id="arabic">
             <table>
                 <tr><td><button class="regexInput" onclick="wr('[\u0600-\u06ff\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufeff]')"></button></td><td>Any Arabic character in Unicode </td><td></td><td></td></tr>

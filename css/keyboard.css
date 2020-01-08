@@ -119,7 +119,7 @@ textarea {
     position: static;
 }
 .fivePxMargin {
-    margin: 0px 0px 10px 4px;
+    margin: 5px 0px 5px 2px;
 }
 .footer {
     padding-top: 40px;
@@ -154,10 +154,35 @@ textarea {
     grid-template-rows: 34px;
     padding: 5px;
     background-color: #dddddd;
-    border-radius: 0px 0px 3px 3px;
+    border-radius: 0px 0px 0px 0px;
 }
+
 .keyGridBasic {
     background-color: #bbbbbb;
+}
+.keyToggle {
+    display:none; /* hide the checkbox itself */
+}
+.keyToggle ~ label {
+    color: grey;
+    border-style: outset;
+    padding: 2px;
+    margin: 1px;
+    cursor: pointer;
+}
+.keyToggle:checked ~ label {
+    color: black;
+    border-style: inset;
+
+}
+.keyToggleRow {
+    background-color: #bbbbbb;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 448px;
+    border-radius: 0px 0px 3px 3px;
+    padding-left: 3px;
+
 }
 .l-btn {
     float: left;
@@ -202,6 +227,7 @@ textarea {
     float: left;
     padding-left: 8px;
     margin-top: 4px;
+    cursor: pointer;
 }
 .rowBgd {
     position: absolute;
@@ -253,9 +279,14 @@ textarea {
     width: 75px;
     /* Position the tooltip */
     position: absolute;
-    top: 100%;
-    left: 50%;
+    bottom: 35px;
+    left: 70%;
     z-index: 100;
+}
+.tooltip .rgxtooltip {
+    left: -50%;
+    top: 100%;
+    bottom:auto;
 }
 .tooltip:hover .tooltiptext {
     visibility: visible;
@@ -264,10 +295,11 @@ textarea {
 
 #addNewKeyInput {
     padding-top: 10px;
+    display: none;
 }
 #area {
     position: relative;
-    height: 132px;
+    height: 100px;
     width: 451px;
     top: 0px;
     left: 0px;
