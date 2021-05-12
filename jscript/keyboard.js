@@ -519,7 +519,7 @@ function copy2Clipboard(msg="", asIs=false) {
     var modalContent = document.getElementsByClassName("modal-content")[0];
     var p = document.createElement("p");
     var link = 'http://www.babelstone.co.uk/Unicode/whatisit.html?string=';
-    var t = "<br/> (Use ctrl+shift+C to copy the text as is)"
+    var t = "<br/> (Use ctrl+shift+C (Mac: cmd+shift+c) to copy the text as is)"
     t = t + '<br/>You can inspect the characters copied <a href="';
     t = t + link + temp_copyText + '" target="_blank">here</a>';
     p.innerHTML = msg+"Copied the text: " + copyText + " as " + temp_copyText + t;
@@ -690,7 +690,7 @@ function getSelection(target, prev=false) {
 
 function interceptOnKeyDown() {
     var keyID = event.which;
-    if (event.ctrlKey) { // if Ctrl key is pressed:
+    if (event.ctrlKey || event.metaKey) { // if Ctrl key (on Windows) or Cmd key (on Mac) is pressed :
       if (keyID === 67) {  // check if c key is also pressed;
         // if so, adapt the copy event:
         event.preventDefault();
